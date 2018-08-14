@@ -35,7 +35,7 @@ knit_engines$set(solution = function(options) {
     } else {
         solLabels[[taskCtr]][2] <- out
         assign("solLabels", solLabels, pos = 1)
-        out <- paste0("\\hyperlink{sol", taskCtr, "}{\\buttonS{Show Solution on P\\pageref{tsk", taskCtr, "}}}")
+        out <- paste0("\\hyperlink{sol", taskCtr, "}{\\buttonS{Show Solution on P\\colpageref{tsk", taskCtr, "}}}")
     }
     out
 })
