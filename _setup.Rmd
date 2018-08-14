@@ -21,7 +21,7 @@ knit_engines$set(task = function(options) {
     if(opts_knit$get("rmarkdown.pandoc.to") == "html") {
         out <- paste("<div class=\"panel panel-default\"><div class=\"panel-heading\"> Task </div><div class=\"panel-body\">", out, "</div></div>")
     } else {
-        out <- paste0("\\hypertarget{tsk", taskCtr, "}{}\\bblockT{", taskCtr, "}\n", out, "\n\\eblockT\n")
+        out <- paste0("\\hypertarget{tsk", taskCtr, "}{}\\bblockT{\\phantomsection\\label{sol", taskCtr, "}", taskCtr, "}\n", out, "\n\\eblockT\n")
     }
     out
 })
@@ -35,7 +35,7 @@ knit_engines$set(solution = function(options) {
     } else {
         solLabels[[taskCtr]][2] <- out
         assign("solLabels", solLabels, pos = 1)
-        out <- paste0("\\hyperlink{sol", taskCtr, "}{\\buttonS{Show Solution}}")
+        out <- paste0("\\hyperlink{sol", taskCtr, "}{\\buttonS{Show Solution on P\\pageref{tsk", taskCtr, "}}}")
     }
     out
 })
