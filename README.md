@@ -8,7 +8,7 @@ Run `./_build.sh` from the working directory.
 
 **Windows:**
 
-Run `_build.bat` from the working directory.
+Run `_build.bat` from the working directory using the command line.
 
 Depending on whether or not the `Rscript` executable is on the search path, you may have to edit the build files. For example, on my Windows machine I needed to amend `_build.bat` to:
 
