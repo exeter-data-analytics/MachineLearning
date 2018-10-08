@@ -1,6 +1,6 @@
 # skeleton_Rmd
 
-This provides a template for R practicals written using the `bookdown` package. The template provides some customised "Task" and solution boxes. To see some examples, download or clone the repository and then compile the project:
+This provides a template for R practicals written using the `bookdown` package. The template provides some customised "Task" and "Solution" boxes. To see some examples on how to use this template, download or clone the repository and then compile the project:
 
 **Linux / Mac:**
 
@@ -16,7 +16,9 @@ Depending on whether or not the `Rscript` executable is on the search path, you 
 "C:\Program Files\R\R-3.5.1\bin\Rscript.exe" -e "bookdown::render_book('index.Rmd', 'bookdown::gitbook')"
 ```
 
-and so on. You will also have to install pandoc.
+and so on. You may also have to install pandoc.
 
-All necessary files are included in the `docs` folder which is made as part of the build. If you want to link the PDF document within the HTML Gitbook document, then you need to compile the PDF first.
+All necessary files are included in the `docs` folder which is made as part of the build. If you want to link the PDF document within the HTML gitbook document, then you need to compile the PDF first.
+
+All files are compiled to a `docs` folder. After compilation, the file `index.html` contains examples on how to use the template.
 
