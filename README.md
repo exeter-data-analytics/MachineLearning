@@ -1,24 +1,7 @@
 # skeleton_Rmd
 
-This provides a template for R practicals written using the `bookdown` package. The template provides some customised "Task" and "Solution" boxes. To see some examples on how to use this template, download or clone the repository and then compile the project:
+This provides a template for R practicals written using the `bookdown` package. The template provides some customised "Task" and "Solution" boxes. To see some examples on how to use this template, download or clone the repository and then compile the project. This can be done on any platform by loading the "skeleton.Rproj" file in RStudio. The "Build Book" button in the "Build" pane can be used to compile the practical. The "Knit" button on individual "*.Rmd" files provides a quick way to preview individual chapters.
 
-**Linux / Mac:**
+Alternatively, if running on Linux or Macs, you should be able to run `./_build.sh` from the working directory to compile the entire book.
 
-Run `./_build.sh` from the working directory.
-
-**Windows:**
-
-Run `_build.bat` from the working directory using the command line.
-
-Depending on whether or not the `Rscript` executable is on the search path, you may have to edit the build files. For example, on my Windows machine I needed to amend `_build.bat` to:
-
-```
-"C:\Program Files\R\R-3.5.1\bin\Rscript.exe" -e "bookdown::render_book('index.Rmd', 'bookdown::gitbook')"
-```
-
-and so on. You may also have to install pandoc.
-
-All necessary files are included in the `docs` folder which is made as part of the build. If you want to link the PDF document within the HTML gitbook document, then you need to compile the PDF first.
-
-All files are compiled to a `docs` folder. After compilation, the file `index.html` contains examples on how to use the template.
-
+After the build is complete, all necessary files will be included in the `docs` folder which is made as part of the build. If you want to link the PDF document within the HTML gitbook document, then you need to compile the PDF first. After compilation, the file `index.html` contains examples on how to use the template.
