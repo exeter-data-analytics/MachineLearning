@@ -6,7 +6,7 @@ After the build is complete, all necessary files will be included in the `docs` 
 
 ## Usage
 
-Basically a standard Bookdown template with a few tweaks. New chapters need to be in separate '.Rmd' files, where each file starts with a chapter heading as seen [here](https://bookdown.org/yihui/bookdown/usage.html). In order to use the task and solution blocks in \LaTeX, you must input the order of the files into the `_bookdown.yml` file, and the first file must be called `index.Rmd` e.g.
+Basically a standard Bookdown template with a few tweaks. New chapters need to be in separate '.Rmd' files, where each file starts with a chapter heading as seen [here](https://bookdown.org/yihui/bookdown/usage.html). In order to use the task and solution blocks in LaTeX, you must input the order of the files into the `_bookdown.yml` file, and the first file must be called `index.Rmd` e.g.
 
 ```
 rmd_files:
@@ -25,10 +25,7 @@ Here is a task written in **markdown**.
 ```
 ````
 
-which renders as:
-
-<div class="panel panel-default"><div class="panel-heading"> Task </div><div class="panel-body"> 
-Here is a task written in **markdown**. </div></div>
+To see how this renders, please compile the template and open "docs/index.html".
 
 You can include chunks within the `task` chunk, but you need to use double backticks *within* the chunk, and leave carriage returns around the internal chunk e.g.
 
@@ -45,19 +42,7 @@ x
 
 ````
 
-which renders as:
-
-<div class="panel panel-default"><div class="panel-heading"> Task </div><div class="panel-body"> 
-
-```r
-x <- 2 + 2
-x
-```
-
-```
-## [1] 4
-```
- </div></div>
+Again, to see how this renders, please compile the template.
 
 Be careful to have suitable carriage returns around e.g. `enumerate` or `itemize` environments inside the chunk also. For example:
 
@@ -85,14 +70,7 @@ Here is a list:
 
 ```` 
 
-will:
-
-<div class="panel panel-default"><div class="panel-heading"> Task </div><div class="panel-body"> 
-Here is a list:
-
-1. item 1
-2. item 2
- </div></div>
+will.
 
 The `solution` chunk works in the same way, and the numbers will follow the previous `task` chunk (so you can set tasks without solutions) e.g.
 
@@ -111,22 +89,3 @@ Add 2 and 2 together
 ```
 
 ````
-
-gives:
-
-<div class="panel panel-default"><div class="panel-heading"> Task </div><div class="panel-body"> 
-Add 2 and 2 together </div></div>
-
-<button id="displayTextunnamed-chunk-6" onclick="javascript:toggle('unnamed-chunk-6');">Show Solution</button>
-
-<div id="toggleTextunnamed-chunk-6" style="display: none"><div class="panel panel-default"><div class="panel-heading panel-heading1"> Solution </div><div class="panel-body">
-
-```r
-2 + 2
-```
-
-```
-## [1] 4
-```
-</div></div></div>
-
