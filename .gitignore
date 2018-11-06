@@ -1,6 +1,7 @@
-#ignore backup files
+# ignore backup files
 *~
 .Rhistory
-
-
 .Rproj.user
+
+# ignore compiled files
+docs/

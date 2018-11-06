@@ -3,16 +3,16 @@ title: "Skeleton Tutorial Template"
 author: "TJ McKinley"
 site: bookdown::bookdown_site
 output:
+    bookdown::pdf_book:
+        includes:
+            in_header: header.tex
     bookdown::gitbook:
         config:
             sharing: null
         css: 'style.css'
         includes:
             in_header: _toggle.html
-    bookdown::pdf_book:
-        keep_tex: yes
-        includes:
-            in_header: header.tex
+        keep_md: TRUE
 linkcolor: blue
 documentclass: book
 link-citations: yes
