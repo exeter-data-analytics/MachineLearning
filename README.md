@@ -94,19 +94,18 @@ Add 2 and 2 together
 
 Originally developed to put base R and `tidyverse` solutions side-by-side, using a `multCode = T` option to the solution box. Here the two tabs are separated by four consecutive hashes: `####`, and the `titles` option gives the tab titles (these can be set globally if preferred) e.g.
 
-
-
 ````
 
-```{task}
-Filter the `iris` data by `Species == "setosa"` and summarise.
+```{task}`r ''`
+Filter the `iris` data by `Species == "setosa"` and find the mean `Petal.Length`.
 ```
 
-```{solution, multCode = T, titles = c("Base R", "tidyverse")}
+```{solution, multCode = T, titles = c("Base R", "tidyverse")}`r ''`
 
 ``{r}
 ## base R solution
-summary(iris[iris$Species == "setosa", ])
+mean(iris$Petal.Length[
+    iris$Species == "setosa"])
 ``
 
 ####
@@ -115,7 +114,8 @@ summary(iris[iris$Species == "setosa", ])
 ## tidyverse solution
 iris %>% 
     filter(Species == "setosa") %>%
-    summary()
+    select(Petal.Length) %>%
+    summarise(mean = mean(Petal.Length))
 ``
     
 ```

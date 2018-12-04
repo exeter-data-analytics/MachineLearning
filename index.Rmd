@@ -184,14 +184,15 @@ library(tidyverse)
 ````
 
 ```{task}`r ''`
-Filter the `iris` data by `Species == "setosa"` and summarise.
+Filter the `iris` data by `Species == "setosa"` and find the mean `Petal.Length`.
 ```
 
 ```{solution, multCode = T, titles = c("Base R", "tidyverse")}`r ''`
 
 ``{r}
 ## base R solution
-summary(iris[iris$Species == "setosa", ])
+mean(iris$Petal.Length[
+    iris$Species == "setosa"])
 ``
 
 ####
@@ -200,7 +201,8 @@ summary(iris[iris$Species == "setosa", ])
 ## tidyverse solution
 iris %>% 
     filter(Species == "setosa") %>%
-    summary()
+    select(Petal.Length) %>%
+    summarise(mean = mean(Petal.Length))
 ``
     
 ```
@@ -210,14 +212,15 @@ iris %>%
 will typeset to:
 
 ```{task}
-Filter the `iris` data by `Species == "setosa"` and summarise.
+Filter the `iris` data by `Species == "setosa"` and find the mean `Petal.Length`.
 ```
 
 ```{solution, multCode = T, titles = c("Base R", "tidyverse")}
 
 ``{r}
 ## base R solution
-summary(iris[iris$Species == "setosa", ])
+mean(iris$Petal.Length[
+    iris$Species == "setosa"])
 ``
 
 ####
@@ -226,9 +229,10 @@ summary(iris[iris$Species == "setosa", ])
 ## tidyverse solution
 iris %>% 
     filter(Species == "setosa") %>%
-    summary()
+    select(Petal.Length) %>%
+    summarise(mean = mean(Petal.Length))
 ``
-
+    
 ```
 
 Note that there is also a `multCode` chunk that does not link to task and solution boxes e.g.
