@@ -144,3 +144,107 @@ Add 2 and 2 together
 ```
 
 To compile, run the `_build.sh` script which will compile into multiple formats. 
+
+## Additional extensions
+
+### Different task and solution titles
+
+Task and solution boxes can also be given different names using the `title` option e.g.
+
+````
+
+```{task, title = "Question"}`r ''`
+What is the meaning of life, the universe and everything?
+```
+
+```{solution, title = "Answer"}`r ''`
+Why 42 of course!
+```
+
+````
+
+gives:
+
+```{task, title = "Question"}
+What is the meaning of life, the universe and everything?
+```
+
+```{solution, title = "Answer"}
+Why 42 of course!
+```
+
+### Tabbed boxed environments
+
+Originally developed to put base R and `tidyverse` solutions side-by-side, using a `multCode = T` option to the solution box. Here the two tabs are sepearetd by four consecutive hashes: `####`, and the `titles` option gives the tab titles (these can be set globally if preferred) e.g.
+
+```{r, include = F}
+library(tidyverse)
+```
+
+````
+
+```{task}`r ''`
+Filter the `iris` data by `Species == "setosa"` and summarise.
+```
+
+```{solution, multCode = T, titles = c("Base R", "tidyverse")}`r ''`
+
+``{r}
+## base R solution
+summary(iris[iris$Species == "setosa", ])
+``
+
+####
+
+``{r}
+## tidyverse solution
+iris %>% 
+    filter(Species == "setosa") %>%
+    summary()
+``
+    
+```
+
+````
+
+will typeset to:
+
+```{task}
+Filter the `iris` data by `Species == "setosa"` and summarise.
+```
+
+```{solution, multCode = T, titles = c("Base R", "tidyverse")}
+
+``{r}
+## base R solution
+summary(iris[iris$Species == "setosa", ])
+``
+
+####
+
+``{r}
+## tidyverse solution
+iris %>% 
+    filter(Species == "setosa") %>%
+    summary()
+``
+
+```
+
+Note that there is also a `multCode` chunk that does not link to task and solution boxes e.g.
+
+```{multCode}
+
+Two options: 
+
+* Option 1
+
+####
+
+Two options:
+    
+* Option 2
+
+```
+
+The `titles` option can be set as before.

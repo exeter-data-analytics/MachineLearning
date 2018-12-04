@@ -89,3 +89,109 @@ Add 2 and 2 together
 ```
 
 ````
+
+### Tabbed boxed environments
+
+Originally developed to put base R and `tidyverse` solutions side-by-side, using a `multCode = T` option to the solution box. Here the two tabs are sepearetd by four consecutive hashes: `####`, and the `titles` option gives the tab titles (these can be set globally if preferred) e.g.
+
+
+
+````
+
+```{task}
+Filter the `iris` data by `Species == "setosa"` and summarise.
+```
+
+```{solution, multCode = T, titles = c("Base R", "tidyverse")}
+
+``{r}
+## base R solution
+summary(iris[iris$Species == "setosa", ])
+``
+
+####
+
+``{r}
+## tidyverse solution
+iris %>% 
+    filter(Species == "setosa") %>%
+    summary()
+``
+    
+```
+
+````
+
+will typeset to:
+
+<div class="panel panel-default"><div class="panel-heading"> Task </div><div class="panel-body"> 
+Filter the `iris` data by `Species == "setosa"` and summarise. </div></div>
+
+<button id="displayTextunnamed-chunk-11" onclick="javascript:toggle('unnamed-chunk-11');">Show Solution</button>
+
+<div id="toggleTextunnamed-chunk-11" style="display: none"><div class="panel panel-default"><div class="panel-heading panel-heading1"> Solution </div><div class="panel-body"><div class="tab"><button class="tablinksunnamed-chunk-11 active" onclick="javascript:openCode(event, 'option1unnamed-chunk-11', 'unnamed-chunk-11');">Base R</button><button class="tablinksunnamed-chunk-11" onclick="javascript:openCode(event, 'option2unnamed-chunk-11', 'unnamed-chunk-11');">tidyverse</button></div><div id="option1unnamed-chunk-11" class="tabcontentunnamed-chunk-11">
+
+```r
+## base R solution
+summary(iris[iris$Species == "setosa", ])
+```
+
+```
+##   Sepal.Length    Sepal.Width     Petal.Length    Petal.Width   
+##  Min.   :4.300   Min.   :2.300   Min.   :1.000   Min.   :0.100  
+##  1st Qu.:4.800   1st Qu.:3.200   1st Qu.:1.400   1st Qu.:0.200  
+##  Median :5.000   Median :3.400   Median :1.500   Median :0.200  
+##  Mean   :5.006   Mean   :3.428   Mean   :1.462   Mean   :0.246  
+##  3rd Qu.:5.200   3rd Qu.:3.675   3rd Qu.:1.575   3rd Qu.:0.300  
+##  Max.   :5.800   Max.   :4.400   Max.   :1.900   Max.   :0.600  
+##        Species  
+##  setosa    :50  
+##  versicolor: 0  
+##  virginica : 0  
+##                 
+##                 
+## 
+```
+</div><div id="option2unnamed-chunk-11" class="tabcontentunnamed-chunk-11">
+
+```r
+## tidyverse solution
+iris %>% 
+    filter(Species == "setosa") %>%
+    summary()
+```
+
+```
+##   Sepal.Length    Sepal.Width     Petal.Length    Petal.Width   
+##  Min.   :4.300   Min.   :2.300   Min.   :1.000   Min.   :0.100  
+##  1st Qu.:4.800   1st Qu.:3.200   1st Qu.:1.400   1st Qu.:0.200  
+##  Median :5.000   Median :3.400   Median :1.500   Median :0.200  
+##  Mean   :5.006   Mean   :3.428   Mean   :1.462   Mean   :0.246  
+##  3rd Qu.:5.200   3rd Qu.:3.675   3rd Qu.:1.575   3rd Qu.:0.300  
+##  Max.   :5.800   Max.   :4.400   Max.   :1.900   Max.   :0.600  
+##        Species  
+##  setosa    :50  
+##  versicolor: 0  
+##  virginica : 0  
+##                 
+##                 
+## 
+```
+</div><script> javascript:hide('option2unnamed-chunk-11') </script></div></div></div>
+
+Note that there is also a `multCode` chunk that does not link to task and solution boxes e.g.
+
+<div class="tab"><button class="tablinksunnamed-chunk-12 active" onclick="javascript:openCode(event, 'option1unnamed-chunk-12', 'unnamed-chunk-12');">Option 1</button><button class="tablinksunnamed-chunk-12" onclick="javascript:openCode(event, 'option2unnamed-chunk-12', 'unnamed-chunk-12');">Option 2</button></div><div id="option1unnamed-chunk-12" class="tabcontentunnamed-chunk-12">
+
+Two options: 
+
+* Option 1
+</div><div id="option2unnamed-chunk-12" class="tabcontentunnamed-chunk-12">
+
+Two options:
+    
+* Option 2
+</div><script> javascript:hide('option2unnamed-chunk-12') </script>
+
+The `titles` option can be set as before.
+
