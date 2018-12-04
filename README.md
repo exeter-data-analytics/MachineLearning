@@ -96,7 +96,7 @@ Originally developed to put base R and `tidyverse` solutions side-by-side, using
 
 ````
 
-```{task}`r ''`
+```{task}
 Filter the `iris` data by `Species == "setosa"` and find the mean `Petal.Length`.
 ```
 
@@ -126,7 +126,7 @@ Note that there is also a `multCode` chunk that does not link to task and soluti
 
 ````
 
-```{multCode}`r ''`
+```{multCode}
 
 Two options: 
 
