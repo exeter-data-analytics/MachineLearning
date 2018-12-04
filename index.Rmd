@@ -233,6 +233,26 @@ iris %>%
 
 Note that there is also a `multCode` chunk that does not link to task and solution boxes e.g.
 
+````
+
+```{multCode}`r ''`
+
+Two options: 
+
+* Option 1
+
+####
+
+Two options:
+    
+* Option 2
+
+```
+
+````
+
+will typeset to:
+
 ```{multCode}
 
 Two options: 
