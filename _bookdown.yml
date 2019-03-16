@@ -1,4 +1,4 @@
 rmd_files:
-    html: ['index.Rmd', '01-intro.Rmd']
-    latex: ['index.Rmd', '01-intro.Rmd', 'ch_appendix.Rmd']
-output_dir: '_site'
+    html: ['index.Rmd']
+    latex: ['index.Rmd', 'ch_appendix.Rmd']
+output_dir: "docs"

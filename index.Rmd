@@ -1,67 +1,274 @@
 --- 
-title: "Introduction to Machine Learning"
-date: '`r format(Sys.Date(), "%d %B %Y")`'
-author: "[JJ Valletta](mailto:jj.valletta@exeter.ac.uk)"
+title: "Skeleton Tutorial Template"
+author: "TJ McKinley"
 site: bookdown::bookdown_site
 output:
     bookdown::pdf_book:
-        keep_tex: yes
         includes:
-            in_header: '_header.tex'
+            in_header: header.tex
     bookdown::gitbook:
         config:
             sharing: null
-        css: '_style.css'
+        css: 'style.css'
         includes:
-            in_header: '_toggle.html'
+            in_header: _toggle.html
         keep_md: TRUE
+linkcolor: blue
 documentclass: book
 link-citations: yes
-description: "Introduction to Machine Learning"
+description: "Skeleton Tutorial Template"
 ---
 
-# Preface {-}
+# Opening page
 
-```{r setup, include=FALSE}
-# Setup Python environment
-library(reticulate)
-use_python('/Applications/anaconda/bin/python')
-knitr::opts_chunk$set(echo=TRUE, comment=NA)
+```{r, child = "_setup.Rmd", include = F, purl = F, cache = F}
 ```
 
-```{r, child="_setup.Rmd", include=F, purl=F, cache=F}
+Basically a standard Bookdown template with a few tweaks. New chapters need to be in separate '.Rmd' files, where each file starts with a chapter heading as seen [here](https://bookdown.org/yihui/bookdown/usage.html). In order to use the task and solution blocks in \LaTeX, you must input the order of the files into the `_bookdown.yml` file, and the first file must be called `index.Rmd` e.g.
+
+```
+rmd_files:
+    html: ['index.Rmd', 'ch1.Rmd']
+    latex: ['index.Rmd', 'ch1.Rmd', 'ch_appendix.Rmd']
+output_dir: "docs"
 ```
 
-An introductory workshop on the field of machine learning. The focus will be on how to use these methods
-in practice using R and Python, rather than on the rigorous underlying mathematics. The target audience
-is anyone who wants to know what machine learning is, what problems it can solve and how we solve them
-in practice using R and Python.
+The `latex:` path above ***must*** have `'ch_appendix.Rmd'` as its last entry. This ensures that the appendix is properly formatted for the solutions to the problems.
 
-## Prerequisites {-}
+There are a couple of useful special blocks. A `task` block, and a `solution` block. These can be used as e.g.
 
-* Programming basics in either R or Python
+````
+```{task}`r ''`
+Here is a task written in **markdown**.
+```
+````
 
-## Learning outcomes {-}
+which renders as:
 
-* Understand the key concepts and terminology used in the field of machine learning
-* Build predictive models for clustering, regression and classification problems
-* Apply machine learning algorithms in R/Python to a variety of real-world datasets
-* Recognise practical issues in data-driven modelling
+```{task}
+Here is a task written in **markdown**.
+```
 
-## Recommended reading {-}
+You can include chunks within the `task` chunk, but you need to use double backticks *within* the chunk, and leave carriage returns around the internal chunk e.g.
 
-I highly recommend the following books:
+````
 
-* [An Introduction to Statistical Learning](http://www-bcf.usc.edu/~gareth/ISL/)
-* [The Elements of Statistical Learning](https://web.stanford.edu/~hastie/ElemStatLearn/)
-* [Pattern Recognition and Machine Learning](https://www.springer.com/gp/book/9780387310732)
-* [Machine Learning: A Probabilistic Perspective](https://www.cs.ubc.ca/~murphyk/MLbook/)
+```{task}`r ''`
 
-## Software packages {-}
+``{r}
+x <- 2 + 2
+x
+``
 
-* R: [`caret`](http://topepo.github.io/caret/index.html)
-* Python: [`scikit-learn`](https://scikit-learn.org/stable/)
+```
 
-## Data files {-}
+````
 
-All data files can be downloaded as a ZIP file from [here](https://exeter-data-analytics.github.io/StatModelling/dataFiles.zip).
+which renders as:
+
+```{task}
+
+``{r}
+x <- 2 + 2
+x
+``
+
+```
+
+Be careful to have suitable carriage returns around e.g. `enumerate` or `itemize` environments inside the chunk also. For example:
+
+````
+
+```{task}`r ''`
+Here is a list:
+1. item 1
+2. item 2
+```
+
+```` 
+
+will not render nicely. But
+
+````
+
+```{task}`r ''`
+Here is a list:
+
+1. item 1
+2. item 2
+
+```
+
+```` 
+
+will:
+
+```{task}
+Here is a list:
+
+1. item 1
+2. item 2
+
+```
+
+The `solution` chunk works in the same way, and the numbers will follow the previous `task` chunk (so you can set tasks without solutions) e.g.
+
+````
+
+```{task}`r ''`
+Add 2 and 2 together
+```
+
+```{solution}`r ''`
+
+``{r}
+2 + 2
+``
+
+```
+
+````
+
+gives:
+
+```{task}
+Add 2 and 2 together
+```
+
+```{solution}
+
+``{r}
+2 + 2
+``
+
+```
+
+To compile, run the `_build.sh` script which will compile into multiple formats. 
+
+## Additional extensions
+
+### Different task and solution titles
+
+Task and solution boxes can also be given different names using the `title` option e.g.
+
+````
+
+```{task, title = "Question"}`r ''`
+What is the meaning of life, the universe and everything?
+```
+
+```{solution, title = "Answer"}`r ''`
+Why 42 of course!
+```
+
+````
+
+gives:
+
+```{task, title = "Question"}
+What is the meaning of life, the universe and everything?
+```
+
+```{solution, title = "Answer"}
+Why 42 of course!
+```
+
+### Tabbed boxed environments
+
+Originally developed to put base R and `tidyverse` solutions side-by-side, using a `multCode = T` option to the solution box. Here the two tabs are separated by four consecutive hashes: `####`, and the `titles` option gives the tab titles (these can be set globally if preferred) e.g.
+
+```{r, include = F}
+library(tidyverse)
+```
+
+````
+
+```{task}`r ''`
+Filter the `iris` data by `Species == "setosa"` and find the mean `Petal.Length`.
+```
+
+```{solution, multCode = T, titles = c("Base R", "tidyverse")}`r ''`
+
+``{r}
+## base R solution
+mean(iris$Petal.Length[
+    iris$Species == "setosa"])
+``
+
+####
+
+``{r}
+## tidyverse solution
+iris %>% 
+    filter(Species == "setosa") %>%
+    select(Petal.Length) %>%
+    summarise(mean = mean(Petal.Length))
+``
+    
+```
+
+````
+
+will typeset to:
+
+```{task}
+Filter the `iris` data by `Species == "setosa"` and find the mean `Petal.Length`.
+```
+
+```{solution, multCode = T, titles = c("Base R", "tidyverse")}
+
+``{r}
+## base R solution
+mean(iris$Petal.Length[
+    iris$Species == "setosa"])
+``
+
+####
+
+``{r}
+## tidyverse solution
+iris %>% 
+    filter(Species == "setosa") %>%
+    select(Petal.Length) %>%
+    summarise(mean = mean(Petal.Length))
+``
+    
+```
+
+Note that there is also a `multCode` chunk that does not link to task and solution boxes e.g.
+
+````
+
+```{multCode}`r ''`
+
+Two options: 
+
+* Option 1
+
+####
+
+Two options:
+    
+* Option 2
+
+```
+
+````
+
+will typeset to:
+
+```{multCode}
+
+Two options: 
+
+* Option 1
+
+####
+
+Two options:
+    
+* Option 2
+
+```
+
+The `titles` option can be set as before.

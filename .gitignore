@@ -2,7 +2,9 @@
 *~
 .Rhistory
 .Rproj.user
+.Rproj
 
 # ignore compiled files
-docs/
-_bookdown*
+_bookdown_files
+_site
+_gh-pages_commit.sh
