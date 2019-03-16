@@ -143,3 +143,35 @@ Two options:
 ````
 
 The `titles` option can be set as before.
+
+### Python and R
+
+Using the `multCode` option we can also display and run R and Python code simultaneously.
+
+````
+
+```{multCode, titles=c('R', 'Python')}
+
+``{r}
+plot(2,2)
+``
+
+####
+
+``{python}
+import numpy as np
+x = np.array([1,2,3])
+print(x)
+``
+
+```
+
+````
+
+For Python to work seamlessly make sure to import the [`reticulate`](https://rstudio.github.io/reticulate/) package and set the correct Python path
+in your setup code.
+
+```
+library(reticulate)
+use_python('/Applications/anaconda/bin/python')
+```

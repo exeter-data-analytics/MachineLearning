@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>1 Introduction | Introduction to Machine Learning</title>
+  <meta name="description" content="1 Introduction | Introduction to Machine Learning">
+  <meta name="generator" content="bookdown  and GitBook 2.6.7">
+
+  <meta property="og:title" content="1 Introduction | Introduction to Machine Learning" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="1 Introduction | Introduction to Machine Learning" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="1 Introduction | Introduction to Machine Learning" />
+  
+  <meta name="twitter:description" content="1 Introduction | Introduction to Machine Learning" />
+  
+
+<meta name="author" content="JJ Valletta">
+
+
+<meta name="date" content="2019-03-16">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="index.html">
+
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+<script language="javascript"> 
+    function toggle(id) {
+        var ele = document.getElementById("toggleText" + id);
+        var text = document.getElementById("displayText" + id);
+        var buttonText = text.innerHTML.replace("Show ", "");
+        buttonText = buttonText.replace("Hide ", "");
+        if(ele.style.display == "block") {
+            ele.style.display = "none";
+            text.innerHTML = "Show " + buttonText;
+        } else {
+            ele.style.display = "block";
+            text.innerHTML = "Hide " + buttonText;
+        }
+    } 
+</script>
+
+<script language="javascript">
+    function openCode(evt, codeName, id) {
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tabcontent" + id);
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+        tablinks = document.getElementsByClassName("tablinks" + id);
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+        document.getElementById(codeName).style.display = "block";
+        evt.currentTarget.className += " active";
+    }
+</script>
+
+<script language="javascript">
+    function hide(id){
+        document.getElementById(id).style.display = "none";
+    }
+</script>
+</script>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+
+
+<link rel="stylesheet" href="_style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a><ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#prerequisites"><i class="fa fa-check"></i>Prerequisites</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#learning-outcomes"><i class="fa fa-check"></i>Learning outcomes</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#recommended-reading"><i class="fa fa-check"></i>Recommended reading</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#software-packages"><i class="fa fa-check"></i>Software packages</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#data-files"><i class="fa fa-check"></i>Data files</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
+<li class="chapter" data-level="1.1" data-path="introduction.html"><a href="introduction.html#motivation"><i class="fa fa-check"></i><b>1.1</b> Motivation</a></li>
+<li class="chapter" data-level="1.2" data-path="introduction.html"><a href="introduction.html#what-is-machine-learning"><i class="fa fa-check"></i><b>1.2</b> What is machine learning?</a></li>
+<li class="chapter" data-level="1.3" data-path="introduction.html"><a href="introduction.html#what-problems-can-machine-learning-solve"><i class="fa fa-check"></i><b>1.3</b> What problems can machine learning solve?</a></li>
+<li class="chapter" data-level="1.4" data-path="introduction.html"><a href="introduction.html#types-of-machine-learning-methods"><i class="fa fa-check"></i><b>1.4</b> Types of machine learning methods</a><ul>
+<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#unsupervised-learning"><i class="fa fa-check"></i>Unsupervised learning</a></li>
+<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#supervised-learning"><i class="fa fa-check"></i>Supervised learning</a></li>
+<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#semi-supervised-learning"><i class="fa fa-check"></i>Semi-supervised learning</a></li>
+<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#reinforcement-learning"><i class="fa fa-check"></i>Reinforcement learning</a></li>
+</ul></li>
+<li class="chapter" data-level="1.5" data-path="introduction.html"><a href="introduction.html#statistics-and-machine-learning"><i class="fa fa-check"></i><b>1.5</b> Statistics and Machine Learning</a></li>
+<li class="chapter" data-level="1.6" data-path="introduction.html"><a href="introduction.html#terminology"><i class="fa fa-check"></i><b>1.6</b> Terminology</a></li>
+<li class="chapter" data-level="1.7" data-path="introduction.html"><a href="introduction.html#a-birds-eye-view-of-building-machine-learning-systems"><i class="fa fa-check"></i><b>1.7</b> A bird’s-eye view of building machine learning systems</a></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Introduction to Machine Learning</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="introduction" class="section level1">
+<h1><span class="header-section-number">1</span> Introduction</h1>
+<div id="motivation" class="section level2">
+<h2><span class="header-section-number">1.1</span> Motivation</h2>
+<ul>
+<li>Scientists are nowadays faced with an unprecedented amount of complex and big data sets
+(e.g. high-throughput sequencing, GIS (Geographical Information System) data, biomedical imaging and social media data).</li>
+<li>These data sets are very challenging to analyse due to nonlinear dependencies, mixed data sources and high-dimensionality.</li>
+<li>They often fail to conform to the assumptions of classical statistical methods.</li>
+<li>Hand-in-hand with the rise of computational power, machine learning (ML), has matured into a field of its own,
+to specificially extract knowledge from these data.</li>
+</ul>
+</div>
+<div id="what-is-machine-learning" class="section level2">
+<h2><span class="header-section-number">1.2</span> What is machine learning?</h2>
+<blockquote>
+<p>A machine (an algorithm/model) improves its performance (predictive accuracy) in achieving a task (e.g
+classifying the content of an image) from experience (data).</p>
+</blockquote>
+<blockquote>
+<p>The automatic discovery of patterns and regularities in data.</p>
+</blockquote>
+</div>
+<div id="what-problems-can-machine-learning-solve" class="section level2">
+<h2><span class="header-section-number">1.3</span> What problems can machine learning solve?</h2>
+<ul>
+<li><p>Object recognition</p></li>
+<li><p>Biomarker discovery in genomics</p></li>
+<li><p>Navigation of autonomous vehicles</p></li>
+<li><p>Fraud detection</p></li>
+<li><p>… and much more!</p></li>
+</ul>
+</div>
+<div id="types-of-machine-learning-methods" class="section level2">
+<h2><span class="header-section-number">1.4</span> Types of machine learning methods</h2>
+<div id="unsupervised-learning" class="section level3 unnumbered">
+<h3>Unsupervised learning</h3>
+<p>Unsupervised learning methods uncover structure in unlabelled data. Structure means patterns in the data that are sufficiently different from pure unstructured noise. Structure can be discovered by:</p>
+<ul>
+<li><p>Determining the distribution of the data using <strong>density estimation</strong> techniques
+<img src="_img/01-density.png" width="600px" style="display: block; margin: auto;" /></p></li>
+<li><p>Visualising the data after <strong>dimensionality reduction</strong> (e.g Principal Component Analysis (PCA))
+<img src="_img/01-dimensionality.png" width="600px" style="display: block; margin: auto;" /></p></li>
+<li><p>Identifying groups of observations sharing similar attributes using <strong>clustering</strong> methods
+<img src="_img/01-clustering.png" width="600px" style="display: block; margin: auto;" /></p></li>
+</ul>
+</div>
+<div id="supervised-learning" class="section level3 unnumbered">
+<h3>Supervised learning</h3>
+<p>Akin to traditional statistical models (e.g generalised linear models) supervised learning methods
+discover the relationship between an outcome and a set of explanatory variables.
+Using <strong>training data</strong>, the model learns the mapping (predictive model) between a set of features
+and a:</p>
+<ul>
+<li><p>Continuous outcome - <strong>regression</strong>
+<img src="_img/01-regression.png" width="600px" style="display: block; margin: auto;" /></p></li>
+<li><p>Categorical variable - <strong>classification</strong>
+<img src="_img/01-classification.png" width="600px" style="display: block; margin: auto;" /></p></li>
+</ul>
+</div>
+<div id="semi-supervised-learning" class="section level3 unnumbered">
+<h3>Semi-supervised learning</h3>
+<p>Similar to supervised learning, however these methods also make use of unlabelled data to improve
+the model’s predictive performance.</p>
+</div>
+<div id="reinforcement-learning" class="section level3 unnumbered">
+<h3>Reinforcement learning</h3>
+<p>These methods mimic the way humans learn new games or skills (e.g riding a unicycle).
+The machine/model explores different actions that maximise a <strong>reward</strong> (e.g score achieved in a game or
+time spent upright on a unicyle) by a process of trial and error.
+There is an inherent tradeoff between <strong>exploration</strong> (trying out new actions) and
+<strong>exploitation</strong> (use actions that already give reasonable results).</p>
+<iframe width="768" height="432" src="http://mlg.eng.cam.ac.uk/wp/wp-content/uploads/2011/09/realunicycle.mp4" frameborder="0" allowfullscreen>
+</iframe>
+<p>In this introductory workshop we will only focus on unsupervised and supervised learning methods.</p>
+</div>
+</div>
+<div id="statistics-and-machine-learning" class="section level2">
+<h2><span class="header-section-number">1.5</span> Statistics and Machine Learning</h2>
+<p>There is substantial overlap between the fields of statistics and machine learning.
+Some high-profile academics, such as Robert Tibshirani, even argue that ML is merely
+“glorified statistics”. He also provides a handy <a href="http://statweb.stanford.edu/~tibs/stat315a/glossary.pdf">glossary</a>.</p>
+<p>We will not enter into a philosophical debate here, rather we focus
+on a pragmatic comparison between these two schools of thought,
+which evolved from different research areas and tackled different problems.</p>
+<table>
+<colgroup>
+<col width="10%" />
+<col width="44%" />
+<col width="44%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>Statistics</th>
+<th>Machine learning</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Philosophy</strong></td>
+<td>provide humans with a set of data analysis tools</td>
+<td>replace humans in the processing of data</td>
+</tr>
+<tr class="even">
+<td><strong>Focus</strong></td>
+<td>what is the relationship between the data and the outcome?</td>
+<td>how can we predict the outcome using the data?</td>
+</tr>
+<tr class="odd">
+<td><strong>Inference</strong></td>
+<td>how was the observed data generated? what do the model parameters mean in practice?</td>
+<td>typically only care about predictions and not what the model parameters mean</td>
+</tr>
+<tr class="even">
+<td><strong>Learning</strong></td>
+<td>use all of the observed data to perform inference at the <em>population-level</em></td>
+<td>use training data then use testing data to perfom <em>individual-level</em> predictions</td>
+</tr>
+<tr class="odd">
+<td><strong>Validation</strong></td>
+<td>measures of fit (<span class="math inline">\(R^2\)</span>, chi-square test, etc.) and suitability of inferred parameters</td>
+<td>predictive performance measures (root mean squared error (RMSE), area under the ROC cuve (AUC), etc.) computed on “unseen” data (generalisation)</td>
+</tr>
+<tr class="even">
+<td><strong>Model selection</strong></td>
+<td>adjusted measures of fit (adjusted <span class="math inline">\(R^2\)</span>, <span class="math inline">\(C_p\)</span> statistic, Aikake information criterion, etc.)</td>
+<td>Cross-validation and out-of-bag errors</td>
+</tr>
+</tbody>
+</table>
+<p>The line between ML and statistics is blurry at best. Personally, I do not find engaging in heated debates
+between the two fields to be healthy. Both fields complement each other and as the late Leo Breiman puts it:</p>
+<blockquote>
+<p>The best solution could be an algorithmic model (machine learning), or maybe a data model,
+or maybe a combination. But the trick to being a scientist is to be open to using a wide variety of tools. - <em>Leo Breiman</em></p>
+</blockquote>
+</div>
+<div id="terminology" class="section level2">
+<h2><span class="header-section-number">1.6</span> Terminology</h2>
+<p>The jargon used in ML can be daunting at first. The table below summarises the most commonly encountered terms and their synonyms:</p>
+<table>
+<colgroup>
+<col width="29%" />
+<col width="70%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td><strong>Training dataset</strong></td>
+<td>data used to train a set of machine learning models</td>
+</tr>
+<tr class="even">
+<td><strong>Validation dataset</strong></td>
+<td>data used for model selection and validation i.e to choose a model which is complex enough to describe the data “well” but not more complex</td>
+</tr>
+<tr class="odd">
+<td><strong>Testing dataset</strong></td>
+<td>data <em>not</em> used when building the machine learning model, but used to evaluate the model’s performance on previously unseen data (<em>generalisation</em> error)</td>
+</tr>
+<tr class="even">
+<td><strong>Features</strong></td>
+<td>the covariates/predictors/inputs/attributes used to train the model</td>
+</tr>
+<tr class="odd">
+<td><strong>Training error</strong></td>
+<td>the model’s performance evaluated on the training data (also known as in-sample or resubstitution error)</td>
+</tr>
+<tr class="even">
+<td><strong>Testing error</strong></td>
+<td>the model’s performance evaluated on the testing data (also known as out-of-sample or generalisation error)</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="a-birds-eye-view-of-building-machine-learning-systems" class="section level2">
+<h2><span class="header-section-number">1.7</span> A bird’s-eye view of building machine learning systems</h2>
+<p><img src="_img/01-birdview.png" width="750px" style="display: block; margin: auto;" /></p>
+<p><strong>Health warning</strong>: Real-life data is very messy. You <em>will</em> end up spending most of your time preparing your data
+into a format amenable for exploration/modelling. Do not despair, in this workshop you will be provided with clean data sets
+that can be used straightaway. Nevertheless, if you have not attended a course on data wrangling
+and visualisation yet, I would strongly recommend doing TJ McKinley’s <a href="https://exeter-data-analytics.github.io/AdVis/">course</a>.</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="index.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": null,
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"download": ["_main.pdf"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
