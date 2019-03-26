@@ -82,10 +82,7 @@ The machine/model explores different actions that maximise a **reward** (e.g sco
 time spent upright on a unicyle) by a process of trial and error.
 There is an inherent tradeoff between **exploration** (trying out new actions) and 
 **exploitation** (use actions that already give reasonable results).
-
-```{r, echo=FALSE}
-knitr::include_url('http://mlg.eng.cam.ac.uk/wp/wp-content/uploads/2011/09/realunicycle.mp4')
-```
+Here's a [nice example](http://mlg.eng.cam.ac.uk/wp/wp-content/uploads/2011/09/realunicycle.mp4).
 
 In this introductory workshop we will only focus on unsupervised and supervised learning methods.
 
