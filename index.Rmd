@@ -15,6 +15,7 @@ output:
         includes:
             in_header: '_toggle.html'
         keep_md: TRUE
+        highlight: pygments
 documentclass: book
 link-citations: yes
 description: "Introduction to Machine Learning"
@@ -61,6 +62,8 @@ I highly recommend the following books:
 
 * R: [`caret`](http://topepo.github.io/caret/index.html)
 * Python: [`scikit-learn`](https://scikit-learn.org/stable/)
+
+**Please make sure to read the documentation of any machine learning algorithm *before* using it!**
 
 ## Data files {-}
 

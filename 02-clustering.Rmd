@@ -1,0 +1,381 @@
+# Clustering
+
+```{r, echo=FALSE}
+IMG <- "_img/" # image path
+```
+
+## Motivation
+
+```{r, echo=FALSE, out.width='700px'}
+knitr::include_graphics(file.path(IMG, "02-microarray.jpg"))
+```
+
+The image above is from a microarray experiment ^[Nowadays microarrays have been largely replaced by sequencing technologies. However, the problem remains exactly the same]. The intensity
+of each dot represents gene expression of a single gene (how "active" the gene is) for a particular individual/sample.
+The resultant data is therefore a big matrix of numbers, where each column and row represent a gene and individual/sample respectively.
+
+There are two key questions we can ask from this data:
+
+1. Which genes are co-regulated, that is, behave in the same way.
+2. Which individuals are similar to each other, that is, have a similar gene expression profile.
+
+In both cases we want to discover some underlying structure in unlabelled data. Structure means patterns
+in the data that are sufficiently different from pure unstructured noise. Here we introduce clustering, 
+a class of unsupervised learning methods that try to answer these questions.
+
+## What is clustering?
+
+> The goal of clustering is to find groups that share similar properties. 
+The data in each group should be similar (minimise intracluster distance), but each 
+cluster should be sufficiently different (maximize intercluster similarity).
+
+```{r, echo=FALSE, out.width='600px'}
+knitr::include_graphics(file.path(IMG, "02-clustering.png"))
+```
+
+## What problems can clustering solve?
+
+Clustering is particularly useful in applications where labelling the data is very time consuming/expensive.
+
+* **Gene expression**: discovering co-regulated genes.
+
+* **Biological systematics**: finding organisms sharing similar attributes.
+
+* **Computer vision**: segmenting a digital image for object recognition.
+
+* **Epidemiology**: identifying geographical clusters of diseases.
+
+* **Medical imaging**: differentiating between tissues.
+
+* **Mathematical chemistry**: grouping compounds by topological indices.
+
+* **Market basket analysis**: determining which group of items tend to be bought together.
+
+* **Cybersecurity**: detecting fraudulent activity.
+
+* ... and much more!
+
+## Types of clustering methods
+
+* **Partitional**: the feature space is partitioned into $k$ regions e.g $k$-means.
+
+* **Hierarchical**: iteratively merging small clusters into larger ones (*agglomerative*) or breaking
+large clusters into smaller ones (*divisive*).
+
+* **Distribution-based**: fit $k$ multivariate statistical distributions e.g Gaussian mixture model.
+
+## Similarity measures {#sec:similarity}
+
+Most clustering methods rely on distance metrics that quantify how close two observations are. There
+are several ways to define this distance, which has a direct effect on the clustering result.
+
+The Euclidean distance (think Pythagoras theorem) is depicted below, together with the Manhatttan distance 
+(named for the journey a taxi has to follow in gridlike streets of cities like Manhattan).
+
+```{r, echo=FALSE, out.width='400px'}
+knitr::include_graphics(file.path(IMG, "02-euclidean.png"))
+```
+
+The correlation coefficient is also another popular way to measure distance.
+
+```{r, echo=FALSE, out.width='500px'}
+knitr::include_graphics(file.path(IMG, "02-correlation.png"))
+```
+
+In this introductory workshop we will focus on continuous features, but be aware that distance measures
+for categorical variables exists such as the Jaccard index, Gower distance and polychoric correlation.
+
+## The *Iris* dataset
+
+To showcase some of the clustering methods, we will use the popular [*Iris* dataset](https://en.wikipedia.org/wiki/Iris_flower_data_set). The data set
+consists of 50 samples from three species of *Iris* flower (*I. setosa*, *I. virginica* and *I. versicolor*).
+Each flower is quantified by four measurements, length and width of sepal and petal.
+We will see whether using these four features we end up grouping flowers by species.
+
+Let us load this dataset:
+
+```{multCode, titles=c('R', 'Python')}
+
+``{r}
+# The iris dataset is preloaded in R upon startup
+head(iris)
+``
+
+####
+
+``{python}
+# The iris dataset is available in sci-kit learn
+from sklearn import datasets
+iris = datasets.load_iris()
+
+# Print the first 6 rows
+# Sepal Length, Sepal Width, Petal Length, Petal Width
+iris.data[:6, ]
+``
+
+```
+
+## $k$-means
+
+Arguably the most widely used partitioning clustering method. 
+The feature space is divided into $k$ regions as follows:
+
+1. Select $k$ centroids at random.
+
+2. Compute the Euclidean distance between centroids and each data point.
+
+3. Assign each data point to the closest centroid.
+
+4. Compute new centroids; the average of all data points in that cluster.
+
+5. Repeat steps 2 to 4 until data points remain in the same cluster or some maximum number of iterations reached.
+
+**Note**: $k$-means clustering should **only** be used with continuous data!
+
+For visualisation purposes let's just use two features of the *Iris* dataset; sepal length and petal width.
+
+```{multCode, titles=c('R', 'Python')}
+
+``{r}
+# Fit k-means model
+k <- 3
+mdl <- kmeans(x=iris[, c(1, 4)], centers=k)
+
+# Associate a colour with each cluster
+library(RColorBrewer)
+COL <- seq(k)
+names(COL) <- brewer.pal(n=k, 'Set1')
+
+# Plot results
+plot(iris[, 4], iris[, 1], pch=19, col=names(COL[mdl$cluster]),
+     xlab='Petal width (cm)', ylab='Sepal length (cm)')
+``
+
+####
+
+``{python, results='hide'}
+# Fit k-means model
+from sklearn.cluster import KMeans
+k = 3
+mdl = KMeans(n_clusters=k, n_jobs=-1) # -1 uses all cores
+mdl.fit(X=iris.data[:, [0, 3]])
+
+# Associate a colour with each cluster
+from palettable.colorbrewer.qualitative import Set1_3
+colDict = {0: Set1_3.hex_colors[0], 1: Set1_3.hex_colors[1], 2: Set1_3.hex_colors[2]}
+myCol = [colDict[i] for i in mdl.labels_]
+
+# Plot results
+import matplotlib.pyplot as plt
+plt.scatter(iris.data[:, 3], iris.data[:, 0], c=myCol)
+plt.xlabel('Petal width (cm)')
+plt.ylabel('Sepal length (cm)')
+``
+
+```
+
+|                     Pros             |             Cons                     |
+|--------------------------------------|--------------------------------------|
+| Simple and intuitive | $k$ needs to be specified *a priori* |
+| Computationally inexpensive/fast | Only applicable for continuous data where a mean is defined|
+|  | No guarantee of a global optimum solution |
+
+## Agglomerative hiearchical clustering
+
+In agglomerative hierarchical clustering small clusters are iteratively merged into larger ones. The clustering strategy is as follows:
+
+1. Assign each datum as its own cluster.
+
+2. Compute the distance between each cluster. 
+
+3. Merge the closest pair into a single cluster. 
+
+4. Repeat steps 2 to 3 until all clusters are merged together.
+
+Step 3 is *key*, the distance metric and *linkage* function dictate the final result.
+The *linkage* function specifies how the inter-cluster distance is computed. There are various methods:
+
+* **Centroid**: mean of data points (same as in $k$-means).
+```{r, echo=FALSE, out.width='300px'}
+knitr::include_graphics(file.path(IMG, "02-centroid.png"))
+```
+
+* **Single**: distance between closest pair of points.
+```{r, echo=FALSE, out.width='300px'}
+knitr::include_graphics(file.path(IMG, "02-single.png"))
+```
+
+* **Complete**: distance between furthest pair of points.
+```{r, echo=FALSE, out.width='300px'}
+knitr::include_graphics(file.path(IMG, "02-complete.png"))
+```
+
+* **Average**: mean pairwise distance between all points.
+```{r, echo=FALSE, out.width='300px'}
+knitr::include_graphics(file.path(IMG, "02-average.png"))
+```
+
+The distance can be computed using any [similarity measure](#sec:similarity) introduced previously.
+
+```{multCode, titles=c('R', 'Python')}
+
+``{r, fig.height=6, fig.width=9}
+# Compute distance matrix
+d <- dist(x=iris[, c(1, 4)], method='euclidean') 
+
+# Perform agglomerative hierarchical clustering
+# Use 'average' link function
+mdl <- hclust(d=d, method='average')
+
+# Plot resultant dendrogram
+plot(mdl, cex=0.6)
+``
+
+####
+
+``{python, results='hide', fig.height=6, fig.width=9}
+from scipy.spatial.distance import pdist
+from scipy.cluster.hierarchy import linkage, dendrogram
+
+# Compute distance matrix
+d = pdist(X=iris.data[:, [0, 3]], metric="euclidean")
+
+# Perform agglomerative hierarchical clustering
+# Use 'average' link function
+mdl = linkage(d, method='average')
+
+# Plot resultant dendrogram
+plt.figure(figsize=(9,6))
+dendrogram(mdl)
+plt.show()
+
+``
+
+```
+
+The number at the end of each branch corresponds to that observation row number.
+
+|                     Pros             |             Cons                     |
+|--------------------------------------|--------------------------------------|
+| No need to specify $k$ | Can be computationally expensive |
+| Sub-groups within larger clusters can be easily identified | Interpretation is subjective. Where should we draw the line?|
+| Dendrograms let us visualise results irrespective of number of features | Choice of distance method and linkage function can significantly change the result |
+
+## Gaussian mixture model (GMM)
+
+The GMM is a simple but powerful model that performs clustering via density estimation. 
+The feature's histogram is modelled as the sum of multiple Gaussian distributions. 
+Suppose we only had access to one feature, a GMM with $k=2$ would look something like this:
+
+```{r, echo=FALSE, out.width='600px'}
+knitr::include_graphics(file.path(IMG, "02-GMM.png"))
+```
+
+The blue dashed lines represent the two individual univariate Gaussians, whilst the black line 
+depicts the combined model. We can extend this to more features by using multivariate Gaussians.
+Mathematically this can be expressed as follows:
+
+$$
+p(x) = \sum_{i=1}^k \pi_i \mathcal{N}(x|\mu_i, \Sigma_i)\\
+\sum_{i=1}^k \pi_i = 1
+$$
+The Expectation-Maximisation (EM) algorithm is used to estimate the parameters $\pi_i$ (known as mixing coefficients), 
+$\mu_i$ and $\Sigma_i$. 
+
+```{multCode, titles=c('R', 'Python')}
+
+``{r, fig.height=6, fig.width=6}
+library(mclust)
+
+# Fit Gaussian Mixture Model
+k <- 3 # no. of clusters
+mdl <- Mclust(data=iris[, c(4, 1)], G=3)
+
+# Plot results
+plot(mdl, what='classification',
+     xlab='Petal width (cm)', 
+     ylab='Sepal length (cm)')
+``
+
+####
+
+``{python, results='hide', fig.height=6, fig.width=6}
+import numpy as np
+from matplotlib.colors import LogNorm
+from sklearn.mixture import GaussianMixture as GMM
+
+# Fit Gaussian Mixture Model
+k = 3 # no. of clusters
+mdl = GMM(n_components=3)
+mdl.fit(X=iris.data[:, [3, 0]])
+
+# Compute probability distribution function at each point on a gird
+x = np.linspace(np.min(iris.data[:, 3]), np.max(iris.data[:, 3]), 100)
+y = np.linspace(np.min(iris.data[:, 0]), np.max(iris.data[:, 0]), 100)
+X, Y = np.meshgrid(x, y)
+XX = np.array([X.ravel(), Y.ravel()]).T
+Z = -mdl.score_samples(XX)
+Z = Z.reshape(X.shape)
+
+# Plot results
+hPlot = plt.contour(X, Y, Z, norm=LogNorm(), 
+                 levels=np.logspace(0, 3, 10))
+plt.colorbar(hPlot, shrink=0.8, extend='both')
+plt.scatter(iris.data[:, 3], iris.data[:, 0])
+plt.xlabel('Petal width (cm)')
+plt.ylabel('Sepal length (cm)')
+``
+
+```
+
+|                     Pros             |             Cons                     |
+|--------------------------------------|--------------------------------------|
+| Intuitive interpretation | $k$ needs to be specified *a priori* |
+| Computationally inexpensive | Strong assumption on the distribution of the feature space (multivariate Gaussian)|
+|  | No guarantee of a global optimum solution |
+|  | Fails when number of features is much greater than observations|
+
+GMMs offer a "soft" clustering approach, where *every* observation is part of *every* cluster but
+with varying levels of membership. 
+
+## Determining the correct number of clusters
+
+One of the biggest questions when it comes to clustering is "How many clusters do I have?".
+The number of clusters $k$ cannot be determined *exactly*, because the observations are
+unlabelled, so $k$ is inherently ambiguous. Moreover, similarity is quite subjective 
+and often we cannot define a clear cut-off. For example, suppose 
+that as part of a public health exercise we want to cluster 
+a large group of individuals based on their health and we've measured 
+various biomarkers, like body mass index (BMI), cholesterol levels, body composition,
+resting metabolic rate, etc. Although we would be able to differentiate between
+individuals at the two extremes (i.e athelete vs couch potato), most people
+will sit somewhere on a continuum. There isn't a clear "line", that once crossed an individual
+goes from being healthy to a bit unhealthy or moderately unhealthy etc. The number
+of clusters is therefore somewhat dictated by the problem at hand and the type of questions
+we're trying to answer. 
+
+Nevertheless, there are various metrics that one can use to estimate the underlying number of clusters:
+
+* Recall that the objective of clustering is to minimise intracluster distance and 
+maximise intercluster similarity. Thus we can plot the within and between clusters sum-of-squares distances
+as a function of $k$. The suggested number of clusters is where these two plots plateau, so 5 in this 
+synthetic example.
+```{r, echo=FALSE, out.width='400px'}
+knitr::include_graphics(file.path(IMG, "02-SS.png"))
+```
+
+* Similarly, the silhouette width quantifies how similar an observation is to its own cluster
+compared to other clusters. This measure ranges from -1 (not compatible with that cluster) to 1 (extremely likely to be part of that cluster).
+The suggested configuration is the one that maximises the average silhouette width, 3 in this synthetic example.
+```{r, echo=FALSE, out.width='650px'}
+knitr::include_graphics(file.path(IMG, "02-Silhouette.png"))
+```
+
+* For distribution-based methods, choosing $k$ can be framed as a model selection problem.
+So we can plot the Akaike Information Criterion (AIC), Bayesian Information Criterior (BIC)
+or other information criterion measures. The suggested number of clusters is where the plot plateaus, 
+so 5 in this synthetic example.
+```{r, echo=FALSE, out.width='400px'}
+knitr::include_graphics(file.path(IMG, "02-IC.png"))
+```
+
