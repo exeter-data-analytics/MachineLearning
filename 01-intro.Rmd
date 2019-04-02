@@ -11,7 +11,7 @@ IMG <- "_img/" # image path
 * These data sets are very challenging to analyse due to nonlinear dependencies, mixed data sources and high-dimensionality.
 * They often fail to conform to the assumptions of classical statistical methods.
 * Hand-in-hand with the rise of computational power, machine learning (ML), has matured into a field of its own, 
-to specificially extract knowledge from these data.
+to specificially extract knowledge from these challenging datasets.
 
 ## What is machine learning?
 
@@ -89,10 +89,10 @@ In this introductory workshop we will only focus on unsupervised and supervised 
 ## Statistics and Machine Learning
 
 There is substantial overlap between the fields of statistics and machine learning.
-Some high-profile academics, such as Robert Tibshirani, even argue that ML is merely
-"glorified statistics". He also provides a handy [glossary](http://statweb.stanford.edu/~tibs/stat315a/glossary.pdf).
+Some high-profile academics, such as [Robert Tibshirani](https://statweb.stanford.edu/~tibs/), even argue that ML is merely
+"glorified statistics". He even provides a handy [glossary](http://statweb.stanford.edu/~tibs/stat315a/glossary.pdf).
 
-We will not enter into a philosophical debate here, rather we focus 
+We will not engage in a philosophical debate here, rather we focus 
 on a pragmatic comparison between these two schools of thought,
 which evolved from different research areas and tackled different problems.
 
@@ -101,7 +101,7 @@ which evolved from different research areas and tackled different problems.
 | **Philosophy** | provide humans with a set of data analysis tools                | replace humans in the processing of data       |
 | **Focus**      | what is the relationship between the data and the outcome? | how can we predict the outcome using the data? |
 | **Inference**  | how was the observed data generated? what do the model parameters mean in practice?  | typically only care about predictions and not what the model parameters mean|
-| **Learning**   | use all of the observed data to perform inference at the *population-level* | use training data then use testing data to perfom *individual-level* predictions|
+| **Learning**   | use all of the observed data to perform inference at the *population-level* | use training data, then use testing data to perfom *individual-level* predictions|
 | **Validation** | measures of fit ($R^2$, chi-square test, etc.) and suitability of inferred parameters | predictive performance measures (root mean squared error (RMSE), area under the ROC cuve (AUC), etc.) computed on "unseen" data (generalisation)|
 | **Model selection**  | adjusted measures of fit (adjusted $R^2$, $C_p$ statistic, Aikake information criterion, etc.) | Cross-validation and out-of-bag errors|
 
@@ -109,7 +109,9 @@ The line between ML and statistics is blurry at best. Personally, I do not find 
 between the two fields to be healthy. Both fields complement each other and as the late Leo Breiman puts it:
 
 > The best solution could be an algorithmic model (machine learning), or maybe a data model, 
-or maybe a combination. But the trick to being a scientist is to be open to using a wide variety of tools. - *Leo Breiman*
+or maybe a combination. But the trick to being a scientist is to be open to using a wide variety of tools.
+>
+> --- Leo Breiman
 
 ## Terminology
 

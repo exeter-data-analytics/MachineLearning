@@ -35,8 +35,8 @@ knitr::opts_chunk$set(echo=TRUE, comment=NA)
 
 An introductory workshop on the field of machine learning. The focus will be on how to use these methods
 in practice using R and Python, rather than on the rigorous underlying mathematics. The target audience
-is anyone who wants to know what machine learning is, what problems it can solve and how we solve them
-in practice using R and Python.
+is anyone who wants to know what machine learning is, what problems it can solve and how we can solve them
+in practice using R or Python.
 
 ## Prerequisites {-}
 
@@ -67,4 +67,4 @@ I highly recommend the following books:
 
 ## Data files {-}
 
-All data files can be downloaded as a ZIP file from [here](https://exeter-data-analytics.github.io/StatModelling/dataFiles.zip).
+All data files can be downloaded as a ZIP file from [here](https://exeter-data-analytics.github.io/MachineLearning/data.zip).
