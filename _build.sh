@@ -6,3 +6,4 @@ Rscript -e "bookdown::render_book('index.Rmd', 'bookdown::gitbook')"
 cp .nojekyll _site/ 
 zip -r data.zip _data 
 cp -r data.zip _site/
+cp -r slides.zip _site/
