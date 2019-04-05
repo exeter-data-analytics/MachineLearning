@@ -670,9 +670,9 @@ for (linkMethod in linkMethods) {
 ``{python, results='hide', fig.height=6, fig.width=6}
 linkMethods = ['single', 'complete', 'average']
 distMethod = 'euclidean'
-distance = pdist(X=xTrain, metric=distMethod )
+distance = pdist(X=xTrain.T, metric=distMethod )
 for linkMethod in linkMethods:
-    mdl = linkage(d, method=linkMethod)
+    mdl = linkage(distance, method=linkMethod)
     plt.figure(num=linkMethod, figsize=(9,6))
     dendrogram(mdl)
     plt.title('{0} distance and {1} link function'.format(distMethod, linkMethod))
@@ -705,8 +705,8 @@ for (distMethod in distMethods) {
 linkMethod = 'average'
 distMethods = ['euclidean', 'cityblock', 'canberra']
 for distMethod in distMethods:
-    distance = pdist(X=xTrain, metric=distMethod )
-    mdl = linkage(d, method=linkMethod)
+    distance = pdist(X=xTrain.T, metric=distMethod )
+    mdl = linkage(distance, method=linkMethod)
     plt.figure(num=distMethod, figsize=(9,6))
     dendrogram(mdl)
     plt.title('{0} distance and {1} link function'.format(distMethod, linkMethod))
