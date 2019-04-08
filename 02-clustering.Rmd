@@ -380,7 +380,7 @@ Please refer to the [R](https://www.rdocumentation.org/packages/cluster/versions
 [Python](https://scikit-learn.org/stable/auto_examples/cluster/plot_kmeans_silhouette_analysis.html#sphx-glr-auto-examples-cluster-plot-kmeans-silhouette-analysis-py) documentation on how to compute and plot these metrics.
 
 ```{r, echo=FALSE, out.width='650px'}
-knitr::include_graphics(file.path(IMG, "02-Silhouette.png"))
+knitr::include_graphics(file.path(IMG, "02-silhouette.png"))
 ```
 
 * For distribution-based methods, choosing $k$ can be framed as a model selection problem.

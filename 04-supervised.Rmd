@@ -1,0 +1,434 @@
+# Supervised learning
+
+```{r, echo=FALSE}
+IMG <- "_img/" # image path
+```
+
+## Motivation
+
+```{r, echo=FALSE, out.width='750px'}
+knitr::include_graphics(file.path(IMG, "04-serengeti.png"))
+```
+
+The picture above was taken from [here](https://www.livescience.com/23310-serengeti.html)
+and depicts the great wildebeest migration from Tanzania's [Serengeti national park](https://en.wikipedia.org/wiki/Serengeti_National_Park) 
+to the south of Kenya's [Masai Mara national park](https://en.wikipedia.org/wiki/Maasai_Mara). 
+
+This migration is of great ecological importance. Conservation biologists are
+particularly interested in estimating the population of wildebeest and observe how it 
+changes over time. This is typically done through aerial surveys. The result
+is several thousands of images that an expert need to count manually.
+This process is of course painstakingly slow and prone to human error. Instead we can segment
+each image and train a machine learning (ML) algorithm to identify different classes
+(see [here](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0156342)
+and [here](https://www.sciencedirect.com/science/article/pii/S0003347216303360)).
+
+```{r, echo=FALSE, out.width='400px'}
+knitr::include_graphics(file.path(IMG, "04-UAV.png"))
+```
+
+The graph below shows carbon dioxide concentration (CO$_2$) over time
+measured at the [Mauna Loa observatory](https://www.esrl.noaa.gov/gmd/obop/mlo/) in Hawaii. 
+The data exhibits seasonal oscillations, together with an increasing trend. 
+Such complex behaviour cannot be captured with classical linear models. 
+Instead supervised learning methods (e.g [Gaussian Processes](https://scikit-learn.org/stable/auto_examples/gaussian_process/plot_gpr_co2.html)) 
+can be used to learn this complex time-series in order to perform predictions
+to inform climate change policies, for example.
+
+```{r, echo=FALSE, out.width='750px'}
+knitr::include_graphics(file.path(IMG, "01-regression.png"))
+```
+
+## What is supervised learning?
+
+```{r, echo=FALSE, out.width='600px'}
+knitr::include_graphics(file.path(IMG, "01-birdview.png"))
+```
+
+Akin to traditional statistical models (e.g. generalised linear models (GLMs)), 
+supervised learning methods determine 
+the mapping (**predictive model**) between a set of features and a continuous outcome (**regression**), 
+or a categorical variable (**classification**).
+
+The observed data is split into a training set, which is used to build the predictive model, 
+whilst the testing data set (not used in model building) is used to compute the expected 
+predictive performance "in the field". 
+In statistics, this is similar to making inferences about the population based on a finite and random sample.
+
+## What problems can supervised learning solve?
+
+* **Medical imaging**: identifying a tumour as being benign or cancerous.
+
+* **Gene expression**: determining a patient's phenotype based on their gene expression "signature".
+
+* **Computer vision**: detecting and tracking a moving object.
+
+* **Biogeography**: predicting land cover usage using remote sensing imagery.
+
+* **Speech recognition**: translating audio signals into written text.
+
+* **Biometric authentication**: identifying a person using their fingerprint.
+
+* **Epidemiology**: predicting the likelihood of an individual to develop a particular disease, given a number of risk factors.   
+
+* ... and much more!
+
+## Cross-validation
+
+ML algorithms can deal with nonlinearities and complex interactions amongst 
+variables because the models are flexible enough to fit the data 
+(as opposed to rigid linear regression models, for example). However, this flexibility needs 
+to be constrained to avoid fitting to noise (**overfitting**). 
+This is achieved by **tuning** the model's hyperparameters.
+
+**Hyperparameters** are parameters that are not directly learnt by the machine learning algorithm,
+but affect its structure.
+For example, consider a simple polynomial regression model:
+
+$$
+y = \beta_0 + \beta_1x + \beta_2x^2 + \ldots + \beta_px^p
+$$
+The $\beta$'s are the model parameters that are inferred/learnt from the data. 
+The degree of the polynomial $p$, however, is a *hyperparameter*
+that dictates the complexity of the model. 
+Hyperparameters are tuned by cross-validation to strike a balance between 
+underfitting and overfitting, known as the bias-variance trade-off (Fig. \@ref(fig:overfitting)a). 
+
+Hyperparameter tuning is essentially a form of **model selection**.
+Compared to statistical modelling, information criterions and $p$-values
+are replaced by predictive performance measures. Note that in the statistics
+literature, model selection tends to encompass every aspect of choosing
+the final model (i.e model structure and which variables and interaction terms to keep).
+In ML, *model* selection (the structure of the model) and 
+*feature* selection (which covariates to keep in the model) 
+tend to be treated separately.
+Nevertheless, typically, both require some form of cross-validation.
+
+```{r overfitting, echo=FALSE, out.width='700px', fig.cap='Cross-validation'}
+knitr::include_graphics(file.path(IMG, "04-overfitting.png"))
+```
+
+In $k$-fold cross-validation the training data are randomly split into $k$ parts. 
+The model is trained on all but one of the folds, and performance is measured on 
+the part left out in the training process (Fig. \@ref(fig:overfitting)b). 
+The average prediction error is computed from the $k$ 
+runs and the hyperparameters that minimise this error are used to build the final model (Fig. \@ref(fig:overfitting)c).
+To make cross-validation insensitive to a single random partitioning of the data,
+**repeated cross-validation** is typically performed, where 
+cross-validation is repeated on several random splits of the data.
+
+Here, we present a few popular supervised learning methods, focusing
+on classification problems (although most methods can tackle regression too).
+A rather exhaustive list of ML algorithms can be found in the [`caret`](http://topepo.github.io/caret/train-models-by-tag.html#accepts-case-weights) 
+package, for R users, and the [`scikit-learn`](https://scikit-learn.org/stable/) package, for Python users.
+
+**I strongly recommend reading the user guide of these packages to familiarise yourself with their interface. Once you choose a particular ML algorithm, make sure to familiarise yourself with its tuning parameters.**
+
+## $k$-nearest neighbour ($k$NN)
+
+Arguably the simplest model available and typically used as a baseline
+to benchmark other ML algorithms. The rationale behind $k$NN is simple;
+the class label for a particular test point is the majority vote
+of the surrounding training data:
+
+1. Compute the distance between test point and every training data point.
+
+2. Find the $k$ training points closest to the test point.
+
+3. Assign test point the majority vote of their class label.
+
+```{multCode, titles=c('R', 'Python')}
+
+``{r, warning=FALSE, message=FALSE, fig.height=6, fig.width=6}
+library(caret)
+
+# Split test/train
+set.seed(103) # for reproducibility
+ii <- createDataPartition(iris[, 5], p=.7, list=F) ## returns indices for train data
+xTrain <- iris[ii, 1:4]; yTrain <- iris[ii, 5]
+xTest <- iris[-ii, 1:4]; yTest <- iris[-ii, 5]
+dim(xTrain)
+dim(xTest)
+
+# Set training options
+# Repeat 5-fold cross-validation, ten times
+opts <- trainControl(method='repeatedcv', number=5, repeats=10, p=0.7)
+
+# Find optimal k (model)
+set.seed(1040) # for reproducibility
+mdl <- train(x=xTrain, y=yTrain,            # training data 
+             method='knn',                  # machine learning model
+             trControl=opts,                # training options
+             tuneGrid=data.frame(k=seq(2, 15))) # range of k's to try
+print(mdl)
+
+# Test model on testing data
+yTestPred <- predict(mdl, newdata=xTest)
+confusionMatrix(yTestPred, yTest) # predicted/true
+``
+
+####
+
+``{python}
+from sklearn.model_selection import train_test_split
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.model_selection import RepeatedKFold, GridSearchCV
+from sklearn.metrics import confusion_matrix
+
+# Split test/train
+xTrain, xTest, yTrain, yTest = train_test_split(iris.data, iris.target, 
+                                                train_size=0.7, random_state=103)
+print(xTrain.shape)
+print(xTest.shape)
+
+cv = RepeatedKFold(n_splits=5, n_repeats=10, random_state=1040) # Repeat 5-fold cross-validation, ten times
+mdl = GridSearchCV(estimator=KNeighborsClassifier(), 
+                 param_grid={'n_neighbors': range(2, 16)}, cv=cv) # Set search grid for k
+
+# Find optimal k (model)
+mdl.fit(X=xTrain, y=yTrain)
+print(mdl.best_estimator_)
+
+yTestPred = mdl.predict(xTest) # evaluate performance on test data
+print(confusion_matrix(yTest, yTestPred)) # true/predicted
+``
+
+```
+
+|                     Pros             |             Cons                     |
+|--------------------------------------|--------------------------------------|
+| Simple and intuitive | Can be computationally expensive, as for every test point, distance to *every* training data point needs to be computed |
+| Works for multi-class problems | Takes up a lot of storage as *all* training points need to be retained|
+| Non-linear decision boundaries | |
+
+## Decision trees
+
+Decision trees are simple and intuitive predictive models, 
+making them a popular choice when decision rules are required, 
+for example in [medicine](https://link.springer.com/article/10.1023/A:1016409317640). 
+A decision tree is constructed as follows: 
+
+1. Find the yes/no rule that best splits the data with respect to *one* of the features. 
+
+2. The best split is the one that produces the most homogeneous groups; found by maximising information gain/lowering entropy.
+
+3. Repeat steps 1 to 2 until all data are correctly classified or some stopping rule reached.
+
+```{multCode, titles=c('R', 'Python')}
+
+``{r, warning=FALSE, message=FALSE, fig.height=6, fig.width=12}
+library(C50) # https://topepo.github.io/C5.0/
+
+# Fit and plot model
+mdl <- C5.0(x=xTrain, y=yTrain)
+plot(mdl)
+
+# Test model on testing data
+yTestPred <- predict(mdl, newdata=xTest)
+confusionMatrix(yTestPred, yTest) # predicted/true
+``
+
+####
+
+``{python}
+from sklearn import tree
+import graphviz
+
+# Fit model
+mdl = tree.DecisionTreeClassifier()
+mdl.fit(X=xTrain, y=yTrain)
+
+# Plot model using graphviz
+mdlStr = tree.export_graphviz(mdl, out_file=None,
+                              feature_names=iris.feature_names, 
+                              class_names=iris.target_names,
+                              filled=True, rounded=True,
+                              special_characters=True) # export model as a string
+graph = graphviz.Source(mdlStr) 
+graph.render('iris_tree') # save tree as a pdf
+
+yTestPred = mdl.predict(xTest) # evaluate performance on test data
+print(confusion_matrix(yTest, yTestPred)) # true/predicted
+``
+
+```
+
+|                     Pros             |             Cons                     |
+|--------------------------------------|--------------------------------------|
+| Model is very easy to explain to non-experts and can be directly used to generate rules | Can easily overfit the data |
+| Computationaly inexpensive to train, evaluate and store | Predictive accuracy can be poor |
+| Handle both categorical and continuous data | Small changes to training data may lead to a completely different tree |
+| Robust to outliers | |
+
+## Random forests
+
+[Random forests](https://link.springer.com/article/10.1023/A:1010933404324) is an ensemble method 
+developed to mitigate the problem of overfitting in decision trees. 
+Instead of a single tree, multiple decision trees are grown and averaged over as follows 
+(each tree is known as a *weak* learner):
+
+1. Grow $T$ decorrelated trees (no pruning).
+
+2. Induce randomness by: 
+    * Bagging (bootstrap aggregating), where each tree is trained on a subset of the data randomly sampled with replacement.
+    * Considering only a subset of predictors as candidates for each split.
+
+3. Average predictions from all $T$ trees.
+
+Cross-validation is inherent in the random forests methodology as every tree is 
+trained only on a subset of the original data. This allows the computation of an 
+estimate for the generalisation error by computing the predictive performance of 
+the model on the data left out from the training process, known as the **out-of- bag (OOB) error**. 
+The OOB data are also used to compute an estimate of the importance of every predictor, 
+which can be subsequently used for feature selection.
+
+```{multCode, titles=c('R', 'Python')}
+
+``{r, warning=FALSE, message=FALSE, fig.height=6, fig.width=6}
+# Fit Random Forest model
+# Fix ntree and mtry
+set.seed(1040) # for reproducibility
+mdl <- train(x=xTrain, y=yTrain, 
+             method='rf',
+             ntree=200,
+             tuneGrid=data.frame(mtry=2))
+print(mdl)
+
+# Test model on testing data
+yTestPred <- predict(mdl, newdata=xTest)
+confusionMatrix(yTestPred, yTest) # predicted/true
+
+# Variable importance by mean decrease in gini index
+varImp(mdl$finalModel)
+
+``
+
+####
+
+``{python}
+from sklearn.ensemble import RandomForestClassifier
+
+# Fit Random Forest model
+# Fix ntree and mtry
+mdl = RandomForestClassifier(n_estimators=200, max_features=2, random_state=1040)
+mdl.fit(X=xTrain, y=yTrain)
+
+yTestPred = mdl.predict(xTest) # evaluate performance on test data
+print(confusion_matrix(yTest, yTestPred)) # true/predicted
+
+# Variable importance by mean decrease in gini index
+print(iris.feature_names)  # print to remind us the order of features
+print(mdl.feature_importances_)
+
+``
+
+```
+
+|                     Pros             |             Cons                     |
+|--------------------------------------|--------------------------------------|
+| State-of-the-art predictive accuracy | Harder to interpret then plain decision trees |
+| Can handle thousands of both categorical and continuous predictors without variable deletion | |
+| Robust to outliers ||
+| Estimates the importance of every predictor | |
+| Out-of-bag error (unbiased estimate of test error for every tree built)||
+|Copes with unbalanced datasets by setting class weights||
+
+## Support vector machines (SVM)
+
+```{r, echo=FALSE, out.width='500px'}
+knitr::include_graphics(file.path(IMG, "04-svm.gif"))
+```
+
+All the grey lines in the GIF above do a good job at seperating the "blue" and "red" points.
+But *which* line is the "best" at seperating these two classes? 
+
+The rationale behind a **maximal margin classifier** is to find an optimal line/hyperplane that maximises
+the **margin**, that is, the distance between data points of both classes.
+This turns out to be a rather straightforward optimisation problem.
+
+```{r, echo=FALSE, out.width='500px'}
+knitr::include_graphics(file.path(IMG, "04-svmsketch.png"))
+```
+
+But what do we do if there isn't a "clean" separating line between the classes?
+
+**Support vector classifiers** (SVC) were developed that use a *soft* margin
+appraoch. The hyperplane is placed in a way that it correctly
+classifies *most* of the data points. 
+
+```{r, echo=FALSE, out.width='500px'}
+knitr::include_graphics(file.path(IMG, "04-svmsoft.png"))
+```
+
+In reality, we face even more complex data sets where 
+a hyperplane would never do a good job at separating the two classes.
+For example:
+
+```{r, echo=FALSE, out.width='500px'}
+knitr::include_graphics(file.path(IMG, "04-svmnonlinear.png"))
+```
+
+We can see that a **non-linear** boundary would do the job.
+**Support vector machines** are a generalisation of support 
+vector classifiers that make use of **kernels** to map the original
+feature set to a higher dimensional space where classes are
+linearly separable. This might sound counter-intuitive, as
+increasing the dimensionality of the problem is undesireable. 
+However, the **kernel trick** enable us to work in an *implicit*
+feature space, such that the data is never explicitly expressed
+in higher dimensions. Think about kernels as generalised 
+distance measures.
+
+The type of kernel is a hyperparameter that we can infer using
+cross-validation. However, in [caret](http://topepo.github.io/caret/train-models-by-tag.html#support-vector-machines),
+each kernel is defined as a separate model, and thus the cross-validation
+loop need to be written manually rather than relying on the [trainControl](https://www.rdocumentation.org/packages/caret/versions/6.0-82/topics/trainControl) function.
+This is not a problem in [`scikit-learn`](https://scikit-learn.org/stable/modules/generated/sklearn.svm.SVC.html#sklearn.svm.SVC) where SVMs are implemented as a generic function that takes `kernel` as an input.
+
+```{multCode, titles=c('R', 'Python')}
+
+``{r, warning=FALSE, message=FALSE, fig.height=6, fig.width=6}
+# Set training options
+# Repeat 5-fold cross-validation, ten times
+opts <- trainControl(method='repeatedcv', number=5, repeats=10, p=0.7)
+
+# Fit SVM
+set.seed(1040) # for reproducibility
+mdl <- train(x=xTrain, y=yTrain,            # training data 
+             method='svmLinear',            # machine learning model
+             trControl=opts,                # training options
+             tuneGrid=data.frame(C=c(0.01, 1, 10, 100, 1000))) # range of C's to try
+print(mdl)
+
+# Test model on testing data
+yTestPred <- predict(mdl, newdata=xTest)
+confusionMatrix(yTestPred, yTest) # predicted/true
+``
+
+####
+
+``{python}
+from sklearn.svm import SVC
+
+cv = RepeatedKFold(n_splits=5, n_repeats=10, random_state=1040) # Repeat 5-fold cross-validation, ten times
+paramGrid = [{'kernel': ['rbf'], 'gamma': [1e-3, 1e-4], 'C': [1, 10, 100, 1000]},
+             {'kernel': ['linear'], 'C': [1, 10, 100, 1000]}] # set hyperprameter search grid
+mdl = GridSearchCV(estimator=SVC(), param_grid=paramGrid, cv=cv)
+
+# Fit SVM
+mdl.fit(X=xTrain, y=yTrain)
+print(mdl.best_estimator_)
+
+yTestPred = mdl.predict(xTest) # evaluate performance on test data
+print(confusion_matrix(yTest, yTestPred)) # true/predicted
+``
+
+```
+
+
+|                     Pros             |             Cons                     |
+|--------------------------------------|--------------------------------------|
+| State-of-the-art predictive accuracy | Model is hard to interpret |
+| Low storage requirements (only the support vectors need to be stored) | Feature space cannot be visualised |
+| A vast array of kernels are available that are flexible enough to cater for any type of data | |
+| Global optimum guaranteed| |
