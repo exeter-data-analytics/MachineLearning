@@ -117,7 +117,23 @@ To make cross-validation insensitive to a single random partitioning of the data
 **repeated cross-validation** is typically performed, where 
 cross-validation is repeated on several random splits of the data.
 
-Here, we present a few popular supervised learning methods, focusing
+## Predictive performance measures
+
+In order to perform cross-validation, specifically to compare models with different
+hyperparameters, we need to **evaluate** how good a model is.
+There are several [predictive performance measures](https://www.cambridge.org/core/books/evaluating-learning-algorithms/3CB22D16AB609D1770C24CA2CB5A11BF)
+available in the literature that we can use to this end.
+Some of the more popular ones are:
+
+* **Regression**: root mean squared error (RMSE), R-squared
+* **Classification**: area uder the receiver operating characteristic (ROC) curve, confusion matrix
+
+```{r, echo=FALSE, out.width='400px'}
+knitr::include_graphics(file.path(IMG, "04-binaryclassifier.png"))
+knitr::include_graphics(file.path(IMG, "04-confusionmatrix.png"))
+```
+
+Next, we present a few popular supervised learning methods, focusing
 on classification problems (although most methods can tackle regression too).
 A rather exhaustive list of ML algorithms can be found in the [`caret`](http://topepo.github.io/caret/train-models-by-tag.html#accepts-case-weights) 
 package, for R users, and the [`scikit-learn`](https://scikit-learn.org/stable/) package, for Python users.
@@ -200,6 +216,7 @@ print(confusion_matrix(yTest, yTestPred)) # true/predicted
 | Simple and intuitive | Can be computationally expensive, as for every test point, distance to *every* training data point needs to be computed |
 | Works for multi-class problems | Takes up a lot of storage as *all* training points need to be retained|
 | Non-linear decision boundaries | |
+| $k$ easily tuned by cross-validation ||
 
 ## Decision trees
 
@@ -257,8 +274,8 @@ print(confusion_matrix(yTest, yTestPred)) # true/predicted
 |--------------------------------------|--------------------------------------|
 | Model is very easy to explain to non-experts and can be directly used to generate rules | Can easily overfit the data |
 | Computationaly inexpensive to train, evaluate and store | Predictive accuracy can be poor |
-| Handle both categorical and continuous data | Small changes to training data may lead to a completely different tree |
-| Robust to outliers | |
+| Handle both categorical and continuous data |  Linear decision boundaries |
+| Robust to outliers | Small changes to training data may lead to a completely different tree |
 
 ## Random forests
 
@@ -332,6 +349,7 @@ print(mdl.feature_importances_)
 | Estimates the importance of every predictor | |
 | Out-of-bag error (unbiased estimate of test error for every tree built)||
 |Copes with unbalanced datasets by setting class weights||
+| Trivially parallelisable | |
 
 ## Support vector machines (SVM)
 
@@ -353,7 +371,7 @@ knitr::include_graphics(file.path(IMG, "04-svmsketch.png"))
 But what do we do if there isn't a "clean" separating line between the classes?
 
 **Support vector classifiers** (SVC) were developed that use a *soft* margin
-appraoch. The hyperplane is placed in a way that it correctly
+approach. The hyperplane is placed in a way that it correctly
 classifies *most* of the data points. 
 
 ```{r, echo=FALSE, out.width='500px'}
@@ -384,6 +402,10 @@ cross-validation. However, in [caret](http://topepo.github.io/caret/train-models
 each kernel is defined as a separate model, and thus the cross-validation
 loop need to be written manually rather than relying on the [trainControl](https://www.rdocumentation.org/packages/caret/versions/6.0-82/topics/trainControl) function.
 This is not a problem in [`scikit-learn`](https://scikit-learn.org/stable/modules/generated/sklearn.svm.SVC.html#sklearn.svm.SVC) where SVMs are implemented as a generic function that takes `kernel` as an input.
+
+**Note**: SVMs are inherently binary classifiers. The most common ways to deal
+with multi-class problems is by building several **one-versus-all** 
+*or* **one-versus-one** classifiers. 
 
 ```{multCode, titles=c('R', 'Python')}
 
@@ -424,7 +446,6 @@ print(confusion_matrix(yTest, yTestPred)) # true/predicted
 ``
 
 ```
-
 
 |                     Pros             |             Cons                     |
 |--------------------------------------|--------------------------------------|
