@@ -73,6 +73,10 @@ that maximise the variance of the data. Mathematically, this is the same as mini
 the sum of squared distances from data points to their projections. This is also equivalent
 to maximising the trace and determinant of the covariance matrix of the projected data.
 
+```{r, echo=FALSE, out.width='600px'}
+knitr::include_graphics(file.path(IMG, "03-pca02.png"))
+```
+
 For a data matrix $X \in \mathbb{R}^{n\ \mathrm{x}\ p}$, ($n$: no. observations, $p$: no. of covariates), 
 the PCAs can be derived as follows:
 

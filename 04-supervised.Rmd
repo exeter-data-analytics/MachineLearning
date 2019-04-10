@@ -1,4 +1,4 @@
-# Supervised learning
+# Supervised Learning
 
 ```{r, echo=FALSE}
 IMG <- "_img/" # image path
@@ -25,6 +25,7 @@ and [here](https://www.sciencedirect.com/science/article/pii/S0003347216303360))
 
 ```{r, echo=FALSE, out.width='400px'}
 knitr::include_graphics(file.path(IMG, "04-UAV.png"))
+knitr::include_graphics(file.path(IMG, "tsne_hog.png"))
 ```
 
 The graph below shows carbon dioxide concentration (CO$_2$) over time
@@ -453,3 +454,29 @@ print(confusion_matrix(yTest, yTestPred)) # true/predicted
 | Low storage requirements (only the support vectors need to be stored) | Feature space cannot be visualised |
 | A vast array of kernels are available that are flexible enough to cater for any type of data | |
 | Global optimum guaranteed| |
+
+## Tasks
+
+If you haven't already, download the gene expression and wine datasets from [here](https://exeter-data-analytics.github.io/MachineLearning/data.zip).
+
+### Gene expression
+
+```{task}
+* Use PCA and t-SNE to visualise the dataset (colour each observation by cancer type *and* stage)
+
+* Use any of the techniques described above (feel free to try and compare all of them) and build a binary classifier 
+to classify the B- and T-cell leukaemia patients.
+
+* Compute the predictive performance measures and visualise the results as a ROC curve
+```
+
+### Wine
+
+```{task}
+* Use PCA and t-SNE to visualise the dataset (colour each observation by wine type)
+
+* Use any of the techniques described above (feel free to try and compare all of them) and build a
+multi-label classifier to classify the three different types of wine
+
+* Compute the predictive performance measures and visualise the results as a confusion matrix
+```
