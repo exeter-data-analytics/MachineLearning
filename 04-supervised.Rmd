@@ -480,3 +480,13 @@ multi-label classifier to classify the three different types of wine
 
 * Compute the predictive performance measures and visualise the results as a confusion matrix
 ```
+
+### UCI Machine Learning Repository
+
+[The UCI repository](https://archive.ics.uci.edu/ml/datasets.php) contains a collection of
+datasets that span different fields. I encourage you to choose a handful of datasets, 
+maybe ones related to your research area, and practice further fitting machine learning models.
+If you're familiar with literate programming (if not, see TJ McKinley's [course](https://exeter-data-analytics.github.io/LitProg/) or 
+[Jupyter](https://jupyter.org/) for Python users), I suggest you document
+every operation performed on the dataset: cleaning, normalisation/standardisation, 
+visualisation, feature extraction, model fitting and model evaluation.
