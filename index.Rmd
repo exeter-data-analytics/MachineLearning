@@ -21,19 +21,19 @@ link-citations: yes
 description: "Introduction to Machine Learning"
 ---
 
-*This course is based on original material by JJ Valetta*
-
 # Preface {-}
 
 ```{r setup, include=FALSE}
 # Setup Python environment
 library(reticulate)
-use_python('/Applications/anaconda/bin/python')
+use_python('anaconda3/bin/python3.7')
 knitr::opts_chunk$set(echo=TRUE, comment=NA)
 ```
 
 ```{r, child="_setup.Rmd", include=F, purl=F, cache=F}
 ```
+
+*This course is based on original material by JJ Valetta from Easter 2019*
 
 An introductory workshop on the field of machine learning. The focus will be on how to use these methods
 in practice using R and Python, rather than on the rigorous underlying mathematics. The target audience
