@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>3 Dimensionality Reduction | Introduction to Machine Learning</title>
+  <meta name="description" content="3 Dimensionality Reduction | Introduction to Machine Learning" />
+  <meta name="generator" content="bookdown 0.18 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="3 Dimensionality Reduction | Introduction to Machine Learning" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="3 Dimensionality Reduction | Introduction to Machine Learning" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="3 Dimensionality Reduction | Introduction to Machine Learning" />
+  
+  <meta name="twitter:description" content="3 Dimensionality Reduction | Introduction to Machine Learning" />
+  
+
+<meta name="author" content="Chris Yeomans and Jiangjiao Xu" />
+
+
+<meta name="date" content="2020-03-26" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="clustering.html"/>
+<link rel="next" href="supervised-learning-1.html"/>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<script language="javascript"> 
+    function toggle(id) {
+        var ele = document.getElementById("toggleText" + id);
+        var text = document.getElementById("displayText" + id);
+        var buttonText = text.innerHTML.replace("Show ", "");
+        buttonText = buttonText.replace("Hide ", "");
+        if(ele.style.display == "block") {
+            ele.style.display = "none";
+            text.innerHTML = "Show " + buttonText;
+        } else {
+            ele.style.display = "block";
+            text.innerHTML = "Hide " + buttonText;
+        }
+    } 
+</script>
+
+<script language="javascript">
+    function openCode(evt, codeName, id) {
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tabcontent" + id);
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+        tablinks = document.getElementsByClassName("tablinks" + id);
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+        document.getElementById(codeName).style.display = "block";
+        evt.currentTarget.className += " active";
+    }
+</script>
+
+<script language="javascript">
+    function hide(id){
+        document.getElementById(id).style.display = "none";
+    }
+</script>
+</script>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="_style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a><ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#prerequisites"><i class="fa fa-check"></i>Prerequisites</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#learning-outcomes"><i class="fa fa-check"></i>Learning outcomes</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#recommended-reading"><i class="fa fa-check"></i>Recommended reading</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#software-packages"><i class="fa fa-check"></i>Software packages</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#data-files"><i class="fa fa-check"></i>Data files</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
+<li class="chapter" data-level="1.1" data-path="introduction.html"><a href="introduction.html#motivation"><i class="fa fa-check"></i><b>1.1</b> Motivation</a></li>
+<li class="chapter" data-level="1.2" data-path="introduction.html"><a href="introduction.html#what-is-machine-learning"><i class="fa fa-check"></i><b>1.2</b> What is machine learning?</a></li>
+<li class="chapter" data-level="1.3" data-path="introduction.html"><a href="introduction.html#what-problems-can-machine-learning-solve"><i class="fa fa-check"></i><b>1.3</b> What problems can machine learning solve?</a></li>
+<li class="chapter" data-level="1.4" data-path="introduction.html"><a href="introduction.html#types-of-machine-learning-methods"><i class="fa fa-check"></i><b>1.4</b> Types of machine learning methods</a><ul>
+<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#unsupervised-learning"><i class="fa fa-check"></i>Unsupervised learning</a></li>
+<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#supervised-learning"><i class="fa fa-check"></i>Supervised learning</a></li>
+<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#semi-supervised-learning"><i class="fa fa-check"></i>Semi-supervised learning</a></li>
+<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#reinforcement-learning"><i class="fa fa-check"></i>Reinforcement learning</a></li>
+</ul></li>
+<li class="chapter" data-level="1.5" data-path="introduction.html"><a href="introduction.html#statistics-and-machine-learning"><i class="fa fa-check"></i><b>1.5</b> Statistics and Machine Learning</a></li>
+<li class="chapter" data-level="1.6" data-path="introduction.html"><a href="introduction.html#terminology"><i class="fa fa-check"></i><b>1.6</b> Terminology</a></li>
+<li class="chapter" data-level="1.7" data-path="introduction.html"><a href="introduction.html#a-birds-eye-view-of-building-machine-learning-systems"><i class="fa fa-check"></i><b>1.7</b> A bird’s-eye view of building machine learning systems</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="clustering.html"><a href="clustering.html"><i class="fa fa-check"></i><b>2</b> Clustering</a><ul>
+<li class="chapter" data-level="2.1" data-path="clustering.html"><a href="clustering.html#motivation-1"><i class="fa fa-check"></i><b>2.1</b> Motivation</a></li>
+<li class="chapter" data-level="2.2" data-path="clustering.html"><a href="clustering.html#what-is-clustering"><i class="fa fa-check"></i><b>2.2</b> What is clustering?</a></li>
+<li class="chapter" data-level="2.3" data-path="clustering.html"><a href="clustering.html#what-problems-can-clustering-solve"><i class="fa fa-check"></i><b>2.3</b> What problems can clustering solve?</a></li>
+<li class="chapter" data-level="2.4" data-path="clustering.html"><a href="clustering.html#types-of-clustering-methods"><i class="fa fa-check"></i><b>2.4</b> Types of clustering methods</a></li>
+<li class="chapter" data-level="2.5" data-path="clustering.html"><a href="clustering.html#sec:similarity"><i class="fa fa-check"></i><b>2.5</b> Similarity measures</a></li>
+<li class="chapter" data-level="2.6" data-path="clustering.html"><a href="clustering.html#the-iris-dataset"><i class="fa fa-check"></i><b>2.6</b> The <em>Iris</em> dataset</a></li>
+<li class="chapter" data-level="2.7" data-path="clustering.html"><a href="clustering.html#k-means"><i class="fa fa-check"></i><b>2.7</b> <span class="math inline">\(k\)</span>-means</a></li>
+<li class="chapter" data-level="2.8" data-path="clustering.html"><a href="clustering.html#agglomerative-hiearchical-clustering"><i class="fa fa-check"></i><b>2.8</b> Agglomerative hiearchical clustering</a></li>
+<li class="chapter" data-level="2.9" data-path="clustering.html"><a href="clustering.html#gaussian-mixture-model-gmm"><i class="fa fa-check"></i><b>2.9</b> Gaussian mixture model (GMM)</a></li>
+<li class="chapter" data-level="2.10" data-path="clustering.html"><a href="clustering.html#determining-the-correct-number-of-clusters"><i class="fa fa-check"></i><b>2.10</b> Determining the “correct” number of clusters</a></li>
+<li class="chapter" data-level="2.11" data-path="clustering.html"><a href="clustering.html#tasks"><i class="fa fa-check"></i><b>2.11</b> Tasks</a><ul>
+<li class="chapter" data-level="2.11.1" data-path="clustering.html"><a href="clustering.html#simulated-data"><i class="fa fa-check"></i><b>2.11.1</b> Simulated data</a></li>
+<li class="chapter" data-level="2.11.2" data-path="clustering.html"><a href="clustering.html#gene-expression"><i class="fa fa-check"></i><b>2.11.2</b> Gene expression</a></li>
+<li class="chapter" data-level="2.11.3" data-path="clustering.html"><a href="clustering.html#wine"><i class="fa fa-check"></i><b>2.11.3</b> Wine</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="dimensionality-reduction.html"><a href="dimensionality-reduction.html"><i class="fa fa-check"></i><b>3</b> Dimensionality Reduction</a><ul>
+<li class="chapter" data-level="3.1" data-path="dimensionality-reduction.html"><a href="dimensionality-reduction.html#feature-extraction"><i class="fa fa-check"></i><b>3.1</b> Feature extraction</a><ul>
+<li class="chapter" data-level="3.1.1" data-path="dimensionality-reduction.html"><a href="dimensionality-reduction.html#pca"><i class="fa fa-check"></i><b>3.1.1</b> PCA</a></li>
+<li class="chapter" data-level="3.1.2" data-path="dimensionality-reduction.html"><a href="dimensionality-reduction.html#t-sne"><i class="fa fa-check"></i><b>3.1.2</b> t-SNE</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="supervised-learning-1.html"><a href="supervised-learning-1.html"><i class="fa fa-check"></i><b>4</b> Supervised Learning</a><ul>
+<li class="chapter" data-level="4.1" data-path="supervised-learning-1.html"><a href="supervised-learning-1.html#motivation-2"><i class="fa fa-check"></i><b>4.1</b> Motivation</a></li>
+<li class="chapter" data-level="4.2" data-path="supervised-learning-1.html"><a href="supervised-learning-1.html#what-is-supervised-learning"><i class="fa fa-check"></i><b>4.2</b> What is supervised learning?</a></li>
+<li class="chapter" data-level="4.3" data-path="supervised-learning-1.html"><a href="supervised-learning-1.html#what-problems-can-supervised-learning-solve"><i class="fa fa-check"></i><b>4.3</b> What problems can supervised learning solve?</a></li>
+<li class="chapter" data-level="4.4" data-path="supervised-learning-1.html"><a href="supervised-learning-1.html#cross-validation"><i class="fa fa-check"></i><b>4.4</b> Cross-validation</a></li>
+<li class="chapter" data-level="4.5" data-path="supervised-learning-1.html"><a href="supervised-learning-1.html#predictive-performance-measures"><i class="fa fa-check"></i><b>4.5</b> Predictive performance measures</a></li>
+<li class="chapter" data-level="4.6" data-path="supervised-learning-1.html"><a href="supervised-learning-1.html#k-nearest-neighbour-knn"><i class="fa fa-check"></i><b>4.6</b> <span class="math inline">\(k\)</span>-nearest neighbour (<span class="math inline">\(k\)</span>NN)</a></li>
+<li class="chapter" data-level="4.7" data-path="supervised-learning-1.html"><a href="supervised-learning-1.html#decision-trees"><i class="fa fa-check"></i><b>4.7</b> Decision trees</a></li>
+<li class="chapter" data-level="4.8" data-path="supervised-learning-1.html"><a href="supervised-learning-1.html#random-forests"><i class="fa fa-check"></i><b>4.8</b> Random forests</a></li>
+<li class="chapter" data-level="4.9" data-path="supervised-learning-1.html"><a href="supervised-learning-1.html#support-vector-machines-svm"><i class="fa fa-check"></i><b>4.9</b> Support vector machines (SVM)</a></li>
+<li class="chapter" data-level="4.10" data-path="supervised-learning-1.html"><a href="supervised-learning-1.html#tasks-1"><i class="fa fa-check"></i><b>4.10</b> Tasks</a><ul>
+<li class="chapter" data-level="4.10.1" data-path="supervised-learning-1.html"><a href="supervised-learning-1.html#gene-expression-1"><i class="fa fa-check"></i><b>4.10.1</b> Gene expression</a></li>
+<li class="chapter" data-level="4.10.2" data-path="supervised-learning-1.html"><a href="supervised-learning-1.html#wine-1"><i class="fa fa-check"></i><b>4.10.2</b> Wine</a></li>
+<li class="chapter" data-level="4.10.3" data-path="supervised-learning-1.html"><a href="supervised-learning-1.html#uci-machine-learning-repository"><i class="fa fa-check"></i><b>4.10.3</b> UCI Machine Learning Repository</a></li>
+</ul></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Introduction to Machine Learning</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="dimensionality-reduction" class="section level1">
+<h1><span class="header-section-number">3</span> Dimensionality Reduction</h1>
+<p>High-dimensional datasets are nowadays very common in science.
+Reducing the number of features per observation can provide several benefits:</p>
+<ul>
+<li><p>Elucidating the best predictors of the underlying process (plausible causal drivers under an experimental setup).</p></li>
+<li><p>Highlighting the data’s structure through visualisation.</p></li>
+<li><p>Improving the model’s predictive performance by removing uninformative features/extracting better features.</p></li>
+<li><p>Decreasing computational power.</p></li>
+</ul>
+<p>The rationale behind dimensionality reduction is straightforward:</p>
+<blockquote>
+<p>Although the data may seem high dimensional, the <strong>structure</strong> of the data can be represented by fewer features.</p>
+</blockquote>
+<p>This situation arises due to redundant features; driven by multicollinearity and/or covariates that
+are only weakly associated with the underlying process.
+Reducing the dimensionality of a problem is achieved through:</p>
+<ul>
+<li><p><strong>Feature extraction</strong>: mapping the original data to a new feature set.</p></li>
+<li><p><strong>Feature selection</strong>: selecting a subset of attributes.</p></li>
+</ul>
+<p>In the machine learning literature the term dimensionality reduction is commonly associated with
+(typically) unsupervised methods that transform high-dimensional data to a lower dimensional feature set,
+whilst feature selection is treated as part of the predictive modelling framework. This is because
+feature selection is generally performed in a supervised fashion (although some unsupervised methods
+do exist). Following this notion, feature selection will be discussed later on in the supervised learning section.</p>
+<div id="feature-extraction" class="section level2">
+<h2><span class="header-section-number">3.1</span> Feature extraction</h2>
+<p>Analogous to representing complex and multifaceted concepts, such as biological diversity or health by using a diversity index or
+body mass index (BMI), feature extraction deals with finding “good” representations of high-dimensional data sets.
+For example, should we describe an image by individual pixel intensities or by extracting higher-order structures such as edges and
+shapes? The objective is to:</p>
+<blockquote>
+<p>Construct new features from the original measured variables that accentuate the inherent patterns in the data and are non-redundant.</p>
+</blockquote>
+<p>Feature extraction is a key step in machine learning; finding representations that are directly relevant to the task at hand (e.g. discriminating between two classes) will almost always result in better predictive accuracy than employing more complex models.
+Dimensionality reduction techniques aggregate dimensions together while trying to preserve as much of the data’s structure as possible.
+That is, observations that are “close” to each other remain so in the lower-dimensional projection.</p>
+<p>Here we introduce two popular “automatic” methods, PCA and t-SNE. Note, that the alternative to “automatic” methods
+is to “hand-craft” features, also known as feature engineering.
+This relies on expert knowledge to specify a set of potentially discriminatory features.
+For example, activity trackers (e.g Fitbit, Garmin Vivosport) rely on accelerometer data (the “raw” observed data)
+to recognise the current activity (e.g sleeping, running, walking). This rather noisy accelerometer data
+cannot be used directly. Instead a sliding time window is used to compute
+several time-domain (e.g statistical attributes such as mean and variance) and
+frequency-domain (e.g min/max frequencies, band power) features.</p>
+<div id="pca" class="section level3">
+<h3><span class="header-section-number">3.1.1</span> PCA</h3>
+<p>Principal component analysis (PCA) is a <strong>linear</strong> dimensionality reduction method with widespread use.
+The new uncorrelated features (PCA 1, PCA 2,…) are <strong>weighted</strong> linear combinations of the original data:</p>
+<p><span class="math display">\[
+\text{PCA 1} = w_{11}x_1 + w_{12}x_2 + \ldots + w_{1p}x_p\\
+\text{PCA 2} = w_{21}x_1 + w_{22}x_2 + \ldots + w_{2p}x_p\\
+\vdots\\ 
+\text{PCA p} = w_{p1}x_1 + w_{p2}x_2 + \ldots + w_{pp}x_p
+\]</span>
+Where the <span class="math inline">\(x\)</span>’s are the original features and <span class="math inline">\(w\)</span>’s are the weights</p>
+<p>The weights are determined in such a way to find directions, called principal components,
+that maximise the variance of the data. Mathematically, this is the same as minimising
+the sum of squared distances from data points to their projections. This is also equivalent
+to maximising the trace and determinant of the covariance matrix of the projected data.</p>
+<p><img src="_img/03-pca02.png" width="600px" style="display: block; margin: auto;" /></p>
+<p>For a data matrix <span class="math inline">\(X \in \mathbb{R}^{n\ \mathrm{x}\ p}\)</span>, (<span class="math inline">\(n\)</span>: no. observations, <span class="math inline">\(p\)</span>: no. of covariates),
+the PCAs can be derived as follows:</p>
+<ol style="list-style-type: decimal">
+<li><p>Compute covariance matrix <span class="math inline">\(\Sigma\)</span> on the standardised data.</p></li>
+<li><p>Compute eigenvectors/eigenvalues of covariance matrix <span class="math inline">\(\Sigma = U\Lambda U^{-1}\)</span>.
+Where<span class="math inline">\(\Lambda\)</span> is a diagonal matrix of eigenvalues
+and the columns in <span class="math inline">\(U\)</span> are the eigenvectors. <a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a></p></li>
+<li><p>Sort eigenvectors by decreasing eigenvalues and choose <span class="math inline">\(k\)</span> eigenvectors with the largest eigenvalues.</p></li>
+<li><p>Use resultant <span class="math inline">\(p \times k\)</span> matrix to project <span class="math inline">\(X\)</span> onto new subspace.</p></li>
+<li><p>The variance explained by the chosen <span class="math inline">\(k\)</span>-components is <span class="math inline">\(\frac{\sum_{i=1}^k\lambda_i}{\sum_{i=1}^D\lambda_i} \times 100\%\)</span></p></li>
+</ol>
+<p>Typically the first two or three components are used to plot the data in an attempt to reveal any groupings.</p>
+<div class="tab">
+<button class="tablinksunnamed-chunk-46 active" onclick="javascript:openCode(event, 'option1unnamed-chunk-46', 'unnamed-chunk-46');">
+R
+</button>
+<button class="tablinksunnamed-chunk-46" onclick="javascript:openCode(event, 'option2unnamed-chunk-46', 'unnamed-chunk-46');">
+Python
+</button>
+</div>
+<div id="option1unnamed-chunk-46" class="tabcontentunnamed-chunk-46">
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb49-1" data-line-number="1"><span class="co"># Perform PCA and show summary</span></a>
+<a class="sourceLine" id="cb49-2" data-line-number="2">mdl &lt;-<span class="st"> </span><span class="kw">prcomp</span>(<span class="dt">x=</span>iris[<span class="op">-</span><span class="dv">5</span>]) </a>
+<a class="sourceLine" id="cb49-3" data-line-number="3"><span class="kw">summary</span>(mdl)</a></code></pre></div>
+<pre><code>Importance of components:
+                          PC1     PC2    PC3     PC4
+Standard deviation     2.0563 0.49262 0.2797 0.15439
+Proportion of Variance 0.9246 0.05307 0.0171 0.00521
+Cumulative Proportion  0.9246 0.97769 0.9948 1.00000</code></pre>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb51-1" data-line-number="1"><span class="co"># Extract variance explained</span></a>
+<a class="sourceLine" id="cb51-2" data-line-number="2">varExpl &lt;-<span class="st"> </span><span class="kw">round</span>((mdl<span class="op">$</span>sdev<span class="op">^</span><span class="dv">2</span> <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(mdl<span class="op">$</span>sdev<span class="op">^</span><span class="dv">2</span>))<span class="op">*</span><span class="dv">100</span>, <span class="dt">digits=</span><span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb51-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb51-4" data-line-number="4"><span class="co"># Visualise the first two PCs</span></a>
+<a class="sourceLine" id="cb51-5" data-line-number="5"><span class="kw">plot</span>(mdl<span class="op">$</span>x[, <span class="dv">1</span>], mdl<span class="op">$</span>x[, <span class="dv">2</span>], <span class="dt">pch=</span><span class="dv">19</span>,</a>
+<a class="sourceLine" id="cb51-6" data-line-number="6">     <span class="dt">xlab=</span><span class="kw">paste0</span>(<span class="st">&#39;PCA 1: &#39;</span>, varExpl[<span class="dv">1</span>], <span class="st">&#39;%&#39;</span>), </a>
+<a class="sourceLine" id="cb51-7" data-line-number="7">     <span class="dt">ylab=</span><span class="kw">paste0</span>(<span class="st">&#39;PCA 2: &#39;</span>, varExpl[<span class="dv">2</span>], <span class="st">&#39;%&#39;</span>))</a></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-94-1.png" style="display: block; margin: auto;" /></p>
+</div>
+<div id="option2unnamed-chunk-46" class="tabcontentunnamed-chunk-46">
+<div class="sourceCode" id="cb52"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb52-1" data-line-number="1"><span class="co"># Perform PCA</span></a>
+<a class="sourceLine" id="cb52-2" data-line-number="2"><span class="im">from</span> sklearn.decomposition <span class="im">import</span> PCA</a>
+<a class="sourceLine" id="cb52-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb52-4" data-line-number="4">mdl <span class="op">=</span> PCA(n_components<span class="op">=</span><span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb52-5" data-line-number="5">mdl.fit(X<span class="op">=</span>iris.data)</a></code></pre></div>
+<div class="sourceCode" id="cb53"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb53-1" data-line-number="1">PCs <span class="op">=</span> mdl.transform(X<span class="op">=</span>iris.data) <span class="co"># extract PCs</span></a>
+<a class="sourceLine" id="cb53-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb53-3" data-line-number="3"><span class="co"># Visualise the first two PCs</span></a>
+<a class="sourceLine" id="cb53-4" data-line-number="4">plt.figure(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">5</span>))</a>
+<a class="sourceLine" id="cb53-5" data-line-number="5">plt.scatter(PCs[:, <span class="dv">0</span>], PCs[:, <span class="dv">1</span>])</a>
+<a class="sourceLine" id="cb53-6" data-line-number="6">plt.xlabel(<span class="st">&#39;PCA 1: </span><span class="sc">{:.1f}</span><span class="st">%&#39;</span>.<span class="bu">format</span>(mdl.explained_variance_ratio_[<span class="dv">0</span>]<span class="op">*</span><span class="dv">100</span>))</a>
+<a class="sourceLine" id="cb53-7" data-line-number="7">plt.ylabel(<span class="st">&#39;PCA 2: </span><span class="sc">{:.1f}</span><span class="st">%&#39;</span>.<span class="bu">format</span>(mdl.explained_variance_ratio_[<span class="dv">1</span>]<span class="op">*</span><span class="dv">100</span>))</a>
+<a class="sourceLine" id="cb53-8" data-line-number="8">plt.show()</a></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-95-1.png" width="576" style="display: block; margin: auto;" /></p>
+</div>
+<script> javascript:hide('option2unnamed-chunk-46') </script>
+<p>Some of you might notice that the R and Python results have opposite signs.
+This is not a bug, but merely the fact that changing the sign of the components
+does not change the variance and neither their interpretion
+(see <a href="https://stats.stackexchange.com/questions/88880/does-the-sign-of-scores-or-of-loadings-in-pca-or-fa-have-a-meaning-may-i-revers">here</a> for more details).</p>
+<p><strong>Note</strong>: Even though we know that the <em>Iris</em> dataset is composed of three distinct species,
+the PCA plot is only accentuating two groups. This could be due to several reasons.
+For example, two species might be very close to each other and/or
+the linearity assumption is not satisfied.
+Recall that the objective of PCA is to maximise the variance of the data rather than
+finding clusters <em>per se</em> (see <a href="https://www.nature.com/articles/nmeth.4346.pdf">here</a> for an extended discussion).</p>
+</div>
+<div id="t-sne" class="section level3">
+<h3><span class="header-section-number">3.1.2</span> t-SNE</h3>
+<p>t-Distributed Stochastic Neighbor Embedding (t-SNE) is a <strong>non-linear</strong> dimensionality
+reduction technique. t-SNE finds a way to project the data into a lower-dimensional space/embedding such
+that the original high-dimensional clustering is preserved.
+The paper describing the algorithm is available <a href="http://www.jmlr.org/papers/volume9/vandermaaten08a/vandermaaten08a.pdf">here</a>,
+however, I recommend watching <a href="https://www.youtube.com/watch?v=RJVL80Gg3lA">this</a> accessible presentation first, given
+by the author himself. Moreover, there’s this nice <a href="https://distill.pub/2016/misread-tsne/">live demo</a>
+that explains the effect of each hyperparameter on the t-SNE output.</p>
+<div class="tab">
+<button class="tablinksunnamed-chunk-47 active" onclick="javascript:openCode(event, 'option1unnamed-chunk-47', 'unnamed-chunk-47');">
+R
+</button>
+<button class="tablinksunnamed-chunk-47" onclick="javascript:openCode(event, 'option2unnamed-chunk-47', 'unnamed-chunk-47');">
+Python
+</button>
+</div>
+<div id="option1unnamed-chunk-47" class="tabcontentunnamed-chunk-47">
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb54-1" data-line-number="1"><span class="co"># Compute t-SNE embedding</span></a>
+<a class="sourceLine" id="cb54-2" data-line-number="2"><span class="kw">library</span>(Rtsne)</a>
+<a class="sourceLine" id="cb54-3" data-line-number="3"><span class="kw">set.seed</span>(<span class="dv">103</span>) <span class="co"># to reproduce results</span></a>
+<a class="sourceLine" id="cb54-4" data-line-number="4">mdl &lt;-<span class="st"> </span><span class="kw">Rtsne</span>(<span class="dt">X=</span>iris[<span class="op">-</span><span class="dv">5</span>], <span class="dt">dims=</span><span class="dv">2</span>, <span class="dt">check_duplicates=</span><span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb54-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb54-6" data-line-number="6"><span class="co"># Visualise results</span></a>
+<a class="sourceLine" id="cb54-7" data-line-number="7"><span class="kw">plot</span>(mdl<span class="op">$</span>Y[, <span class="dv">1</span>], mdl<span class="op">$</span>Y[, <span class="dv">2</span>], <span class="dt">pch=</span><span class="dv">19</span>,</a>
+<a class="sourceLine" id="cb54-8" data-line-number="8">     <span class="dt">xlab=</span><span class="st">&#39;Embedding 1&#39;</span>, </a>
+<a class="sourceLine" id="cb54-9" data-line-number="9">     <span class="dt">ylab=</span><span class="st">&#39;Embedding 2&#39;</span>)</a></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-96-1.png" style="display: block; margin: auto;" /></p>
+</div>
+<div id="option2unnamed-chunk-47" class="tabcontentunnamed-chunk-47">
+<div class="sourceCode" id="cb55"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb55-1" data-line-number="1"><span class="co"># Compute t-SNE embedding</span></a>
+<a class="sourceLine" id="cb55-2" data-line-number="2"><span class="im">from</span> sklearn.manifold <span class="im">import</span> TSNE</a>
+<a class="sourceLine" id="cb55-3" data-line-number="3">seed(<span class="dv">103</span>) <span class="co"># to reproduce results</span></a>
+<a class="sourceLine" id="cb55-4" data-line-number="4">mdl <span class="op">=</span> TSNE(n_components<span class="op">=</span><span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb55-5" data-line-number="5">embedding <span class="op">=</span> mdl.fit_transform(X<span class="op">=</span>iris.data)</a>
+<a class="sourceLine" id="cb55-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb55-7" data-line-number="7"><span class="co"># Visualise the first two PCs</span></a>
+<a class="sourceLine" id="cb55-8" data-line-number="8">plt.figure(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">5</span>))</a>
+<a class="sourceLine" id="cb55-9" data-line-number="9">plt.scatter(embedding[:, <span class="dv">0</span>], embedding[:, <span class="dv">1</span>])</a>
+<a class="sourceLine" id="cb55-10" data-line-number="10">plt.xlabel(<span class="st">&#39;Embedding 1&#39;</span>)</a>
+<a class="sourceLine" id="cb55-11" data-line-number="11">plt.ylabel(<span class="st">&#39;Embedding 2&#39;</span>)</a>
+<a class="sourceLine" id="cb55-12" data-line-number="12">plt.show()</a></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-97-1.png" width="576" style="display: block; margin: auto;" /></p>
+</div>
+<script> javascript:hide('option2unnamed-chunk-47') </script>
+<p>Looks like t-SNE does a better job than PCA in seperating one cluster from another, and
+some might also argue that there’s some evidence for the presence of a third cluster.</p>
+<p>Let’s colour the data points by their respective species:</p>
+<div class="tab">
+<button class="tablinksunnamed-chunk-48 active" onclick="javascript:openCode(event, 'option1unnamed-chunk-48', 'unnamed-chunk-48');">
+R
+</button>
+<button class="tablinksunnamed-chunk-48" onclick="javascript:openCode(event, 'option2unnamed-chunk-48', 'unnamed-chunk-48');">
+Python
+</button>
+</div>
+<div id="option1unnamed-chunk-48" class="tabcontentunnamed-chunk-48">
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb56-1" data-line-number="1"><span class="co"># PCA + t-SNE</span></a>
+<a class="sourceLine" id="cb56-2" data-line-number="2">pca &lt;-<span class="st"> </span><span class="kw">prcomp</span>(<span class="dt">x=</span>iris[, <span class="dv">-5</span>])</a>
+<a class="sourceLine" id="cb56-3" data-line-number="3"><span class="kw">set.seed</span>(<span class="dv">103</span>) <span class="co"># to reproduce results</span></a>
+<a class="sourceLine" id="cb56-4" data-line-number="4">tsne &lt;-<span class="st"> </span><span class="kw">Rtsne</span>(<span class="dt">X=</span>iris[, <span class="dv">-5</span>], <span class="dt">dims=</span><span class="dv">2</span>, <span class="dt">check_duplicates=</span><span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb56-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb56-6" data-line-number="6"><span class="co"># Extract variance explained for PCA</span></a>
+<a class="sourceLine" id="cb56-7" data-line-number="7">varExpl &lt;-<span class="st"> </span><span class="kw">round</span>((pca<span class="op">$</span>sdev<span class="op">^</span><span class="dv">2</span> <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(pca<span class="op">$</span>sdev<span class="op">^</span><span class="dv">2</span>))<span class="op">*</span><span class="dv">100</span>, <span class="dt">digits=</span><span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb56-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb56-9" data-line-number="9"><span class="co"># Assign colour to each species</span></a>
+<a class="sourceLine" id="cb56-10" data-line-number="10"><span class="kw">library</span>(RColorBrewer)</a>
+<a class="sourceLine" id="cb56-11" data-line-number="11">k &lt;-<span class="st"> </span><span class="kw">length</span>(<span class="kw">levels</span>(iris[, <span class="dv">5</span>])) <span class="co"># no. of true underlying clusters</span></a>
+<a class="sourceLine" id="cb56-12" data-line-number="12">myCol &lt;-<span class="st"> </span><span class="kw">seq</span>(k)</a>
+<a class="sourceLine" id="cb56-13" data-line-number="13"><span class="kw">names</span>(myCol) &lt;-<span class="st"> </span><span class="kw">brewer.pal</span>(<span class="dt">n=</span>k, <span class="st">&#39;Set1&#39;</span>)</a>
+<a class="sourceLine" id="cb56-14" data-line-number="14"></a>
+<a class="sourceLine" id="cb56-15" data-line-number="15"><span class="co"># Plot results</span></a>
+<a class="sourceLine" id="cb56-16" data-line-number="16"><span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</a>
+<a class="sourceLine" id="cb56-17" data-line-number="17"><span class="co"># PCA</span></a>
+<a class="sourceLine" id="cb56-18" data-line-number="18"><span class="kw">plot</span>(pca<span class="op">$</span>x[, <span class="dv">1</span>], pca<span class="op">$</span>x[, <span class="dv">2</span>], <span class="dt">pch=</span><span class="dv">19</span>,</a>
+<a class="sourceLine" id="cb56-19" data-line-number="19">     <span class="dt">xlab=</span><span class="kw">paste0</span>(<span class="st">&#39;PCA 1: &#39;</span>, varExpl[<span class="dv">1</span>], <span class="st">&#39;%&#39;</span>),</a>
+<a class="sourceLine" id="cb56-20" data-line-number="20">     <span class="dt">ylab=</span><span class="kw">paste0</span>(<span class="st">&#39;PCA 2: &#39;</span>, varExpl[<span class="dv">2</span>], <span class="st">&#39;%&#39;</span>),</a>
+<a class="sourceLine" id="cb56-21" data-line-number="21">     <span class="dt">col=</span><span class="kw">names</span>(myCol[<span class="kw">as.numeric</span>(iris[, <span class="dv">5</span>])]),</a>
+<a class="sourceLine" id="cb56-22" data-line-number="22">     <span class="dt">main=</span><span class="st">&#39;PCA&#39;</span>)</a>
+<a class="sourceLine" id="cb56-23" data-line-number="23"><span class="kw">legend</span>(<span class="st">&quot;topright&quot;</span>, <span class="kw">levels</span>(iris[, <span class="dv">5</span>]), <span class="dt">bty=</span><span class="st">&quot;n&quot;</span>, <span class="dt">col=</span><span class="kw">names</span>(myCol), <span class="dt">pch=</span><span class="dv">19</span>)</a>
+<a class="sourceLine" id="cb56-24" data-line-number="24"><span class="co"># t-SNE</span></a>
+<a class="sourceLine" id="cb56-25" data-line-number="25"><span class="kw">plot</span>(tsne<span class="op">$</span>Y[, <span class="dv">1</span>], tsne<span class="op">$</span>Y[, <span class="dv">2</span>], <span class="dt">pch=</span><span class="dv">19</span>,</a>
+<a class="sourceLine" id="cb56-26" data-line-number="26">     <span class="dt">xlab=</span><span class="st">&#39;Embedding 1&#39;</span>,</a>
+<a class="sourceLine" id="cb56-27" data-line-number="27">     <span class="dt">ylab=</span><span class="st">&#39;Embedding 2&#39;</span>,</a>
+<a class="sourceLine" id="cb56-28" data-line-number="28">     <span class="dt">col=</span><span class="kw">names</span>(myCol[<span class="kw">as.numeric</span>(iris[, <span class="dv">5</span>])]),</a>
+<a class="sourceLine" id="cb56-29" data-line-number="29">     <span class="dt">main=</span><span class="st">&#39;t-SNE&#39;</span>)</a>
+<a class="sourceLine" id="cb56-30" data-line-number="30"><span class="kw">legend</span>(<span class="st">&quot;topright&quot;</span>, <span class="kw">levels</span>(iris[, <span class="dv">5</span>]), <span class="dt">bty=</span><span class="st">&quot;n&quot;</span>, <span class="dt">col=</span><span class="kw">names</span>(myCol), <span class="dt">pch=</span><span class="dv">19</span>)</a></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-98-1.png" style="display: block; margin: auto;" /></p>
+</div>
+<div id="option2unnamed-chunk-48" class="tabcontentunnamed-chunk-48">
+<div class="sourceCode" id="cb57"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb57-1" data-line-number="1"><span class="im">import</span> matplotlib.patches <span class="im">as</span> mpatches</a>
+<a class="sourceLine" id="cb57-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb57-3" data-line-number="3"><span class="co"># PCA + t-SNE</span></a>
+<a class="sourceLine" id="cb57-4" data-line-number="4">pca <span class="op">=</span> PCA(n_components<span class="op">=</span><span class="dv">2</span>).fit(X<span class="op">=</span>iris.data)</a>
+<a class="sourceLine" id="cb57-5" data-line-number="5">PCs <span class="op">=</span> pca.transform(X<span class="op">=</span>iris.data) <span class="co"># extract PCs</span></a>
+<a class="sourceLine" id="cb57-6" data-line-number="6">seed(<span class="dv">103</span>) <span class="co"># to reproduce results</span></a>
+<a class="sourceLine" id="cb57-7" data-line-number="7">tsne <span class="op">=</span> TSNE(n_components<span class="op">=</span><span class="dv">2</span>).fit_transform(X<span class="op">=</span>iris.data)</a>
+<a class="sourceLine" id="cb57-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb57-9" data-line-number="9"><span class="co"># Assign colour to each species</span></a>
+<a class="sourceLine" id="cb57-10" data-line-number="10"><span class="im">from</span> palettable.colorbrewer.qualitative <span class="im">import</span> Set1_3</a>
+<a class="sourceLine" id="cb57-11" data-line-number="11">colDict <span class="op">=</span> {<span class="dv">0</span>: Set1_3.hex_colors[<span class="dv">0</span>], <span class="dv">1</span>: Set1_3.hex_colors[<span class="dv">1</span>], <span class="dv">2</span>: Set1_3.hex_colors[<span class="dv">2</span>]}</a>
+<a class="sourceLine" id="cb57-12" data-line-number="12">myCol <span class="op">=</span> [colDict[i] <span class="cf">for</span> i <span class="kw">in</span> iris.target]</a>
+<a class="sourceLine" id="cb57-13" data-line-number="13"></a>
+<a class="sourceLine" id="cb57-14" data-line-number="14"><span class="co"># Plot results</span></a>
+<a class="sourceLine" id="cb57-15" data-line-number="15">hFig, hAx <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">13</span>,<span class="dv">6</span>))</a>
+<a class="sourceLine" id="cb57-16" data-line-number="16"><span class="co"># PCA</span></a>
+<a class="sourceLine" id="cb57-17" data-line-number="17">hAx[<span class="dv">0</span>].scatter(PCs[:, <span class="dv">0</span>], PCs[:, <span class="dv">1</span>], c<span class="op">=</span>myCol)</a>
+<a class="sourceLine" id="cb57-18" data-line-number="18">hAx[<span class="dv">0</span>].set_xlabel(<span class="st">&#39;PCA 1: </span><span class="sc">{:.1f}</span><span class="st">%&#39;</span>.<span class="bu">format</span>(pca.explained_variance_ratio_[<span class="dv">0</span>]<span class="op">*</span><span class="dv">100</span>))</a>
+<a class="sourceLine" id="cb57-19" data-line-number="19">hAx[<span class="dv">0</span>].set_ylabel(<span class="st">&#39;PCA 2: </span><span class="sc">{:.1f}</span><span class="st">%&#39;</span>.<span class="bu">format</span>(pca.explained_variance_ratio_[<span class="dv">1</span>]<span class="op">*</span><span class="dv">100</span>))</a>
+<a class="sourceLine" id="cb57-20" data-line-number="20">hAx[<span class="dv">0</span>].set_title(<span class="st">&#39;PCA&#39;</span>)</a>
+<a class="sourceLine" id="cb57-21" data-line-number="21">legend <span class="op">=</span> []</a>
+<a class="sourceLine" id="cb57-22" data-line-number="22"><span class="cf">for</span> i, species <span class="kw">in</span> <span class="bu">enumerate</span>(iris.target_names):</a>
+<a class="sourceLine" id="cb57-23" data-line-number="23">    legend.append(mpatches.Patch(color<span class="op">=</span>colDict[i], label<span class="op">=</span>species))</a>
+<a class="sourceLine" id="cb57-24" data-line-number="24">hAx[<span class="dv">0</span>].legend(loc<span class="op">=</span><span class="st">&#39;upper center&#39;</span>, handles<span class="op">=</span>legend)</a>
+<a class="sourceLine" id="cb57-25" data-line-number="25"><span class="co"># t-SNE</span></a>
+<a class="sourceLine" id="cb57-26" data-line-number="26">hAx[<span class="dv">1</span>].scatter(tsne[:, <span class="dv">0</span>], tsne[:, <span class="dv">1</span>], c<span class="op">=</span>myCol)</a>
+<a class="sourceLine" id="cb57-27" data-line-number="27">hAx[<span class="dv">1</span>].set_xlabel(<span class="st">&#39;Embedding 1&#39;</span>)</a>
+<a class="sourceLine" id="cb57-28" data-line-number="28">hAx[<span class="dv">1</span>].set_ylabel(<span class="st">&#39;Embedding 2&#39;</span>)</a>
+<a class="sourceLine" id="cb57-29" data-line-number="29">hAx[<span class="dv">1</span>].set_title(<span class="st">&#39;t-SNE&#39;</span>)</a>
+<a class="sourceLine" id="cb57-30" data-line-number="30">legend <span class="op">=</span> []</a>
+<a class="sourceLine" id="cb57-31" data-line-number="31"><span class="cf">for</span> i, species <span class="kw">in</span> <span class="bu">enumerate</span>(iris.target_names):</a>
+<a class="sourceLine" id="cb57-32" data-line-number="32">    legend.append(mpatches.Patch(color<span class="op">=</span>colDict[i], label<span class="op">=</span>species))</a>
+<a class="sourceLine" id="cb57-33" data-line-number="33">hAx[<span class="dv">1</span>].legend(loc<span class="op">=</span><span class="st">&#39;lower right&#39;</span>, handles<span class="op">=</span>legend)</a>
+<a class="sourceLine" id="cb57-34" data-line-number="34">plt.show()</a></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-99-1.png" width="1248" style="display: block; margin: auto;" /></p>
+</div>
+<script> javascript:hide('option2unnamed-chunk-48') </script>
+<p>Although t-SNE does a better job at seperating <em>setosa</em> from the rest
+and creates tighter clusters,
+it’s still hard to tell <em>versicolor</em> and <em>virginica</em> apart in the absence
+of their label (although these groups are better defined in the t-SNE plot).
+As discussed in the previous clustering section, this is
+a shortcoming of unsupervised learning methods, that is, we can never
+be sure about the “true” underlying number of groups.</p>
+<p>Nevertheless, these dimensionality reduction techniques are incredibly useful
+at visualising high-dimensional datasets and uncover global structure.</p>
+
+</div>
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="2">
+<li id="fn2"><p><span class="math inline">\(\Sigma\)</span> must be postive semi-definite. The singular value decomposition (SVD) is usually preferred over eigendecomposition as it’s more numerically stable<a href="dimensionality-reduction.html#fnref2" class="footnote-back">↩</a></p></li>
+</ol>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="clustering.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="supervised-learning-1.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": null,
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

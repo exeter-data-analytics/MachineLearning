@@ -1,0 +1,1098 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>4 Supervised Learning | Introduction to Machine Learning</title>
+  <meta name="description" content="4 Supervised Learning | Introduction to Machine Learning" />
+  <meta name="generator" content="bookdown 0.18 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="4 Supervised Learning | Introduction to Machine Learning" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="4 Supervised Learning | Introduction to Machine Learning" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="4 Supervised Learning | Introduction to Machine Learning" />
+  
+  <meta name="twitter:description" content="4 Supervised Learning | Introduction to Machine Learning" />
+  
+
+<meta name="author" content="Chris Yeomans and Jiangjiao Xu" />
+
+
+<meta name="date" content="2020-03-26" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="dimensionality-reduction.html"/>
+
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<script language="javascript"> 
+    function toggle(id) {
+        var ele = document.getElementById("toggleText" + id);
+        var text = document.getElementById("displayText" + id);
+        var buttonText = text.innerHTML.replace("Show ", "");
+        buttonText = buttonText.replace("Hide ", "");
+        if(ele.style.display == "block") {
+            ele.style.display = "none";
+            text.innerHTML = "Show " + buttonText;
+        } else {
+            ele.style.display = "block";
+            text.innerHTML = "Hide " + buttonText;
+        }
+    } 
+</script>
+
+<script language="javascript">
+    function openCode(evt, codeName, id) {
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tabcontent" + id);
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+        tablinks = document.getElementsByClassName("tablinks" + id);
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+        document.getElementById(codeName).style.display = "block";
+        evt.currentTarget.className += " active";
+    }
+</script>
+
+<script language="javascript">
+    function hide(id){
+        document.getElementById(id).style.display = "none";
+    }
+</script>
+</script>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="_style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a><ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#prerequisites"><i class="fa fa-check"></i>Prerequisites</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#learning-outcomes"><i class="fa fa-check"></i>Learning outcomes</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#recommended-reading"><i class="fa fa-check"></i>Recommended reading</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#software-packages"><i class="fa fa-check"></i>Software packages</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#data-files"><i class="fa fa-check"></i>Data files</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
+<li class="chapter" data-level="1.1" data-path="introduction.html"><a href="introduction.html#motivation"><i class="fa fa-check"></i><b>1.1</b> Motivation</a></li>
+<li class="chapter" data-level="1.2" data-path="introduction.html"><a href="introduction.html#what-is-machine-learning"><i class="fa fa-check"></i><b>1.2</b> What is machine learning?</a></li>
+<li class="chapter" data-level="1.3" data-path="introduction.html"><a href="introduction.html#what-problems-can-machine-learning-solve"><i class="fa fa-check"></i><b>1.3</b> What problems can machine learning solve?</a></li>
+<li class="chapter" data-level="1.4" data-path="introduction.html"><a href="introduction.html#types-of-machine-learning-methods"><i class="fa fa-check"></i><b>1.4</b> Types of machine learning methods</a><ul>
+<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#unsupervised-learning"><i class="fa fa-check"></i>Unsupervised learning</a></li>
+<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#supervised-learning"><i class="fa fa-check"></i>Supervised learning</a></li>
+<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#semi-supervised-learning"><i class="fa fa-check"></i>Semi-supervised learning</a></li>
+<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#reinforcement-learning"><i class="fa fa-check"></i>Reinforcement learning</a></li>
+</ul></li>
+<li class="chapter" data-level="1.5" data-path="introduction.html"><a href="introduction.html#statistics-and-machine-learning"><i class="fa fa-check"></i><b>1.5</b> Statistics and Machine Learning</a></li>
+<li class="chapter" data-level="1.6" data-path="introduction.html"><a href="introduction.html#terminology"><i class="fa fa-check"></i><b>1.6</b> Terminology</a></li>
+<li class="chapter" data-level="1.7" data-path="introduction.html"><a href="introduction.html#a-birds-eye-view-of-building-machine-learning-systems"><i class="fa fa-check"></i><b>1.7</b> A bird’s-eye view of building machine learning systems</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="clustering.html"><a href="clustering.html"><i class="fa fa-check"></i><b>2</b> Clustering</a><ul>
+<li class="chapter" data-level="2.1" data-path="clustering.html"><a href="clustering.html#motivation-1"><i class="fa fa-check"></i><b>2.1</b> Motivation</a></li>
+<li class="chapter" data-level="2.2" data-path="clustering.html"><a href="clustering.html#what-is-clustering"><i class="fa fa-check"></i><b>2.2</b> What is clustering?</a></li>
+<li class="chapter" data-level="2.3" data-path="clustering.html"><a href="clustering.html#what-problems-can-clustering-solve"><i class="fa fa-check"></i><b>2.3</b> What problems can clustering solve?</a></li>
+<li class="chapter" data-level="2.4" data-path="clustering.html"><a href="clustering.html#types-of-clustering-methods"><i class="fa fa-check"></i><b>2.4</b> Types of clustering methods</a></li>
+<li class="chapter" data-level="2.5" data-path="clustering.html"><a href="clustering.html#sec:similarity"><i class="fa fa-check"></i><b>2.5</b> Similarity measures</a></li>
+<li class="chapter" data-level="2.6" data-path="clustering.html"><a href="clustering.html#the-iris-dataset"><i class="fa fa-check"></i><b>2.6</b> The <em>Iris</em> dataset</a></li>
+<li class="chapter" data-level="2.7" data-path="clustering.html"><a href="clustering.html#k-means"><i class="fa fa-check"></i><b>2.7</b> <span class="math inline">\(k\)</span>-means</a></li>
+<li class="chapter" data-level="2.8" data-path="clustering.html"><a href="clustering.html#agglomerative-hiearchical-clustering"><i class="fa fa-check"></i><b>2.8</b> Agglomerative hiearchical clustering</a></li>
+<li class="chapter" data-level="2.9" data-path="clustering.html"><a href="clustering.html#gaussian-mixture-model-gmm"><i class="fa fa-check"></i><b>2.9</b> Gaussian mixture model (GMM)</a></li>
+<li class="chapter" data-level="2.10" data-path="clustering.html"><a href="clustering.html#determining-the-correct-number-of-clusters"><i class="fa fa-check"></i><b>2.10</b> Determining the “correct” number of clusters</a></li>
+<li class="chapter" data-level="2.11" data-path="clustering.html"><a href="clustering.html#tasks"><i class="fa fa-check"></i><b>2.11</b> Tasks</a><ul>
+<li class="chapter" data-level="2.11.1" data-path="clustering.html"><a href="clustering.html#simulated-data"><i class="fa fa-check"></i><b>2.11.1</b> Simulated data</a></li>
+<li class="chapter" data-level="2.11.2" data-path="clustering.html"><a href="clustering.html#gene-expression"><i class="fa fa-check"></i><b>2.11.2</b> Gene expression</a></li>
+<li class="chapter" data-level="2.11.3" data-path="clustering.html"><a href="clustering.html#wine"><i class="fa fa-check"></i><b>2.11.3</b> Wine</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="dimensionality-reduction.html"><a href="dimensionality-reduction.html"><i class="fa fa-check"></i><b>3</b> Dimensionality Reduction</a><ul>
+<li class="chapter" data-level="3.1" data-path="dimensionality-reduction.html"><a href="dimensionality-reduction.html#feature-extraction"><i class="fa fa-check"></i><b>3.1</b> Feature extraction</a><ul>
+<li class="chapter" data-level="3.1.1" data-path="dimensionality-reduction.html"><a href="dimensionality-reduction.html#pca"><i class="fa fa-check"></i><b>3.1.1</b> PCA</a></li>
+<li class="chapter" data-level="3.1.2" data-path="dimensionality-reduction.html"><a href="dimensionality-reduction.html#t-sne"><i class="fa fa-check"></i><b>3.1.2</b> t-SNE</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="supervised-learning-1.html"><a href="supervised-learning-1.html"><i class="fa fa-check"></i><b>4</b> Supervised Learning</a><ul>
+<li class="chapter" data-level="4.1" data-path="supervised-learning-1.html"><a href="supervised-learning-1.html#motivation-2"><i class="fa fa-check"></i><b>4.1</b> Motivation</a></li>
+<li class="chapter" data-level="4.2" data-path="supervised-learning-1.html"><a href="supervised-learning-1.html#what-is-supervised-learning"><i class="fa fa-check"></i><b>4.2</b> What is supervised learning?</a></li>
+<li class="chapter" data-level="4.3" data-path="supervised-learning-1.html"><a href="supervised-learning-1.html#what-problems-can-supervised-learning-solve"><i class="fa fa-check"></i><b>4.3</b> What problems can supervised learning solve?</a></li>
+<li class="chapter" data-level="4.4" data-path="supervised-learning-1.html"><a href="supervised-learning-1.html#cross-validation"><i class="fa fa-check"></i><b>4.4</b> Cross-validation</a></li>
+<li class="chapter" data-level="4.5" data-path="supervised-learning-1.html"><a href="supervised-learning-1.html#predictive-performance-measures"><i class="fa fa-check"></i><b>4.5</b> Predictive performance measures</a></li>
+<li class="chapter" data-level="4.6" data-path="supervised-learning-1.html"><a href="supervised-learning-1.html#k-nearest-neighbour-knn"><i class="fa fa-check"></i><b>4.6</b> <span class="math inline">\(k\)</span>-nearest neighbour (<span class="math inline">\(k\)</span>NN)</a></li>
+<li class="chapter" data-level="4.7" data-path="supervised-learning-1.html"><a href="supervised-learning-1.html#decision-trees"><i class="fa fa-check"></i><b>4.7</b> Decision trees</a></li>
+<li class="chapter" data-level="4.8" data-path="supervised-learning-1.html"><a href="supervised-learning-1.html#random-forests"><i class="fa fa-check"></i><b>4.8</b> Random forests</a></li>
+<li class="chapter" data-level="4.9" data-path="supervised-learning-1.html"><a href="supervised-learning-1.html#support-vector-machines-svm"><i class="fa fa-check"></i><b>4.9</b> Support vector machines (SVM)</a></li>
+<li class="chapter" data-level="4.10" data-path="supervised-learning-1.html"><a href="supervised-learning-1.html#tasks-1"><i class="fa fa-check"></i><b>4.10</b> Tasks</a><ul>
+<li class="chapter" data-level="4.10.1" data-path="supervised-learning-1.html"><a href="supervised-learning-1.html#gene-expression-1"><i class="fa fa-check"></i><b>4.10.1</b> Gene expression</a></li>
+<li class="chapter" data-level="4.10.2" data-path="supervised-learning-1.html"><a href="supervised-learning-1.html#wine-1"><i class="fa fa-check"></i><b>4.10.2</b> Wine</a></li>
+<li class="chapter" data-level="4.10.3" data-path="supervised-learning-1.html"><a href="supervised-learning-1.html#uci-machine-learning-repository"><i class="fa fa-check"></i><b>4.10.3</b> UCI Machine Learning Repository</a></li>
+</ul></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Introduction to Machine Learning</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="supervised-learning-1" class="section level1">
+<h1><span class="header-section-number">4</span> Supervised Learning</h1>
+<div id="motivation-2" class="section level2">
+<h2><span class="header-section-number">4.1</span> Motivation</h2>
+<p><img src="_img/04-serengeti.png" width="750px" style="display: block; margin: auto;" /></p>
+<p>The picture above was taken from <a href="https://www.livescience.com/23310-serengeti.html">here</a>
+and depicts the great wildebeest migration from Tanzania’s <a href="https://en.wikipedia.org/wiki/Serengeti_National_Park">Serengeti national park</a>
+to the south of Kenya’s <a href="https://en.wikipedia.org/wiki/Maasai_Mara">Masai Mara national park</a>.</p>
+<p>This migration is of great ecological importance. Conservation biologists are
+particularly interested in estimating the population of wildebeest and observe how it
+changes over time. This is typically done through aerial surveys. The result
+is several thousands of images that an expert need to count manually.
+This process is of course painstakingly slow and prone to human error. Instead we can segment
+each image and train a machine learning (ML) algorithm to identify different classes
+(see <a href="https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0156342">here</a>
+and <a href="https://www.sciencedirect.com/science/article/pii/S0003347216303360">here</a>).</p>
+<p><img src="_img/04-UAV.png" width="400px" style="display: block; margin: auto;" /></p>
+<p>The graph below shows carbon dioxide concentration (CO<span class="math inline">\(_2\)</span>) over time
+measured at the <a href="https://www.esrl.noaa.gov/gmd/obop/mlo/">Mauna Loa observatory</a> in Hawaii.
+The data exhibits seasonal oscillations, together with an increasing trend.
+Such complex behaviour cannot be captured with classical linear models.
+Instead supervised learning methods (e.g <a href="https://scikit-learn.org/stable/auto_examples/gaussian_process/plot_gpr_co2.html">Gaussian Processes</a>)
+can be used to learn this complex time-series in order to perform predictions
+to inform climate change policies, for example.</p>
+<p><img src="_img/01-regression.png" width="750px" style="display: block; margin: auto;" /></p>
+</div>
+<div id="what-is-supervised-learning" class="section level2">
+<h2><span class="header-section-number">4.2</span> What is supervised learning?</h2>
+<p><img src="_img/01-birdview.png" width="600px" style="display: block; margin: auto;" /></p>
+<p>Akin to traditional statistical models (e.g. generalised linear models (GLMs)),
+supervised learning methods determine
+the mapping (<strong>predictive model</strong>) between a set of features and a continuous outcome (<strong>regression</strong>),
+or a categorical variable (<strong>classification</strong>).</p>
+<p>The observed data is split into a training set, which is used to build the predictive model,
+whilst the testing data set (not used in model building) is used to compute the expected
+predictive performance “in the field”.
+In statistics, this is similar to making inferences about the population based on a finite and random sample.</p>
+</div>
+<div id="what-problems-can-supervised-learning-solve" class="section level2">
+<h2><span class="header-section-number">4.3</span> What problems can supervised learning solve?</h2>
+<ul>
+<li><p><strong>Medical imaging</strong>: identifying a tumour as being benign or cancerous.</p></li>
+<li><p><strong>Gene expression</strong>: determining a patient’s phenotype based on their gene expression “signature”.</p></li>
+<li><p><strong>Computer vision</strong>: detecting and tracking a moving object.</p></li>
+<li><p><strong>Biogeography</strong>: predicting land cover usage using remote sensing imagery.</p></li>
+<li><p><strong>Speech recognition</strong>: translating audio signals into written text.</p></li>
+<li><p><strong>Biometric authentication</strong>: identifying a person using their fingerprint.</p></li>
+<li><p><strong>Epidemiology</strong>: predicting the likelihood of an individual to develop a particular disease, given a number of risk factors.</p></li>
+<li><p>… and much more!</p></li>
+</ul>
+</div>
+<div id="cross-validation" class="section level2">
+<h2><span class="header-section-number">4.4</span> Cross-validation</h2>
+<p>ML algorithms can deal with nonlinearities and complex interactions amongst
+variables because the models are flexible enough to fit the data
+(as opposed to rigid linear regression models, for example). However, this flexibility needs
+to be constrained to avoid fitting to noise (<strong>overfitting</strong>).
+This is achieved by <strong>tuning</strong> the model’s hyperparameters.</p>
+<p><strong>Hyperparameters</strong> are parameters that are not directly learnt by the machine learning algorithm,
+but affect its structure.
+For example, consider a simple polynomial regression model:</p>
+<p><span class="math display">\[
+y = \beta_0 + \beta_1x + \beta_2x^2 + \ldots + \beta_px^p
+\]</span>
+The <span class="math inline">\(\beta\)</span>’s are the model parameters that are inferred/learnt from the data.
+The degree of the polynomial <span class="math inline">\(p\)</span>, however, is a <em>hyperparameter</em>
+that dictates the complexity of the model.
+Hyperparameters are tuned by cross-validation to strike a balance between
+underfitting and overfitting, known as the bias-variance trade-off (Fig. <a href="supervised-learning-1.html#fig:overfitting">4.1</a>a).</p>
+<p>Hyperparameter tuning is essentially a form of <strong>model selection</strong>.
+Compared to statistical modelling, information criterions and <span class="math inline">\(p\)</span>-values
+are replaced by predictive performance measures. Note that in the statistics
+literature, model selection tends to encompass every aspect of choosing
+the final model (i.e model structure and which variables and interaction terms to keep).
+In ML, <em>model</em> selection (the structure of the model) and
+<em>feature</em> selection (which covariates to keep in the model)
+tend to be treated separately.
+Nevertheless, typically, both require some form of cross-validation.</p>
+<div class="figure" style="text-align: center"><span id="fig:overfitting"></span>
+<img src="_img/04-overfitting.png" alt="Cross-validation" width="700px" />
+<p class="caption">
+Figure 4.1: Cross-validation
+</p>
+</div>
+<p>In <span class="math inline">\(k\)</span>-fold cross-validation the training data are randomly split into <span class="math inline">\(k\)</span> parts.
+The model is trained on all but one of the folds, and performance is measured on
+the part left out in the training process (Fig. <a href="supervised-learning-1.html#fig:overfitting">4.1</a>b).
+The average prediction error is computed from the <span class="math inline">\(k\)</span>
+runs and the hyperparameters that minimise this error are used to build the final model (Fig. <a href="supervised-learning-1.html#fig:overfitting">4.1</a>c).
+To make cross-validation insensitive to a single random partitioning of the data,
+<strong>repeated cross-validation</strong> is typically performed, where
+cross-validation is repeated on several random splits of the data.</p>
+</div>
+<div id="predictive-performance-measures" class="section level2">
+<h2><span class="header-section-number">4.5</span> Predictive performance measures</h2>
+<p>In order to perform cross-validation, specifically to compare models with different
+hyperparameters, we need to <strong>evaluate</strong> how good a model is.
+There are several <a href="https://www.cambridge.org/core/books/evaluating-learning-algorithms/3CB22D16AB609D1770C24CA2CB5A11BF">predictive performance measures</a>
+available in the literature that we can use to this end.
+Some of the more popular ones are:</p>
+<ul>
+<li><strong>Regression</strong>: root mean squared error (RMSE), R-squared</li>
+<li><strong>Classification</strong>: area uder the receiver operating characteristic (ROC) curve, confusion matrix</li>
+</ul>
+<p><img src="_img/04-binaryclassifier.png" width="400px" style="display: block; margin: auto;" /><img src="_img/04-confusionmatrix.png" width="400px" style="display: block; margin: auto;" /></p>
+<p>Next, we present a few popular supervised learning methods, focusing
+on classification problems (although most methods can tackle regression too).
+A rather exhaustive list of ML algorithms can be found in the <a href="http://topepo.github.io/caret/train-models-by-tag.html#accepts-case-weights"><code>caret</code></a>
+package, for R users, and the <a href="https://scikit-learn.org/stable/"><code>scikit-learn</code></a> package, for Python users.</p>
+<p><strong>I strongly recommend reading the user guide of these packages to familiarise yourself with their interface. Once you choose a particular ML algorithm, make sure to familiarise yourself with its tuning parameters.</strong></p>
+</div>
+<div id="k-nearest-neighbour-knn" class="section level2">
+<h2><span class="header-section-number">4.6</span> <span class="math inline">\(k\)</span>-nearest neighbour (<span class="math inline">\(k\)</span>NN)</h2>
+<p>Arguably the simplest model available and typically used as a baseline
+to benchmark other ML algorithms. The rationale behind <span class="math inline">\(k\)</span>NN is simple;
+the class label for a particular test point is the majority vote
+of the surrounding training data:</p>
+<ol style="list-style-type: decimal">
+<li><p>Compute the distance between test point and every training data point.</p></li>
+<li><p>Find the <span class="math inline">\(k\)</span> training points closest to the test point.</p></li>
+<li><p>Assign test point the majority vote of their class label.</p></li>
+</ol>
+<div class="tab">
+<button class="tablinksunnamed-chunk-55 active" onclick="javascript:openCode(event, 'option1unnamed-chunk-55', 'unnamed-chunk-55');">
+R
+</button>
+<button class="tablinksunnamed-chunk-55" onclick="javascript:openCode(event, 'option2unnamed-chunk-55', 'unnamed-chunk-55');">
+Python
+</button>
+</div>
+<div id="option1unnamed-chunk-55" class="tabcontentunnamed-chunk-55">
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb58-1" data-line-number="1"><span class="kw">library</span>(caret)</a>
+<a class="sourceLine" id="cb58-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb58-3" data-line-number="3"><span class="co"># Split test/train</span></a>
+<a class="sourceLine" id="cb58-4" data-line-number="4"><span class="kw">set.seed</span>(<span class="dv">103</span>) <span class="co"># for reproducibility</span></a>
+<a class="sourceLine" id="cb58-5" data-line-number="5">ii &lt;-<span class="st"> </span><span class="kw">createDataPartition</span>(iris[, <span class="dv">5</span>], <span class="dt">p=</span>.<span class="dv">7</span>, <span class="dt">list=</span>F) <span class="co">## returns indices for train data</span></a>
+<a class="sourceLine" id="cb58-6" data-line-number="6">xTrain &lt;-<span class="st"> </span>iris[ii, <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>]; yTrain &lt;-<span class="st"> </span>iris[ii, <span class="dv">5</span>]</a>
+<a class="sourceLine" id="cb58-7" data-line-number="7">xTest &lt;-<span class="st"> </span>iris[<span class="op">-</span>ii, <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>]; yTest &lt;-<span class="st"> </span>iris[<span class="op">-</span>ii, <span class="dv">5</span>]</a>
+<a class="sourceLine" id="cb58-8" data-line-number="8"><span class="kw">dim</span>(xTrain)</a></code></pre></div>
+<pre><code>[1] 105   4</code></pre>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb60-1" data-line-number="1"><span class="kw">dim</span>(xTest)</a></code></pre></div>
+<pre><code>[1] 45  4</code></pre>
+<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb62-1" data-line-number="1"><span class="co"># Set training options</span></a>
+<a class="sourceLine" id="cb62-2" data-line-number="2"><span class="co"># Repeat 5-fold cross-validation, ten times</span></a>
+<a class="sourceLine" id="cb62-3" data-line-number="3">opts &lt;-<span class="st"> </span><span class="kw">trainControl</span>(<span class="dt">method=</span><span class="st">&#39;repeatedcv&#39;</span>, <span class="dt">number=</span><span class="dv">5</span>, <span class="dt">repeats=</span><span class="dv">10</span>, <span class="dt">p=</span><span class="fl">0.7</span>)</a>
+<a class="sourceLine" id="cb62-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb62-5" data-line-number="5"><span class="co"># Find optimal k (model)</span></a>
+<a class="sourceLine" id="cb62-6" data-line-number="6"><span class="kw">set.seed</span>(<span class="dv">1040</span>) <span class="co"># for reproducibility</span></a>
+<a class="sourceLine" id="cb62-7" data-line-number="7">mdl &lt;-<span class="st"> </span><span class="kw">train</span>(<span class="dt">x=</span>xTrain, <span class="dt">y=</span>yTrain,            <span class="co"># training data </span></a>
+<a class="sourceLine" id="cb62-8" data-line-number="8">             <span class="dt">method=</span><span class="st">&#39;knn&#39;</span>,                  <span class="co"># machine learning model</span></a>
+<a class="sourceLine" id="cb62-9" data-line-number="9">             <span class="dt">trControl=</span>opts,                <span class="co"># training options</span></a>
+<a class="sourceLine" id="cb62-10" data-line-number="10">             <span class="dt">tuneGrid=</span><span class="kw">data.frame</span>(<span class="dt">k=</span><span class="kw">seq</span>(<span class="dv">2</span>, <span class="dv">15</span>))) <span class="co"># range of k&#39;s to try</span></a>
+<a class="sourceLine" id="cb62-11" data-line-number="11"><span class="kw">print</span>(mdl)</a></code></pre></div>
+<pre><code>k-Nearest Neighbors 
+
+105 samples
+  4 predictor
+  3 classes: &#39;setosa&#39;, &#39;versicolor&#39;, &#39;virginica&#39; 
+
+No pre-processing
+Resampling: Cross-Validated (5 fold, repeated 10 times) 
+Summary of sample sizes: 84, 84, 84, 84, 84, 84, ... 
+Resampling results across tuning parameters:
+
+  k   Accuracy   Kappa    
+   2  0.9504762  0.9257143
+   3  0.9600000  0.9400000
+   4  0.9552381  0.9328571
+   5  0.9619048  0.9428571
+   6  0.9666667  0.9500000
+   7  0.9666667  0.9500000
+   8  0.9666667  0.9500000
+   9  0.9676190  0.9514286
+  10  0.9685714  0.9528571
+  11  0.9638095  0.9457143
+  12  0.9638095  0.9457143
+  13  0.9628571  0.9442857
+  14  0.9638095  0.9457143
+  15  0.9676190  0.9514286
+
+Accuracy was used to select the optimal model using the largest value.
+The final value used for the model was k = 10.</code></pre>
+<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb64-1" data-line-number="1"><span class="co"># Test model on testing data</span></a>
+<a class="sourceLine" id="cb64-2" data-line-number="2">yTestPred &lt;-<span class="st"> </span><span class="kw">predict</span>(mdl, <span class="dt">newdata=</span>xTest)</a>
+<a class="sourceLine" id="cb64-3" data-line-number="3"><span class="kw">confusionMatrix</span>(yTestPred, yTest) <span class="co"># predicted/true</span></a></code></pre></div>
+<pre><code>Confusion Matrix and Statistics
+
+            Reference
+Prediction   setosa versicolor virginica
+  setosa         15          0         0
+  versicolor      0         14         0
+  virginica       0          1        15
+
+Overall Statistics
+                                          
+               Accuracy : 0.9778          
+                 95% CI : (0.8823, 0.9994)
+    No Information Rate : 0.3333          
+    P-Value [Acc &gt; NIR] : &lt; 2.2e-16       
+                                          
+                  Kappa : 0.9667          
+                                          
+ Mcnemar&#39;s Test P-Value : NA              
+
+Statistics by Class:
+
+                     Class: setosa Class: versicolor Class: virginica
+Sensitivity                 1.0000            0.9333           1.0000
+Specificity                 1.0000            1.0000           0.9667
+Pos Pred Value              1.0000            1.0000           0.9375
+Neg Pred Value              1.0000            0.9677           1.0000
+Prevalence                  0.3333            0.3333           0.3333
+Detection Rate              0.3333            0.3111           0.3333
+Detection Prevalence        0.3333            0.3111           0.3556
+Balanced Accuracy           1.0000            0.9667           0.9833</code></pre>
+</div>
+<div id="option2unnamed-chunk-55" class="tabcontentunnamed-chunk-55">
+<div class="sourceCode" id="cb66"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb66-1" data-line-number="1"><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</a>
+<a class="sourceLine" id="cb66-2" data-line-number="2"><span class="im">from</span> sklearn.neighbors <span class="im">import</span> KNeighborsClassifier</a>
+<a class="sourceLine" id="cb66-3" data-line-number="3"><span class="im">from</span> sklearn.model_selection <span class="im">import</span> RepeatedKFold, GridSearchCV</a>
+<a class="sourceLine" id="cb66-4" data-line-number="4"><span class="im">from</span> sklearn.metrics <span class="im">import</span> confusion_matrix</a>
+<a class="sourceLine" id="cb66-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb66-6" data-line-number="6"><span class="co"># Split test/train</span></a>
+<a class="sourceLine" id="cb66-7" data-line-number="7">xTrain, xTest, yTrain, yTest <span class="op">=</span> train_test_split(iris.data, iris.target, </a>
+<a class="sourceLine" id="cb66-8" data-line-number="8">                                                train_size<span class="op">=</span><span class="fl">0.7</span>, random_state<span class="op">=</span><span class="dv">103</span>)</a>
+<a class="sourceLine" id="cb66-9" data-line-number="9"><span class="bu">print</span>(xTrain.shape)</a></code></pre></div>
+<pre><code>(105, 4)</code></pre>
+<div class="sourceCode" id="cb68"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb68-1" data-line-number="1"><span class="bu">print</span>(xTest.shape)</a></code></pre></div>
+<pre><code>(45, 4)</code></pre>
+<div class="sourceCode" id="cb70"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb70-1" data-line-number="1">cv <span class="op">=</span> RepeatedKFold(n_splits<span class="op">=</span><span class="dv">5</span>, n_repeats<span class="op">=</span><span class="dv">10</span>, random_state<span class="op">=</span><span class="dv">1040</span>) <span class="co"># Repeat 5-fold cross-validation, ten times</span></a>
+<a class="sourceLine" id="cb70-2" data-line-number="2">mdl <span class="op">=</span> GridSearchCV(estimator<span class="op">=</span>KNeighborsClassifier(), </a>
+<a class="sourceLine" id="cb70-3" data-line-number="3">                 param_grid<span class="op">=</span>{<span class="st">&#39;n_neighbors&#39;</span>: <span class="bu">range</span>(<span class="dv">2</span>, <span class="dv">16</span>)}, cv<span class="op">=</span>cv) <span class="co"># Set search grid for k</span></a>
+<a class="sourceLine" id="cb70-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb70-5" data-line-number="5"><span class="co"># Find optimal k (model)</span></a>
+<a class="sourceLine" id="cb70-6" data-line-number="6">mdl.fit(X<span class="op">=</span>xTrain, y<span class="op">=</span>yTrain)</a></code></pre></div>
+<pre><code>GridSearchCV(cv=&lt;sklearn.model_selection._split.RepeatedKFold object at 0x1a2c99cef0&gt;,
+             error_score=&#39;raise-deprecating&#39;,
+             estimator=KNeighborsClassifier(algorithm=&#39;auto&#39;, leaf_size=30,
+                                            metric=&#39;minkowski&#39;,
+                                            metric_params=None, n_jobs=None,
+                                            n_neighbors=5, p=2,
+                                            weights=&#39;uniform&#39;),
+             iid=&#39;warn&#39;, n_jobs=None, param_grid={&#39;n_neighbors&#39;: range(2, 16)},
+             pre_dispatch=&#39;2*n_jobs&#39;, refit=True, return_train_score=False,
+             scoring=None, verbose=0)</code></pre>
+<div class="sourceCode" id="cb72"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb72-1" data-line-number="1"><span class="bu">print</span>(mdl.best_estimator_)</a></code></pre></div>
+<pre><code>KNeighborsClassifier(algorithm=&#39;auto&#39;, leaf_size=30, metric=&#39;minkowski&#39;,
+                     metric_params=None, n_jobs=None, n_neighbors=5, p=2,
+                     weights=&#39;uniform&#39;)</code></pre>
+<div class="sourceCode" id="cb74"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb74-1" data-line-number="1">yTestPred <span class="op">=</span> mdl.predict(xTest) <span class="co"># evaluate performance on test data</span></a>
+<a class="sourceLine" id="cb74-2" data-line-number="2"><span class="bu">print</span>(confusion_matrix(yTest, yTestPred)) <span class="co"># true/predicted</span></a></code></pre></div>
+<pre><code>[[14  0  0]
+ [ 0 13  0]
+ [ 0  0 18]]</code></pre>
+</div>
+<script> javascript:hide('option2unnamed-chunk-55') </script>
+<table>
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Pros</th>
+<th>Cons</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Simple and intuitive</td>
+<td>Can be computationally expensive, as for every test point, distance to <em>every</em> training data point needs to be computed</td>
+</tr>
+<tr class="even">
+<td>Works for multi-class problems</td>
+<td>Takes up a lot of storage as <em>all</em> training points need to be retained</td>
+</tr>
+<tr class="odd">
+<td>Non-linear decision boundaries</td>
+<td></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(k\)</span> easily tuned by cross-validation</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="decision-trees" class="section level2">
+<h2><span class="header-section-number">4.7</span> Decision trees</h2>
+<p>Decision trees are simple and intuitive predictive models,
+making them a popular choice when decision rules are required,
+for example in <a href="https://link.springer.com/article/10.1023/A:1016409317640">medicine</a>.
+A decision tree is constructed as follows:</p>
+<ol style="list-style-type: decimal">
+<li><p>Find the yes/no rule that best splits the data with respect to <em>one</em> of the features.</p></li>
+<li><p>The best split is the one that produces the most homogeneous groups; found by maximising information gain/lowering entropy.</p></li>
+<li><p>Repeat steps 1 to 2 until all data are correctly classified or some stopping rule reached.</p></li>
+</ol>
+<div class="tab">
+<button class="tablinksunnamed-chunk-56 active" onclick="javascript:openCode(event, 'option1unnamed-chunk-56', 'unnamed-chunk-56');">
+R
+</button>
+<button class="tablinksunnamed-chunk-56" onclick="javascript:openCode(event, 'option2unnamed-chunk-56', 'unnamed-chunk-56');">
+Python
+</button>
+</div>
+<div id="option1unnamed-chunk-56" class="tabcontentunnamed-chunk-56">
+<div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb76-1" data-line-number="1"><span class="kw">library</span>(C50) <span class="co"># https://topepo.github.io/C5.0/</span></a>
+<a class="sourceLine" id="cb76-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb76-3" data-line-number="3"><span class="co"># Fit and plot model</span></a>
+<a class="sourceLine" id="cb76-4" data-line-number="4">mdl &lt;-<span class="st"> </span><span class="kw">C5.0</span>(<span class="dt">x=</span>xTrain, <span class="dt">y=</span>yTrain)</a>
+<a class="sourceLine" id="cb76-5" data-line-number="5"><span class="kw">plot</span>(mdl)</a></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-102-1.png" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb77-1" data-line-number="1"><span class="co"># Test model on testing data</span></a>
+<a class="sourceLine" id="cb77-2" data-line-number="2">yTestPred &lt;-<span class="st"> </span><span class="kw">predict</span>(mdl, <span class="dt">newdata=</span>xTest)</a>
+<a class="sourceLine" id="cb77-3" data-line-number="3"><span class="kw">confusionMatrix</span>(yTestPred, yTest) <span class="co"># predicted/true</span></a></code></pre></div>
+<pre><code>Confusion Matrix and Statistics
+
+            Reference
+Prediction   setosa versicolor virginica
+  setosa         15          0         0
+  versicolor      0         14         0
+  virginica       0          1        15
+
+Overall Statistics
+                                          
+               Accuracy : 0.9778          
+                 95% CI : (0.8823, 0.9994)
+    No Information Rate : 0.3333          
+    P-Value [Acc &gt; NIR] : &lt; 2.2e-16       
+                                          
+                  Kappa : 0.9667          
+                                          
+ Mcnemar&#39;s Test P-Value : NA              
+
+Statistics by Class:
+
+                     Class: setosa Class: versicolor Class: virginica
+Sensitivity                 1.0000            0.9333           1.0000
+Specificity                 1.0000            1.0000           0.9667
+Pos Pred Value              1.0000            1.0000           0.9375
+Neg Pred Value              1.0000            0.9677           1.0000
+Prevalence                  0.3333            0.3333           0.3333
+Detection Rate              0.3333            0.3111           0.3333
+Detection Prevalence        0.3333            0.3111           0.3556
+Balanced Accuracy           1.0000            0.9667           0.9833</code></pre>
+</div>
+<div id="option2unnamed-chunk-56" class="tabcontentunnamed-chunk-56">
+<div class="sourceCode" id="cb79"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb79-1" data-line-number="1"><span class="im">from</span> sklearn <span class="im">import</span> tree</a>
+<a class="sourceLine" id="cb79-2" data-line-number="2"><span class="im">import</span> graphviz</a>
+<a class="sourceLine" id="cb79-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb79-4" data-line-number="4"><span class="co"># Fit model</span></a>
+<a class="sourceLine" id="cb79-5" data-line-number="5">mdl <span class="op">=</span> tree.DecisionTreeClassifier()</a>
+<a class="sourceLine" id="cb79-6" data-line-number="6">mdl.fit(X<span class="op">=</span>xTrain, y<span class="op">=</span>yTrain)</a>
+<a class="sourceLine" id="cb79-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb79-8" data-line-number="8"><span class="co"># Plot model using graphviz</span></a></code></pre></div>
+<pre><code>DecisionTreeClassifier(class_weight=None, criterion=&#39;gini&#39;, max_depth=None,
+                       max_features=None, max_leaf_nodes=None,
+                       min_impurity_decrease=0.0, min_impurity_split=None,
+                       min_samples_leaf=1, min_samples_split=2,
+                       min_weight_fraction_leaf=0.0, presort=False,
+                       random_state=None, splitter=&#39;best&#39;)</code></pre>
+<div class="sourceCode" id="cb81"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb81-1" data-line-number="1">mdlStr <span class="op">=</span> tree.export_graphviz(mdl, out_file<span class="op">=</span><span class="va">None</span>,</a>
+<a class="sourceLine" id="cb81-2" data-line-number="2">                              feature_names<span class="op">=</span>iris.feature_names, </a>
+<a class="sourceLine" id="cb81-3" data-line-number="3">                              class_names<span class="op">=</span>iris.target_names,</a>
+<a class="sourceLine" id="cb81-4" data-line-number="4">                              filled<span class="op">=</span><span class="va">True</span>, rounded<span class="op">=</span><span class="va">True</span>,</a>
+<a class="sourceLine" id="cb81-5" data-line-number="5">                              special_characters<span class="op">=</span><span class="va">True</span>) <span class="co"># export model as a string</span></a>
+<a class="sourceLine" id="cb81-6" data-line-number="6">graph <span class="op">=</span> graphviz.Source(mdlStr) </a>
+<a class="sourceLine" id="cb81-7" data-line-number="7">graph.render(<span class="st">&#39;iris_tree&#39;</span>) <span class="co"># save tree as a pdf</span></a></code></pre></div>
+<pre><code>&#39;iris_tree.pdf&#39;</code></pre>
+<div class="sourceCode" id="cb83"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb83-1" data-line-number="1">yTestPred <span class="op">=</span> mdl.predict(xTest) <span class="co"># evaluate performance on test data</span></a>
+<a class="sourceLine" id="cb83-2" data-line-number="2"><span class="bu">print</span>(confusion_matrix(yTest, yTestPred)) <span class="co"># true/predicted</span></a></code></pre></div>
+<pre><code>[[14  0  0]
+ [ 0 13  0]
+ [ 0  1 17]]</code></pre>
+</div>
+<script> javascript:hide('option2unnamed-chunk-56') </script>
+<table>
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Pros</th>
+<th>Cons</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Model is very easy to explain to non-experts and can be directly used to generate rules</td>
+<td>Can easily overfit the data</td>
+</tr>
+<tr class="even">
+<td>Computationaly inexpensive to train, evaluate and store</td>
+<td>Predictive accuracy can be poor</td>
+</tr>
+<tr class="odd">
+<td>Handle both categorical and continuous data</td>
+<td>Linear decision boundaries</td>
+</tr>
+<tr class="even">
+<td>Robust to outliers</td>
+<td>Small changes to training data may lead to a completely different tree</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="random-forests" class="section level2">
+<h2><span class="header-section-number">4.8</span> Random forests</h2>
+<p><a href="https://link.springer.com/article/10.1023/A:1010933404324">Random forests</a> is an ensemble method
+developed to mitigate the problem of overfitting in decision trees.
+Instead of a single tree, multiple decision trees are grown and averaged over as follows
+(each tree is known as a <em>weak</em> learner):</p>
+<ol style="list-style-type: decimal">
+<li><p>Grow <span class="math inline">\(T\)</span> decorrelated trees (no pruning).</p></li>
+<li>Induce randomness by:
+<ul>
+<li>Bagging (bootstrap aggregating), where each tree is trained on a subset of the data randomly sampled with replacement.</li>
+<li>Considering only a subset of predictors as candidates for each split.</li>
+</ul></li>
+<li><p>Average predictions from all <span class="math inline">\(T\)</span> trees.</p></li>
+</ol>
+<p>Cross-validation is inherent in the random forests methodology as every tree is
+trained only on a subset of the original data. This allows the computation of an
+estimate for the generalisation error by computing the predictive performance of
+the model on the data left out from the training process, known as the <strong>out-of- bag (OOB) error</strong>.
+The OOB data are also used to compute an estimate of the importance of every predictor,
+which can be subsequently used for feature selection.</p>
+<div class="tab">
+<button class="tablinksunnamed-chunk-57 active" onclick="javascript:openCode(event, 'option1unnamed-chunk-57', 'unnamed-chunk-57');">
+R
+</button>
+<button class="tablinksunnamed-chunk-57" onclick="javascript:openCode(event, 'option2unnamed-chunk-57', 'unnamed-chunk-57');">
+Python
+</button>
+</div>
+<div id="option1unnamed-chunk-57" class="tabcontentunnamed-chunk-57">
+<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb85-1" data-line-number="1"><span class="co"># Fit Random Forest model</span></a>
+<a class="sourceLine" id="cb85-2" data-line-number="2"><span class="co"># Fix ntree and mtry</span></a>
+<a class="sourceLine" id="cb85-3" data-line-number="3"><span class="kw">set.seed</span>(<span class="dv">1040</span>) <span class="co"># for reproducibility</span></a>
+<a class="sourceLine" id="cb85-4" data-line-number="4">mdl &lt;-<span class="st"> </span><span class="kw">train</span>(<span class="dt">x=</span>xTrain, <span class="dt">y=</span>yTrain, </a>
+<a class="sourceLine" id="cb85-5" data-line-number="5">              <span class="dt">method=</span><span class="st">&#39;rf&#39;</span>,</a>
+<a class="sourceLine" id="cb85-6" data-line-number="6">              <span class="dt">ntree=</span><span class="dv">200</span>,</a>
+<a class="sourceLine" id="cb85-7" data-line-number="7">              <span class="dt">tuneGrid=</span><span class="kw">data.frame</span>(<span class="dt">mtry=</span><span class="dv">2</span>))</a>
+<a class="sourceLine" id="cb85-8" data-line-number="8"><span class="kw">print</span>(mdl)</a></code></pre></div>
+<pre><code>Random Forest 
+
+105 samples
+  4 predictor
+  3 classes: &#39;setosa&#39;, &#39;versicolor&#39;, &#39;virginica&#39; 
+
+No pre-processing
+Resampling: Bootstrapped (25 reps) 
+Summary of sample sizes: 105, 105, 105, 105, 105, 105, ... 
+Resampling results:
+
+  Accuracy  Kappa    
+  0.941297  0.9098626
+
+Tuning parameter &#39;mtry&#39; was held constant at a value of 2</code></pre>
+<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb87-1" data-line-number="1"><span class="co"># Test model on testing data</span></a>
+<a class="sourceLine" id="cb87-2" data-line-number="2">yTestPred &lt;-<span class="st"> </span><span class="kw">predict</span>(mdl, <span class="dt">newdata=</span>xTest)</a>
+<a class="sourceLine" id="cb87-3" data-line-number="3"><span class="kw">confusionMatrix</span>(yTestPred, yTest) <span class="co"># predicted/true</span></a></code></pre></div>
+<pre><code>Confusion Matrix and Statistics
+
+            Reference
+Prediction   setosa versicolor virginica
+  setosa         15          0         0
+  versicolor      0         14         0
+  virginica       0          1        15
+
+Overall Statistics
+                                          
+               Accuracy : 0.9778          
+                 95% CI : (0.8823, 0.9994)
+    No Information Rate : 0.3333          
+    P-Value [Acc &gt; NIR] : &lt; 2.2e-16       
+                                          
+                  Kappa : 0.9667          
+                                          
+ Mcnemar&#39;s Test P-Value : NA              
+
+Statistics by Class:
+
+                     Class: setosa Class: versicolor Class: virginica
+Sensitivity                 1.0000            0.9333           1.0000
+Specificity                 1.0000            1.0000           0.9667
+Pos Pred Value              1.0000            1.0000           0.9375
+Neg Pred Value              1.0000            0.9677           1.0000
+Prevalence                  0.3333            0.3333           0.3333
+Detection Rate              0.3333            0.3111           0.3333
+Detection Prevalence        0.3333            0.3111           0.3556
+Balanced Accuracy           1.0000            0.9667           0.9833</code></pre>
+<div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb89-1" data-line-number="1"><span class="co"># Variable importance by mean decrease in gini index</span></a>
+<a class="sourceLine" id="cb89-2" data-line-number="2"><span class="kw">varImp</span>(mdl<span class="op">$</span>finalModel)</a></code></pre></div>
+<pre><code>               Overall
+Sepal.Length  6.912099
+Sepal.Width   1.943424
+Petal.Length 31.290924
+Petal.Width  29.105553</code></pre>
+</div>
+<div id="option2unnamed-chunk-57" class="tabcontentunnamed-chunk-57">
+<div class="sourceCode" id="cb91"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb91-1" data-line-number="1"><span class="im">from</span> sklearn.ensemble <span class="im">import</span> RandomForestClassifier</a>
+<a class="sourceLine" id="cb91-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb91-3" data-line-number="3"><span class="co"># Fit Random Forest model</span></a>
+<a class="sourceLine" id="cb91-4" data-line-number="4"><span class="co"># Fix ntree and mtry</span></a>
+<a class="sourceLine" id="cb91-5" data-line-number="5">mdl <span class="op">=</span> RandomForestClassifier(n_estimators<span class="op">=</span><span class="dv">200</span>, max_features<span class="op">=</span><span class="dv">2</span>, random_state<span class="op">=</span><span class="dv">1040</span>)</a>
+<a class="sourceLine" id="cb91-6" data-line-number="6">mdl.fit(X<span class="op">=</span>xTrain, y<span class="op">=</span>yTrain)</a></code></pre></div>
+<pre><code>RandomForestClassifier(bootstrap=True, class_weight=None, criterion=&#39;gini&#39;,
+                       max_depth=None, max_features=2, max_leaf_nodes=None,
+                       min_impurity_decrease=0.0, min_impurity_split=None,
+                       min_samples_leaf=1, min_samples_split=2,
+                       min_weight_fraction_leaf=0.0, n_estimators=200,
+                       n_jobs=None, oob_score=False, random_state=1040,
+                       verbose=0, warm_start=False)</code></pre>
+<div class="sourceCode" id="cb93"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb93-1" data-line-number="1">yTestPred <span class="op">=</span> mdl.predict(xTest) <span class="co"># evaluate performance on test data</span></a>
+<a class="sourceLine" id="cb93-2" data-line-number="2"><span class="bu">print</span>(confusion_matrix(yTest, yTestPred)) <span class="co"># true/predicted</span></a>
+<a class="sourceLine" id="cb93-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb93-4" data-line-number="4"><span class="co"># Variable importance by mean decrease in gini index</span></a></code></pre></div>
+<pre><code>[[14  0  0]
+ [ 0 13  0]
+ [ 0  0 18]]</code></pre>
+<div class="sourceCode" id="cb95"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb95-1" data-line-number="1"><span class="bu">print</span>(iris.feature_names)  <span class="co"># print to remind us the order of features</span></a></code></pre></div>
+<pre><code>[&#39;sepal length (cm)&#39;, &#39;sepal width (cm)&#39;, &#39;petal length (cm)&#39;, &#39;petal width (cm)&#39;]</code></pre>
+<div class="sourceCode" id="cb97"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb97-1" data-line-number="1"><span class="bu">print</span>(mdl.feature_importances_)</a></code></pre></div>
+<pre><code>[0.09896118 0.03103976 0.4213009  0.44869816]</code></pre>
+</div>
+<script> javascript:hide('option2unnamed-chunk-57') </script>
+<table>
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Pros</th>
+<th>Cons</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>State-of-the-art predictive accuracy</td>
+<td>Harder to interpret then plain decision trees</td>
+</tr>
+<tr class="even">
+<td>Can handle thousands of both categorical and continuous predictors without variable deletion</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Robust to outliers</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Estimates the importance of every predictor</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Out-of-bag error (unbiased estimate of test error for every tree built)</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Copes with unbalanced datasets by setting class weights</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Trivially parallelisable</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="support-vector-machines-svm" class="section level2">
+<h2><span class="header-section-number">4.9</span> Support vector machines (SVM)</h2>
+<p><img src="_img/04-svm.gif" width="500px" style="display: block; margin: auto;" /></p>
+<p>All the grey lines in the GIF above do a good job at seperating the “blue” and “red” points.
+But <em>which</em> line is the “best” at seperating these two classes?</p>
+<p>The rationale behind a <strong>maximal margin classifier</strong> is to find an optimal line/hyperplane that maximises
+the <strong>margin</strong>, that is, the distance between data points of both classes.
+This turns out to be a rather straightforward optimisation problem.</p>
+<p><img src="_img/04-svmsketch.png" width="500px" style="display: block; margin: auto;" /></p>
+<p>But what do we do if there isn’t a “clean” separating line between the classes?</p>
+<p><strong>Support vector classifiers</strong> (SVC) were developed that use a <em>soft</em> margin
+approach. The hyperplane is placed in a way that it correctly
+classifies <em>most</em> of the data points.</p>
+<p><img src="_img/04-svmsoft.png" width="500px" style="display: block; margin: auto;" /></p>
+<p>In reality, we face even more complex data sets where
+a hyperplane would never do a good job at separating the two classes.
+For example:</p>
+<p><img src="_img/04-svmnonlinear.png" width="500px" style="display: block; margin: auto;" /></p>
+<p>We can see that a <strong>non-linear</strong> boundary would do the job.
+<strong>Support vector machines</strong> are a generalisation of support
+vector classifiers that make use of <strong>kernels</strong> to map the original
+feature set to a higher dimensional space where classes are
+linearly separable. This might sound counter-intuitive, as
+increasing the dimensionality of the problem is undesireable.
+However, the <strong>kernel trick</strong> enable us to work in an <em>implicit</em>
+feature space, such that the data is never explicitly expressed
+in higher dimensions. Think about kernels as generalised
+distance measures.</p>
+<p>The type of kernel is a hyperparameter that we can infer using
+cross-validation. However, in <a href="http://topepo.github.io/caret/train-models-by-tag.html#support-vector-machines">caret</a>,
+each kernel is defined as a separate model, and thus the cross-validation
+loop need to be written manually rather than relying on the <a href="https://www.rdocumentation.org/packages/caret/versions/6.0-82/topics/trainControl">trainControl</a> function.
+This is not a problem in <a href="https://scikit-learn.org/stable/modules/generated/sklearn.svm.SVC.html#sklearn.svm.SVC"><code>scikit-learn</code></a> where SVMs are implemented as a generic function that takes <code>kernel</code> as an input.</p>
+<p><strong>Note</strong>: SVMs are inherently binary classifiers. The most common ways to deal
+with multi-class problems is by building several <strong>one-versus-all</strong>
+<em>or</em> <strong>one-versus-one</strong> classifiers.</p>
+<div class="tab">
+<button class="tablinksunnamed-chunk-62 active" onclick="javascript:openCode(event, 'option1unnamed-chunk-62', 'unnamed-chunk-62');">
+R
+</button>
+<button class="tablinksunnamed-chunk-62" onclick="javascript:openCode(event, 'option2unnamed-chunk-62', 'unnamed-chunk-62');">
+Python
+</button>
+</div>
+<div id="option1unnamed-chunk-62" class="tabcontentunnamed-chunk-62">
+<div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb99-1" data-line-number="1"><span class="co"># Set training options</span></a>
+<a class="sourceLine" id="cb99-2" data-line-number="2"><span class="co"># Repeat 5-fold cross-validation, ten times</span></a>
+<a class="sourceLine" id="cb99-3" data-line-number="3">opts &lt;-<span class="st"> </span><span class="kw">trainControl</span>(<span class="dt">method=</span><span class="st">&#39;repeatedcv&#39;</span>, <span class="dt">number=</span><span class="dv">5</span>, <span class="dt">repeats=</span><span class="dv">10</span>, <span class="dt">p=</span><span class="fl">0.7</span>)</a>
+<a class="sourceLine" id="cb99-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb99-5" data-line-number="5"><span class="co"># Fit SVM</span></a>
+<a class="sourceLine" id="cb99-6" data-line-number="6"><span class="kw">set.seed</span>(<span class="dv">1040</span>) <span class="co"># for reproducibility</span></a>
+<a class="sourceLine" id="cb99-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb99-8" data-line-number="8"><span class="co">## SORRY - This is currently broken (CY to fix)</span></a>
+<a class="sourceLine" id="cb99-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb99-10" data-line-number="10"><span class="co"># mdl &lt;- train(x=xTrain, y=yTrain,            # training data </span></a>
+<a class="sourceLine" id="cb99-11" data-line-number="11"><span class="co">#              method=&#39;svmLinear2&#39;,            # machine learning model</span></a>
+<a class="sourceLine" id="cb99-12" data-line-number="12"><span class="co">#              trControl=opts,                # training options</span></a>
+<a class="sourceLine" id="cb99-13" data-line-number="13"><span class="co">#              tuneGrid=data.frame(C=c(0.01, 1, 10, 100, 1000))) # range of C&#39;s to try</span></a>
+<a class="sourceLine" id="cb99-14" data-line-number="14"><span class="co"># print(mdl)</span></a>
+<a class="sourceLine" id="cb99-15" data-line-number="15"></a>
+<a class="sourceLine" id="cb99-16" data-line-number="16"><span class="co"># Test model on testing data</span></a>
+<a class="sourceLine" id="cb99-17" data-line-number="17">yTestPred &lt;-<span class="st"> </span><span class="kw">predict</span>(mdl, <span class="dt">newdata=</span>xTest)</a>
+<a class="sourceLine" id="cb99-18" data-line-number="18"><span class="kw">confusionMatrix</span>(yTestPred, yTest) <span class="co"># predicted/true</span></a></code></pre></div>
+<pre><code>Confusion Matrix and Statistics
+
+            Reference
+Prediction   setosa versicolor virginica
+  setosa         15          0         0
+  versicolor      0         14         0
+  virginica       0          1        15
+
+Overall Statistics
+                                          
+               Accuracy : 0.9778          
+                 95% CI : (0.8823, 0.9994)
+    No Information Rate : 0.3333          
+    P-Value [Acc &gt; NIR] : &lt; 2.2e-16       
+                                          
+                  Kappa : 0.9667          
+                                          
+ Mcnemar&#39;s Test P-Value : NA              
+
+Statistics by Class:
+
+                     Class: setosa Class: versicolor Class: virginica
+Sensitivity                 1.0000            0.9333           1.0000
+Specificity                 1.0000            1.0000           0.9667
+Pos Pred Value              1.0000            1.0000           0.9375
+Neg Pred Value              1.0000            0.9677           1.0000
+Prevalence                  0.3333            0.3333           0.3333
+Detection Rate              0.3333            0.3111           0.3333
+Detection Prevalence        0.3333            0.3111           0.3556
+Balanced Accuracy           1.0000            0.9667           0.9833</code></pre>
+</div>
+<div id="option2unnamed-chunk-62" class="tabcontentunnamed-chunk-62">
+<div class="sourceCode" id="cb101"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb101-1" data-line-number="1"><span class="im">from</span> sklearn.svm <span class="im">import</span> SVC</a>
+<a class="sourceLine" id="cb101-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb101-3" data-line-number="3">cv <span class="op">=</span> RepeatedKFold(n_splits<span class="op">=</span><span class="dv">5</span>, n_repeats<span class="op">=</span><span class="dv">10</span>, random_state<span class="op">=</span><span class="dv">1040</span>) <span class="co"># Repeat 5-fold cross-validation, ten times</span></a>
+<a class="sourceLine" id="cb101-4" data-line-number="4">paramGrid <span class="op">=</span> [{<span class="st">&#39;kernel&#39;</span>: [<span class="st">&#39;rbf&#39;</span>], <span class="st">&#39;gamma&#39;</span>: [<span class="fl">1e-3</span>, <span class="fl">1e-4</span>], <span class="st">&#39;C&#39;</span>: [<span class="dv">1</span>, <span class="dv">10</span>, <span class="dv">100</span>, <span class="dv">1000</span>]},</a>
+<a class="sourceLine" id="cb101-5" data-line-number="5">             {<span class="st">&#39;kernel&#39;</span>: [<span class="st">&#39;linear&#39;</span>], <span class="st">&#39;C&#39;</span>: [<span class="dv">1</span>, <span class="dv">10</span>, <span class="dv">100</span>, <span class="dv">1000</span>]}] <span class="co"># set hyperprameter search grid</span></a>
+<a class="sourceLine" id="cb101-6" data-line-number="6">mdl <span class="op">=</span> GridSearchCV(estimator<span class="op">=</span>SVC(), param_grid<span class="op">=</span>paramGrid, cv<span class="op">=</span>cv)</a>
+<a class="sourceLine" id="cb101-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb101-8" data-line-number="8"><span class="co"># Fit SVM</span></a>
+<a class="sourceLine" id="cb101-9" data-line-number="9">mdl.fit(X<span class="op">=</span>xTrain, y<span class="op">=</span>yTrain)</a></code></pre></div>
+<pre><code>GridSearchCV(cv=&lt;sklearn.model_selection._split.RepeatedKFold object at 0x1a31327278&gt;,
+             error_score=&#39;raise-deprecating&#39;,
+             estimator=SVC(C=1.0, cache_size=200, class_weight=None, coef0=0.0,
+                           decision_function_shape=&#39;ovr&#39;, degree=3,
+                           gamma=&#39;auto_deprecated&#39;, kernel=&#39;rbf&#39;, max_iter=-1,
+                           probability=False, random_state=None, shrinking=True,
+                           tol=0.001, verbose=False),
+             iid=&#39;warn&#39;, n_jobs=None,
+             param_grid=[{&#39;C&#39;: [1, 10, 100, 1000], &#39;gamma&#39;: [0.001, 0.0001],
+                          &#39;kernel&#39;: [&#39;rbf&#39;]},
+                         {&#39;C&#39;: [1, 10, 100, 1000], &#39;kernel&#39;: [&#39;linear&#39;]}],
+             pre_dispatch=&#39;2*n_jobs&#39;, refit=True, return_train_score=False,
+             scoring=None, verbose=0)</code></pre>
+<div class="sourceCode" id="cb103"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb103-1" data-line-number="1"><span class="bu">print</span>(mdl.best_estimator_)</a></code></pre></div>
+<pre><code>SVC(C=1000, cache_size=200, class_weight=None, coef0=0.0,
+    decision_function_shape=&#39;ovr&#39;, degree=3, gamma=0.001, kernel=&#39;rbf&#39;,
+    max_iter=-1, probability=False, random_state=None, shrinking=True,
+    tol=0.001, verbose=False)</code></pre>
+<div class="sourceCode" id="cb105"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb105-1" data-line-number="1">yTestPred <span class="op">=</span> mdl.predict(xTest) <span class="co"># evaluate performance on test data</span></a>
+<a class="sourceLine" id="cb105-2" data-line-number="2"><span class="bu">print</span>(confusion_matrix(yTest, yTestPred)) <span class="co"># true/predicted</span></a></code></pre></div>
+<pre><code>[[14  0  0]
+ [ 0 13  0]
+ [ 0  0 18]]</code></pre>
+</div>
+<script> javascript:hide('option2unnamed-chunk-62') </script>
+<table>
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Pros</th>
+<th>Cons</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>State-of-the-art predictive accuracy</td>
+<td>Model is hard to interpret</td>
+</tr>
+<tr class="even">
+<td>Low storage requirements (only the support vectors need to be stored)</td>
+<td>Feature space cannot be visualised</td>
+</tr>
+<tr class="odd">
+<td>A vast array of kernels are available that are flexible enough to cater for any type of data</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Global optimum guaranteed</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="tasks-1" class="section level2">
+<h2><span class="header-section-number">4.10</span> Tasks</h2>
+<p>If you haven’t already, download the gene expression and wine datasets from <a href="https://exeter-data-analytics.github.io/MachineLearning/data.zip">here</a>.</p>
+<div id="gene-expression-1" class="section level3">
+<h3><span class="header-section-number">4.10.1</span> Gene expression</h3>
+<div class="panel panel-default">
+<div class="panel-heading">
+Task
+</div>
+<div class="panel-body">
+<ul>
+<li><p>Use PCA and t-SNE to visualise the dataset (colour each observation by cancer type <em>and</em> stage)</p></li>
+<li><p>Use any of the techniques described above (feel free to try and compare all of them) and build a binary classifier
+to classify the B- and T-cell leukaemia patients.</p></li>
+<li>Compute the predictive performance measures and visualise the results as a ROC curve
+</div>
+</div></li>
+</ul>
+</div>
+<div id="wine-1" class="section level3">
+<h3><span class="header-section-number">4.10.2</span> Wine</h3>
+<div class="panel panel-default">
+<div class="panel-heading">
+Task
+</div>
+<div class="panel-body">
+<ul>
+<li><p>Use PCA and t-SNE to visualise the dataset (colour each observation by wine type)</p></li>
+<li><p>Use any of the techniques described above (feel free to try and compare all of them) and build a
+multi-label classifier to classify the three different types of wine</p></li>
+<li>Compute the predictive performance measures and visualise the results as a confusion matrix
+</div>
+</div></li>
+</ul>
+</div>
+<div id="uci-machine-learning-repository" class="section level3">
+<h3><span class="header-section-number">4.10.3</span> UCI Machine Learning Repository</h3>
+<p><a href="https://archive.ics.uci.edu/ml/datasets.php">The UCI repository</a> contains a collection of
+datasets that span different fields. I encourage you to choose a handful of datasets,
+maybe ones related to your research area, and practice further fitting machine learning models.
+If you’re familiar with literate programming (if not, see TJ McKinley’s <a href="https://exeter-data-analytics.github.io/LitProg/">course</a> or
+<a href="https://jupyter.org/">Jupyter</a> for Python users), I suggest you document
+every operation performed on the dataset: cleaning, normalisation/standardisation,
+visualisation, feature extraction, model fitting and model evaluation.</p>
+
+</div>
+</div>
+</div>
+
+
+
+
+
+
+
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="dimensionality-reduction.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": null,
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

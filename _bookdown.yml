@@ -1,5 +1,0 @@
-rmd_files:
-    html:  ['index.Rmd', '01-intro.Rmd', '02-clustering.Rmd', '03-dimensionality.Rmd', '04-supervised.Rmd']
-    #html: ['index.Rmd', '04-supervised.Rmd']
-    latex: ['index.Rmd', '01-intro.Rmd', '02-clustering.Rmd', '03-dimensionality.Rmd', '04-supervised.Rmd', 'ch_appendix.Rmd']
-output_dir: '_site'
