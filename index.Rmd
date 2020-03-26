@@ -1,13 +1,9 @@
 --- 
 title: "Introduction to Machine Learning"
 date: '`r format(Sys.Date(), "%d %B %Y")`'
-author: "[JJ Valletta](mailto:jj.valletta@exeter.ac.uk)"
+author: "[Chris Yeomans](mailto:c.m.yeomans@exeter.ac.uk) and Jiangjiao Xu"
 site: bookdown::bookdown_site
 output:
-    bookdown::pdf_book:
-        keep_tex: yes
-        includes:
-            in_header: '_header.tex'
     bookdown::gitbook:
         config:
             sharing: null
@@ -16,6 +12,10 @@ output:
             in_header: '_toggle.html'
         keep_md: TRUE
         highlight: pygments
+    bookdown::pdf_book:
+        keep_tex: yes
+        includes:
+            in_header: '_header.tex'
 documentclass: book
 link-citations: yes
 description: "Introduction to Machine Learning"

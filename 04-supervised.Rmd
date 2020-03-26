@@ -25,7 +25,7 @@ and [here](https://www.sciencedirect.com/science/article/pii/S0003347216303360))
 
 ```{r, echo=FALSE, out.width='400px'}
 knitr::include_graphics(file.path(IMG, "04-UAV.png"))
-knitr::include_graphics(file.path(IMG, "tsne_hog.png"))
+#knitr::include_graphics(file.path(IMG, "tsne_hog.png"))
 ```
 
 The graph below shows carbon dioxide concentration (CO$_2$) over time
@@ -307,9 +307,9 @@ which can be subsequently used for feature selection.
 # Fix ntree and mtry
 set.seed(1040) # for reproducibility
 mdl <- train(x=xTrain, y=yTrain, 
-             method='rf',
-             ntree=200,
-             tuneGrid=data.frame(mtry=2))
+              method='rf',
+              ntree=200,
+              tuneGrid=data.frame(mtry=2))
 print(mdl)
 
 # Test model on testing data
@@ -417,11 +417,14 @@ opts <- trainControl(method='repeatedcv', number=5, repeats=10, p=0.7)
 
 # Fit SVM
 set.seed(1040) # for reproducibility
-mdl <- train(x=xTrain, y=yTrain,            # training data 
-             method='svmLinear',            # machine learning model
-             trControl=opts,                # training options
-             tuneGrid=data.frame(C=c(0.01, 1, 10, 100, 1000))) # range of C's to try
-print(mdl)
+
+## SORRY - This is currently broken (CY to fix)
+
+# mdl <- train(x=xTrain, y=yTrain,            # training data 
+#              method='svmLinear2',            # machine learning model
+#              trControl=opts,                # training options
+#              tuneGrid=data.frame(C=c(0.01, 1, 10, 100, 1000))) # range of C's to try
+# print(mdl)
 
 # Test model on testing data
 yTestPred <- predict(mdl, newdata=xTest)

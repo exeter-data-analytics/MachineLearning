@@ -631,7 +631,7 @@ assess how well the clustering algorithm is doing, as we expect the Bâ€™s and Tâ
 ```{multCode, titles=c('R', 'Python')}
 
 ``{r, fig.height=6, fig.width=6}
-xTrain <- read.csv('gene_expression.csv', row.names=1)
+xTrain <- read.csv('_data/gene_expression.csv', row.names=1)
 print(dim(xTrain))
 ``
 
@@ -640,7 +640,7 @@ print(dim(xTrain))
 ``{python, fig.height=6, fig.width=6}
 import pandas as pd
 
-xTrain = pd.read_csv('gene_expression.csv', header=0, index_col=0)
+xTrain = pd.read_csv('_data/gene_expression.csv', header=0, index_col=0)
 print(xTrain.shape)
 ``
 
@@ -724,14 +724,14 @@ in Italy but from three different cultivars (see [here](https://archive.ics.uci.
 ```{multCode, titles=c('R', 'Python')}
 
 ``{r, fig.height=6, fig.width=6}
-xTrain <- read.csv('wine.csv')
+xTrain <- read.csv('_data/wine.csv')
 print(head(xTrain))
 ``
 
 ####
 
 ``{python, fig.height=6, fig.width=6}
-xTrain = pd.read_csv('wine.csv', header=0)
+xTrain = pd.read_csv('_data/wine.csv', header=0)
 print(xTrain.head())
 ``
 
