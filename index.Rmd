@@ -21,6 +21,8 @@ link-citations: yes
 description: "Introduction to Machine Learning"
 ---
 
+*This course is based on original material by JJ Valetta*
+
 # Preface {-}
 
 ```{r setup, include=FALSE}
