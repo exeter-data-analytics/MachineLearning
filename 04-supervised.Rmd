@@ -417,14 +417,11 @@ opts <- trainControl(method='repeatedcv', number=5, repeats=10, p=0.7)
 
 # Fit SVM
 set.seed(1040) # for reproducibility
-
-## SORRY - This is currently broken (CY to fix)
-
-# mdl <- train(x=xTrain, y=yTrain,            # training data 
-#              method='svmLinear2',            # machine learning model
-#              trControl=opts,                # training options
-#              tuneGrid=data.frame(C=c(0.01, 1, 10, 100, 1000))) # range of C's to try
-# print(mdl)
+mdl <- train(x=xTrain, y=yTrain,            # training data
+             method='svmLinear',            # machine learning model
+             trControl=opts,                # training options
+             tuneGrid=data.frame(C=c(0.01, 1, 10, 100, 1000))) # range of C's to try
+print(mdl)
 
 # Test model on testing data
 yTestPred <- predict(mdl, newdata=xTest)
