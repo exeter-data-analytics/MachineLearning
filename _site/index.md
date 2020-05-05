@@ -1,6 +1,6 @@
 --- 
 title: "Introduction to Machine Learning"
-date: '26 March 2020'
+date: '05 May 2020'
 author: "[Chris Yeomans](mailto:c.m.yeomans@exeter.ac.uk) and Jiangjiao Xu"
 site: bookdown::bookdown_site
 output:
@@ -381,7 +381,7 @@ plt.xlabel('Petal width (cm)')
 plt.ylabel('Sepal length (cm)')
 ```
 
-<img src="/Users/cmy203/OneDrive - University of Exeter/Documents/Teaching/Data_Analytics/MachineLearning/_main_files/figure-html/unnamed-chunk-69-1.png" width="480" style="display: block; margin: auto;" />
+<img src="/Users/cmy203/OneDrive - University of Exeter/Documents/Teaching/ExDA_Hub/MachineLearning/_main_files/figure-html/unnamed-chunk-69-1.png" width="480" style="display: block; margin: auto;" />
 </div><script> javascript:hide('option2unnamed-chunk-15') </script>
 
 |                     Pros             |             Cons                     |
@@ -456,7 +456,7 @@ dendrogram(mdl)
 plt.show()
 ```
 
-<img src="/Users/cmy203/OneDrive - University of Exeter/Documents/Teaching/Data_Analytics/MachineLearning/_main_files/figure-html/unnamed-chunk-71-1.png" width="864" style="display: block; margin: auto;" />
+<img src="/Users/cmy203/OneDrive - University of Exeter/Documents/Teaching/ExDA_Hub/MachineLearning/_main_files/figure-html/unnamed-chunk-71-1.png" width="864" style="display: block; margin: auto;" />
 </div><script> javascript:hide('option2unnamed-chunk-20') </script>
 
 The number at the end of each branch corresponds to the observation row number.
@@ -547,7 +547,7 @@ plt.xlabel('Petal width (cm)')
 plt.ylabel('Sepal length (cm)')
 ```
 
-<img src="/Users/cmy203/OneDrive - University of Exeter/Documents/Teaching/Data_Analytics/MachineLearning/_main_files/figure-html/unnamed-chunk-73-1.png" width="864" style="display: block; margin: auto;" />
+<img src="/Users/cmy203/OneDrive - University of Exeter/Documents/Teaching/ExDA_Hub/MachineLearning/_main_files/figure-html/unnamed-chunk-73-1.png" width="864" style="display: block; margin: auto;" />
 </div><script> javascript:hide('option2unnamed-chunk-22') </script>
 
 |                     Pros             |             Cons                     |
@@ -674,7 +674,7 @@ plt.xlabel('Feature 1')
 plt.ylabel('Feature 2')
 ```
 
-<img src="/Users/cmy203/OneDrive - University of Exeter/Documents/Teaching/Data_Analytics/MachineLearning/_main_files/figure-html/unnamed-chunk-75-1.png" width="576" style="display: block; margin: auto;" />
+<img src="/Users/cmy203/OneDrive - University of Exeter/Documents/Teaching/ExDA_Hub/MachineLearning/_main_files/figure-html/unnamed-chunk-75-1.png" width="576" style="display: block; margin: auto;" />
 </div><script> javascript:hide('option2unnamed-chunk-26') </script>
 
 <div class="panel panel-default"><div class="panel-heading"> Task </div><div class="panel-body"> 
@@ -743,7 +743,7 @@ plt.xlabel('k')
 plt.ylabel('Sum-of-squares')
 ```
 
-<img src="/Users/cmy203/OneDrive - University of Exeter/Documents/Teaching/Data_Analytics/MachineLearning/_main_files/figure-html/unnamed-chunk-77-1.png" width="480" style="display: block; margin: auto;" />
+<img src="/Users/cmy203/OneDrive - University of Exeter/Documents/Teaching/ExDA_Hub/MachineLearning/_main_files/figure-html/unnamed-chunk-77-1.png" width="480" style="display: block; margin: auto;" />
 
 The "correct" number of clusters is approximately 3.
 This matches our expectation.
@@ -815,7 +815,7 @@ plt.xlabel('k')
 plt.ylabel('Information criterion')
 ```
 
-<img src="/Users/cmy203/OneDrive - University of Exeter/Documents/Teaching/Data_Analytics/MachineLearning/_main_files/figure-html/unnamed-chunk-79-1.png" width="576" style="display: block; margin: auto;" />
+<img src="/Users/cmy203/OneDrive - University of Exeter/Documents/Teaching/ExDA_Hub/MachineLearning/_main_files/figure-html/unnamed-chunk-79-1.png" width="576" style="display: block; margin: auto;" />
 
 The "correct" number of clusters is approximately 3.
 This matches our expectation.
@@ -916,7 +916,7 @@ for linkMethod in linkMethods:
     plt.show()
 ```
 
-<img src="/Users/cmy203/OneDrive - University of Exeter/Documents/Teaching/Data_Analytics/MachineLearning/_main_files/figure-html/unnamed-chunk-83-1.png" width="864" style="display: block; margin: auto;" /><img src="/Users/cmy203/OneDrive - University of Exeter/Documents/Teaching/Data_Analytics/MachineLearning/_main_files/figure-html/unnamed-chunk-83-2.png" width="864" style="display: block; margin: auto;" /><img src="/Users/cmy203/OneDrive - University of Exeter/Documents/Teaching/Data_Analytics/MachineLearning/_main_files/figure-html/unnamed-chunk-83-3.png" width="864" style="display: block; margin: auto;" /><img src="/Users/cmy203/OneDrive - University of Exeter/Documents/Teaching/Data_Analytics/MachineLearning/_main_files/figure-html/unnamed-chunk-83-4.png" width="864" style="display: block; margin: auto;" />
+<img src="/Users/cmy203/OneDrive - University of Exeter/Documents/Teaching/ExDA_Hub/MachineLearning/_main_files/figure-html/unnamed-chunk-83-1.png" width="864" style="display: block; margin: auto;" /><img src="/Users/cmy203/OneDrive - University of Exeter/Documents/Teaching/ExDA_Hub/MachineLearning/_main_files/figure-html/unnamed-chunk-83-2.png" width="864" style="display: block; margin: auto;" /><img src="/Users/cmy203/OneDrive - University of Exeter/Documents/Teaching/ExDA_Hub/MachineLearning/_main_files/figure-html/unnamed-chunk-83-3.png" width="864" style="display: block; margin: auto;" /><img src="/Users/cmy203/OneDrive - University of Exeter/Documents/Teaching/ExDA_Hub/MachineLearning/_main_files/figure-html/unnamed-chunk-83-4.png" width="864" style="display: block; margin: auto;" />
 </div><script> javascript:hide('option2unnamed-chunk-35') </script></div></div></div>
 
 <div class="panel panel-default"><div class="panel-heading"> Task </div><div class="panel-body"> 
@@ -953,7 +953,7 @@ for distMethod in distMethods:
     plt.show()
 ```
 
-<img src="/Users/cmy203/OneDrive - University of Exeter/Documents/Teaching/Data_Analytics/MachineLearning/_main_files/figure-html/unnamed-chunk-85-1.png" width="864" style="display: block; margin: auto;" /><img src="/Users/cmy203/OneDrive - University of Exeter/Documents/Teaching/Data_Analytics/MachineLearning/_main_files/figure-html/unnamed-chunk-85-2.png" width="864" style="display: block; margin: auto;" /><img src="/Users/cmy203/OneDrive - University of Exeter/Documents/Teaching/Data_Analytics/MachineLearning/_main_files/figure-html/unnamed-chunk-85-3.png" width="864" style="display: block; margin: auto;" /><img src="/Users/cmy203/OneDrive - University of Exeter/Documents/Teaching/Data_Analytics/MachineLearning/_main_files/figure-html/unnamed-chunk-85-4.png" width="864" style="display: block; margin: auto;" />
+<img src="/Users/cmy203/OneDrive - University of Exeter/Documents/Teaching/ExDA_Hub/MachineLearning/_main_files/figure-html/unnamed-chunk-85-1.png" width="864" style="display: block; margin: auto;" /><img src="/Users/cmy203/OneDrive - University of Exeter/Documents/Teaching/ExDA_Hub/MachineLearning/_main_files/figure-html/unnamed-chunk-85-2.png" width="864" style="display: block; margin: auto;" /><img src="/Users/cmy203/OneDrive - University of Exeter/Documents/Teaching/ExDA_Hub/MachineLearning/_main_files/figure-html/unnamed-chunk-85-3.png" width="864" style="display: block; margin: auto;" /><img src="/Users/cmy203/OneDrive - University of Exeter/Documents/Teaching/ExDA_Hub/MachineLearning/_main_files/figure-html/unnamed-chunk-85-4.png" width="864" style="display: block; margin: auto;" />
 </div><script> javascript:hide('option2unnamed-chunk-37') </script></div></div></div>
 
 ### Wine
@@ -1143,7 +1143,7 @@ plt.xlabel('k')
 plt.ylabel('Sum-of-squares')
 ```
 
-<img src="/Users/cmy203/OneDrive - University of Exeter/Documents/Teaching/Data_Analytics/MachineLearning/_main_files/figure-html/unnamed-chunk-91-1.png" width="480" style="display: block; margin: auto;" />
+<img src="/Users/cmy203/OneDrive - University of Exeter/Documents/Teaching/ExDA_Hub/MachineLearning/_main_files/figure-html/unnamed-chunk-91-1.png" width="480" style="display: block; margin: auto;" />
 
 The "correct" number of clusters is approximately 3.
 This matches our expectation.
@@ -1247,7 +1247,7 @@ for k in kRange:
 # Plot average width as a function of k
 ```
 
-<img src="/Users/cmy203/OneDrive - University of Exeter/Documents/Teaching/Data_Analytics/MachineLearning/_main_files/figure-html/unnamed-chunk-93-1.png" width="576" style="display: block; margin: auto;" /><img src="/Users/cmy203/OneDrive - University of Exeter/Documents/Teaching/Data_Analytics/MachineLearning/_main_files/figure-html/unnamed-chunk-93-2.png" width="576" style="display: block; margin: auto;" /><img src="/Users/cmy203/OneDrive - University of Exeter/Documents/Teaching/Data_Analytics/MachineLearning/_main_files/figure-html/unnamed-chunk-93-3.png" width="576" style="display: block; margin: auto;" /><img src="/Users/cmy203/OneDrive - University of Exeter/Documents/Teaching/Data_Analytics/MachineLearning/_main_files/figure-html/unnamed-chunk-93-4.png" width="576" style="display: block; margin: auto;" />
+<img src="/Users/cmy203/OneDrive - University of Exeter/Documents/Teaching/ExDA_Hub/MachineLearning/_main_files/figure-html/unnamed-chunk-93-1.png" width="576" style="display: block; margin: auto;" /><img src="/Users/cmy203/OneDrive - University of Exeter/Documents/Teaching/ExDA_Hub/MachineLearning/_main_files/figure-html/unnamed-chunk-93-2.png" width="576" style="display: block; margin: auto;" /><img src="/Users/cmy203/OneDrive - University of Exeter/Documents/Teaching/ExDA_Hub/MachineLearning/_main_files/figure-html/unnamed-chunk-93-3.png" width="576" style="display: block; margin: auto;" /><img src="/Users/cmy203/OneDrive - University of Exeter/Documents/Teaching/ExDA_Hub/MachineLearning/_main_files/figure-html/unnamed-chunk-93-4.png" width="576" style="display: block; margin: auto;" />
 
 ```python
 plt.figure(figsize=(5,5))
@@ -1256,7 +1256,7 @@ plt.xlabel('k')
 plt.ylabel('Average silhouette width')
 ```
 
-<img src="/Users/cmy203/OneDrive - University of Exeter/Documents/Teaching/Data_Analytics/MachineLearning/_main_files/figure-html/unnamed-chunk-93-5.png" width="480" style="display: block; margin: auto;" />
+<img src="/Users/cmy203/OneDrive - University of Exeter/Documents/Teaching/ExDA_Hub/MachineLearning/_main_files/figure-html/unnamed-chunk-93-5.png" width="480" style="display: block; margin: auto;" />
 
 The "correct" number of clusters is approximately 3.
 This matches our expectation. However, note that the average
@@ -1407,7 +1407,7 @@ plt.ylabel('PCA 2: {:.1f}%'.format(mdl.explained_variance_ratio_[1]*100))
 plt.show()
 ```
 
-<img src="/Users/cmy203/OneDrive - University of Exeter/Documents/Teaching/Data_Analytics/MachineLearning/_main_files/figure-html/unnamed-chunk-95-1.png" width="576" style="display: block; margin: auto;" />
+<img src="/Users/cmy203/OneDrive - University of Exeter/Documents/Teaching/ExDA_Hub/MachineLearning/_main_files/figure-html/unnamed-chunk-95-1.png" width="576" style="display: block; margin: auto;" />
 </div><script> javascript:hide('option2unnamed-chunk-46') </script>
 
 Some of you might notice that the R and Python results have opposite signs.
@@ -1464,7 +1464,7 @@ plt.ylabel('Embedding 2')
 plt.show()
 ```
 
-<img src="/Users/cmy203/OneDrive - University of Exeter/Documents/Teaching/Data_Analytics/MachineLearning/_main_files/figure-html/unnamed-chunk-97-1.png" width="576" style="display: block; margin: auto;" />
+<img src="/Users/cmy203/OneDrive - University of Exeter/Documents/Teaching/ExDA_Hub/MachineLearning/_main_files/figure-html/unnamed-chunk-97-1.png" width="576" style="display: block; margin: auto;" />
 </div><script> javascript:hide('option2unnamed-chunk-47') </script>
 
 Looks like t-SNE does a better job than PCA in seperating one cluster from another, and
@@ -1548,7 +1548,7 @@ hAx[1].legend(loc='lower right', handles=legend)
 plt.show()
 ```
 
-<img src="/Users/cmy203/OneDrive - University of Exeter/Documents/Teaching/Data_Analytics/MachineLearning/_main_files/figure-html/unnamed-chunk-99-1.png" width="1248" style="display: block; margin: auto;" />
+<img src="/Users/cmy203/OneDrive - University of Exeter/Documents/Teaching/ExDA_Hub/MachineLearning/_main_files/figure-html/unnamed-chunk-99-1.png" width="1248" style="display: block; margin: auto;" />
 </div><script> javascript:hide('option2unnamed-chunk-48') </script>
 
 Although t-SNE does a better job at seperating *setosa* from the rest
@@ -1852,16 +1852,16 @@ mdl.fit(X=xTrain, y=yTrain)
 ```
 
 ```
-GridSearchCV(cv=<sklearn.model_selection._split.RepeatedKFold object at 0x1a2c99cef0>,
-             error_score='raise-deprecating',
+GridSearchCV(cv=RepeatedKFold(n_repeats=10, n_splits=5, random_state=1040),
+             error_score=nan,
              estimator=KNeighborsClassifier(algorithm='auto', leaf_size=30,
                                             metric='minkowski',
                                             metric_params=None, n_jobs=None,
                                             n_neighbors=5, p=2,
                                             weights='uniform'),
-             iid='warn', n_jobs=None, param_grid={'n_neighbors': range(2, 16)},
-             pre_dispatch='2*n_jobs', refit=True, return_train_score=False,
-             scoring=None, verbose=0)
+             iid='deprecated', n_jobs=None,
+             param_grid={'n_neighbors': range(2, 16)}, pre_dispatch='2*n_jobs',
+             refit=True, return_train_score=False, scoring=None, verbose=0)
 ```
 
 ```python
@@ -1970,11 +1970,11 @@ mdl.fit(X=xTrain, y=yTrain)
 ```
 
 ```
-DecisionTreeClassifier(class_weight=None, criterion='gini', max_depth=None,
-                       max_features=None, max_leaf_nodes=None,
+DecisionTreeClassifier(ccp_alpha=0.0, class_weight=None, criterion='gini',
+                       max_depth=None, max_features=None, max_leaf_nodes=None,
                        min_impurity_decrease=0.0, min_impurity_split=None,
                        min_samples_leaf=1, min_samples_split=2,
-                       min_weight_fraction_leaf=0.0, presort=False,
+                       min_weight_fraction_leaf=0.0, presort='deprecated',
                        random_state=None, splitter='best')
 ```
 
@@ -2127,8 +2127,9 @@ mdl.fit(X=xTrain, y=yTrain)
 ```
 
 ```
-RandomForestClassifier(bootstrap=True, class_weight=None, criterion='gini',
-                       max_depth=None, max_features=2, max_leaf_nodes=None,
+RandomForestClassifier(bootstrap=True, ccp_alpha=0.0, class_weight=None,
+                       criterion='gini', max_depth=None, max_features=2,
+                       max_leaf_nodes=None, max_samples=None,
                        min_impurity_decrease=0.0, min_impurity_split=None,
                        min_samples_leaf=1, min_samples_split=2,
                        min_weight_fraction_leaf=0.0, n_estimators=200,
@@ -2233,15 +2234,37 @@ opts <- trainControl(method='repeatedcv', number=5, repeats=10, p=0.7)
 
 # Fit SVM
 set.seed(1040) # for reproducibility
+mdl <- train(x=xTrain, y=yTrain,            # training data
+             method='svmLinear',            # machine learning model
+             trControl=opts,                # training options
+             tuneGrid=data.frame(C=c(0.01, 1, 10, 100, 1000))) # range of C's to try
+print(mdl)
+```
 
-## SORRY - This is currently broken (CY to fix)
+```
+Support Vector Machines with Linear Kernel 
 
-# mdl <- train(x=xTrain, y=yTrain,            # training data 
-#              method='svmLinear2',            # machine learning model
-#              trControl=opts,                # training options
-#              tuneGrid=data.frame(C=c(0.01, 1, 10, 100, 1000))) # range of C's to try
-# print(mdl)
+105 samples
+  4 predictor
+  3 classes: 'setosa', 'versicolor', 'virginica' 
 
+No pre-processing
+Resampling: Cross-Validated (5 fold, repeated 10 times) 
+Summary of sample sizes: 84, 84, 84, 84, 84, 84, ... 
+Resampling results across tuning parameters:
+
+  C      Accuracy   Kappa    
+  1e-02  0.8371429  0.7557143
+  1e+00  0.9628571  0.9442857
+  1e+01  0.9628571  0.9442857
+  1e+02  0.9828571  0.9742857
+  1e+03  0.9752381  0.9628571
+
+Accuracy was used to select the optimal model using the largest value.
+The final value used for the model was C = 100.
+```
+
+```r
 # Test model on testing data
 yTestPred <- predict(mdl, newdata=xTest)
 confusionMatrix(yTestPred, yTest) # predicted/true
@@ -2253,31 +2276,31 @@ Confusion Matrix and Statistics
             Reference
 Prediction   setosa versicolor virginica
   setosa         15          0         0
-  versicolor      0         14         0
-  virginica       0          1        15
+  versicolor      0         14         1
+  virginica       0          1        14
 
 Overall Statistics
                                           
-               Accuracy : 0.9778          
-                 95% CI : (0.8823, 0.9994)
+               Accuracy : 0.9556          
+                 95% CI : (0.8485, 0.9946)
     No Information Rate : 0.3333          
     P-Value [Acc > NIR] : < 2.2e-16       
                                           
-                  Kappa : 0.9667          
+                  Kappa : 0.9333          
                                           
  Mcnemar's Test P-Value : NA              
 
 Statistics by Class:
 
                      Class: setosa Class: versicolor Class: virginica
-Sensitivity                 1.0000            0.9333           1.0000
-Specificity                 1.0000            1.0000           0.9667
-Pos Pred Value              1.0000            1.0000           0.9375
-Neg Pred Value              1.0000            0.9677           1.0000
+Sensitivity                 1.0000            0.9333           0.9333
+Specificity                 1.0000            0.9667           0.9667
+Pos Pred Value              1.0000            0.9333           0.9333
+Neg Pred Value              1.0000            0.9667           0.9667
 Prevalence                  0.3333            0.3333           0.3333
-Detection Rate              0.3333            0.3111           0.3333
-Detection Prevalence        0.3333            0.3111           0.3556
-Balanced Accuracy           1.0000            0.9667           0.9833
+Detection Rate              0.3333            0.3111           0.3111
+Detection Prevalence        0.3333            0.3333           0.3333
+Balanced Accuracy           1.0000            0.9500           0.9500
 ```
 </div><div id="option2unnamed-chunk-62" class="tabcontentunnamed-chunk-62">
 
@@ -2294,14 +2317,15 @@ mdl.fit(X=xTrain, y=yTrain)
 ```
 
 ```
-GridSearchCV(cv=<sklearn.model_selection._split.RepeatedKFold object at 0x1a31327278>,
-             error_score='raise-deprecating',
-             estimator=SVC(C=1.0, cache_size=200, class_weight=None, coef0=0.0,
+GridSearchCV(cv=RepeatedKFold(n_repeats=10, n_splits=5, random_state=1040),
+             error_score=nan,
+             estimator=SVC(C=1.0, break_ties=False, cache_size=200,
+                           class_weight=None, coef0=0.0,
                            decision_function_shape='ovr', degree=3,
-                           gamma='auto_deprecated', kernel='rbf', max_iter=-1,
+                           gamma='scale', kernel='rbf', max_iter=-1,
                            probability=False, random_state=None, shrinking=True,
                            tol=0.001, verbose=False),
-             iid='warn', n_jobs=None,
+             iid='deprecated', n_jobs=None,
              param_grid=[{'C': [1, 10, 100, 1000], 'gamma': [0.001, 0.0001],
                           'kernel': ['rbf']},
                          {'C': [1, 10, 100, 1000], 'kernel': ['linear']}],
@@ -2314,7 +2338,7 @@ print(mdl.best_estimator_)
 ```
 
 ```
-SVC(C=1000, cache_size=200, class_weight=None, coef0=0.0,
+SVC(C=1000, break_ties=False, cache_size=200, class_weight=None, coef0=0.0,
     decision_function_shape='ovr', degree=3, gamma=0.001, kernel='rbf',
     max_iter=-1, probability=False, random_state=None, shrinking=True,
     tol=0.001, verbose=False)
