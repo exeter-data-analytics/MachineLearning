@@ -24,7 +24,7 @@
 <meta name="author" content="Chris Yeomans and Jiangjiao Xu" />
 
 
-<meta name="date" content="2020-03-26" />
+<meta name="date" content="2020-05-05" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -480,16 +480,16 @@ Balanced Accuracy           1.0000            0.9667           0.9833</code></pr
 <a class="sourceLine" id="cb70-4" data-line-number="4"></a>
 <a class="sourceLine" id="cb70-5" data-line-number="5"><span class="co"># Find optimal k (model)</span></a>
 <a class="sourceLine" id="cb70-6" data-line-number="6">mdl.fit(X<span class="op">=</span>xTrain, y<span class="op">=</span>yTrain)</a></code></pre></div>
-<pre><code>GridSearchCV(cv=&lt;sklearn.model_selection._split.RepeatedKFold object at 0x1a2c99cef0&gt;,
-             error_score=&#39;raise-deprecating&#39;,
+<pre><code>GridSearchCV(cv=RepeatedKFold(n_repeats=10, n_splits=5, random_state=1040),
+             error_score=nan,
              estimator=KNeighborsClassifier(algorithm=&#39;auto&#39;, leaf_size=30,
                                             metric=&#39;minkowski&#39;,
                                             metric_params=None, n_jobs=None,
                                             n_neighbors=5, p=2,
                                             weights=&#39;uniform&#39;),
-             iid=&#39;warn&#39;, n_jobs=None, param_grid={&#39;n_neighbors&#39;: range(2, 16)},
-             pre_dispatch=&#39;2*n_jobs&#39;, refit=True, return_train_score=False,
-             scoring=None, verbose=0)</code></pre>
+             iid=&#39;deprecated&#39;, n_jobs=None,
+             param_grid={&#39;n_neighbors&#39;: range(2, 16)}, pre_dispatch=&#39;2*n_jobs&#39;,
+             refit=True, return_train_score=False, scoring=None, verbose=0)</code></pre>
 <div class="sourceCode" id="cb72"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb72-1" data-line-number="1"><span class="bu">print</span>(mdl.best_estimator_)</a></code></pre></div>
 <pre><code>KNeighborsClassifier(algorithm=&#39;auto&#39;, leaf_size=30, metric=&#39;minkowski&#39;,
                      metric_params=None, n_jobs=None, n_neighbors=5, p=2,
@@ -601,11 +601,11 @@ Balanced Accuracy           1.0000            0.9667           0.9833</code></pr
 <a class="sourceLine" id="cb79-6" data-line-number="6">mdl.fit(X<span class="op">=</span>xTrain, y<span class="op">=</span>yTrain)</a>
 <a class="sourceLine" id="cb79-7" data-line-number="7"></a>
 <a class="sourceLine" id="cb79-8" data-line-number="8"><span class="co"># Plot model using graphviz</span></a></code></pre></div>
-<pre><code>DecisionTreeClassifier(class_weight=None, criterion=&#39;gini&#39;, max_depth=None,
-                       max_features=None, max_leaf_nodes=None,
+<pre><code>DecisionTreeClassifier(ccp_alpha=0.0, class_weight=None, criterion=&#39;gini&#39;,
+                       max_depth=None, max_features=None, max_leaf_nodes=None,
                        min_impurity_decrease=0.0, min_impurity_split=None,
                        min_samples_leaf=1, min_samples_split=2,
-                       min_weight_fraction_leaf=0.0, presort=False,
+                       min_weight_fraction_leaf=0.0, presort=&#39;deprecated&#39;,
                        random_state=None, splitter=&#39;best&#39;)</code></pre>
 <div class="sourceCode" id="cb81"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb81-1" data-line-number="1">mdlStr <span class="op">=</span> tree.export_graphviz(mdl, out_file<span class="op">=</span><span class="va">None</span>,</a>
 <a class="sourceLine" id="cb81-2" data-line-number="2">                              feature_names<span class="op">=</span>iris.feature_names, </a>
@@ -754,8 +754,9 @@ Petal.Width  29.105553</code></pre>
 <a class="sourceLine" id="cb91-4" data-line-number="4"><span class="co"># Fix ntree and mtry</span></a>
 <a class="sourceLine" id="cb91-5" data-line-number="5">mdl <span class="op">=</span> RandomForestClassifier(n_estimators<span class="op">=</span><span class="dv">200</span>, max_features<span class="op">=</span><span class="dv">2</span>, random_state<span class="op">=</span><span class="dv">1040</span>)</a>
 <a class="sourceLine" id="cb91-6" data-line-number="6">mdl.fit(X<span class="op">=</span>xTrain, y<span class="op">=</span>yTrain)</a></code></pre></div>
-<pre><code>RandomForestClassifier(bootstrap=True, class_weight=None, criterion=&#39;gini&#39;,
-                       max_depth=None, max_features=2, max_leaf_nodes=None,
+<pre><code>RandomForestClassifier(bootstrap=True, ccp_alpha=0.0, class_weight=None,
+                       criterion=&#39;gini&#39;, max_depth=None, max_features=2,
+                       max_leaf_nodes=None, max_samples=None,
                        min_impurity_decrease=0.0, min_impurity_split=None,
                        min_samples_leaf=1, min_samples_split=2,
                        min_weight_fraction_leaf=0.0, n_estimators=200,
@@ -868,79 +869,96 @@ Python
 <a class="sourceLine" id="cb99-4" data-line-number="4"></a>
 <a class="sourceLine" id="cb99-5" data-line-number="5"><span class="co"># Fit SVM</span></a>
 <a class="sourceLine" id="cb99-6" data-line-number="6"><span class="kw">set.seed</span>(<span class="dv">1040</span>) <span class="co"># for reproducibility</span></a>
-<a class="sourceLine" id="cb99-7" data-line-number="7"></a>
-<a class="sourceLine" id="cb99-8" data-line-number="8"><span class="co">## SORRY - This is currently broken (CY to fix)</span></a>
-<a class="sourceLine" id="cb99-9" data-line-number="9"></a>
-<a class="sourceLine" id="cb99-10" data-line-number="10"><span class="co"># mdl &lt;- train(x=xTrain, y=yTrain,            # training data </span></a>
-<a class="sourceLine" id="cb99-11" data-line-number="11"><span class="co">#              method=&#39;svmLinear2&#39;,            # machine learning model</span></a>
-<a class="sourceLine" id="cb99-12" data-line-number="12"><span class="co">#              trControl=opts,                # training options</span></a>
-<a class="sourceLine" id="cb99-13" data-line-number="13"><span class="co">#              tuneGrid=data.frame(C=c(0.01, 1, 10, 100, 1000))) # range of C&#39;s to try</span></a>
-<a class="sourceLine" id="cb99-14" data-line-number="14"><span class="co"># print(mdl)</span></a>
-<a class="sourceLine" id="cb99-15" data-line-number="15"></a>
-<a class="sourceLine" id="cb99-16" data-line-number="16"><span class="co"># Test model on testing data</span></a>
-<a class="sourceLine" id="cb99-17" data-line-number="17">yTestPred &lt;-<span class="st"> </span><span class="kw">predict</span>(mdl, <span class="dt">newdata=</span>xTest)</a>
-<a class="sourceLine" id="cb99-18" data-line-number="18"><span class="kw">confusionMatrix</span>(yTestPred, yTest) <span class="co"># predicted/true</span></a></code></pre></div>
+<a class="sourceLine" id="cb99-7" data-line-number="7">mdl &lt;-<span class="st"> </span><span class="kw">train</span>(<span class="dt">x=</span>xTrain, <span class="dt">y=</span>yTrain,            <span class="co"># training data</span></a>
+<a class="sourceLine" id="cb99-8" data-line-number="8">             <span class="dt">method=</span><span class="st">&#39;svmLinear&#39;</span>,            <span class="co"># machine learning model</span></a>
+<a class="sourceLine" id="cb99-9" data-line-number="9">             <span class="dt">trControl=</span>opts,                <span class="co"># training options</span></a>
+<a class="sourceLine" id="cb99-10" data-line-number="10">             <span class="dt">tuneGrid=</span><span class="kw">data.frame</span>(<span class="dt">C=</span><span class="kw">c</span>(<span class="fl">0.01</span>, <span class="dv">1</span>, <span class="dv">10</span>, <span class="dv">100</span>, <span class="dv">1000</span>))) <span class="co"># range of C&#39;s to try</span></a>
+<a class="sourceLine" id="cb99-11" data-line-number="11"><span class="kw">print</span>(mdl)</a></code></pre></div>
+<pre><code>Support Vector Machines with Linear Kernel 
+
+105 samples
+  4 predictor
+  3 classes: &#39;setosa&#39;, &#39;versicolor&#39;, &#39;virginica&#39; 
+
+No pre-processing
+Resampling: Cross-Validated (5 fold, repeated 10 times) 
+Summary of sample sizes: 84, 84, 84, 84, 84, 84, ... 
+Resampling results across tuning parameters:
+
+  C      Accuracy   Kappa    
+  1e-02  0.8371429  0.7557143
+  1e+00  0.9628571  0.9442857
+  1e+01  0.9628571  0.9442857
+  1e+02  0.9828571  0.9742857
+  1e+03  0.9752381  0.9628571
+
+Accuracy was used to select the optimal model using the largest value.
+The final value used for the model was C = 100.</code></pre>
+<div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb101-1" data-line-number="1"><span class="co"># Test model on testing data</span></a>
+<a class="sourceLine" id="cb101-2" data-line-number="2">yTestPred &lt;-<span class="st"> </span><span class="kw">predict</span>(mdl, <span class="dt">newdata=</span>xTest)</a>
+<a class="sourceLine" id="cb101-3" data-line-number="3"><span class="kw">confusionMatrix</span>(yTestPred, yTest) <span class="co"># predicted/true</span></a></code></pre></div>
 <pre><code>Confusion Matrix and Statistics
 
             Reference
 Prediction   setosa versicolor virginica
   setosa         15          0         0
-  versicolor      0         14         0
-  virginica       0          1        15
+  versicolor      0         14         1
+  virginica       0          1        14
 
 Overall Statistics
                                           
-               Accuracy : 0.9778          
-                 95% CI : (0.8823, 0.9994)
+               Accuracy : 0.9556          
+                 95% CI : (0.8485, 0.9946)
     No Information Rate : 0.3333          
     P-Value [Acc &gt; NIR] : &lt; 2.2e-16       
                                           
-                  Kappa : 0.9667          
+                  Kappa : 0.9333          
                                           
  Mcnemar&#39;s Test P-Value : NA              
 
 Statistics by Class:
 
                      Class: setosa Class: versicolor Class: virginica
-Sensitivity                 1.0000            0.9333           1.0000
-Specificity                 1.0000            1.0000           0.9667
-Pos Pred Value              1.0000            1.0000           0.9375
-Neg Pred Value              1.0000            0.9677           1.0000
+Sensitivity                 1.0000            0.9333           0.9333
+Specificity                 1.0000            0.9667           0.9667
+Pos Pred Value              1.0000            0.9333           0.9333
+Neg Pred Value              1.0000            0.9667           0.9667
 Prevalence                  0.3333            0.3333           0.3333
-Detection Rate              0.3333            0.3111           0.3333
-Detection Prevalence        0.3333            0.3111           0.3556
-Balanced Accuracy           1.0000            0.9667           0.9833</code></pre>
+Detection Rate              0.3333            0.3111           0.3111
+Detection Prevalence        0.3333            0.3333           0.3333
+Balanced Accuracy           1.0000            0.9500           0.9500</code></pre>
 </div>
 <div id="option2unnamed-chunk-62" class="tabcontentunnamed-chunk-62">
-<div class="sourceCode" id="cb101"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb101-1" data-line-number="1"><span class="im">from</span> sklearn.svm <span class="im">import</span> SVC</a>
-<a class="sourceLine" id="cb101-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb101-3" data-line-number="3">cv <span class="op">=</span> RepeatedKFold(n_splits<span class="op">=</span><span class="dv">5</span>, n_repeats<span class="op">=</span><span class="dv">10</span>, random_state<span class="op">=</span><span class="dv">1040</span>) <span class="co"># Repeat 5-fold cross-validation, ten times</span></a>
-<a class="sourceLine" id="cb101-4" data-line-number="4">paramGrid <span class="op">=</span> [{<span class="st">&#39;kernel&#39;</span>: [<span class="st">&#39;rbf&#39;</span>], <span class="st">&#39;gamma&#39;</span>: [<span class="fl">1e-3</span>, <span class="fl">1e-4</span>], <span class="st">&#39;C&#39;</span>: [<span class="dv">1</span>, <span class="dv">10</span>, <span class="dv">100</span>, <span class="dv">1000</span>]},</a>
-<a class="sourceLine" id="cb101-5" data-line-number="5">             {<span class="st">&#39;kernel&#39;</span>: [<span class="st">&#39;linear&#39;</span>], <span class="st">&#39;C&#39;</span>: [<span class="dv">1</span>, <span class="dv">10</span>, <span class="dv">100</span>, <span class="dv">1000</span>]}] <span class="co"># set hyperprameter search grid</span></a>
-<a class="sourceLine" id="cb101-6" data-line-number="6">mdl <span class="op">=</span> GridSearchCV(estimator<span class="op">=</span>SVC(), param_grid<span class="op">=</span>paramGrid, cv<span class="op">=</span>cv)</a>
-<a class="sourceLine" id="cb101-7" data-line-number="7"></a>
-<a class="sourceLine" id="cb101-8" data-line-number="8"><span class="co"># Fit SVM</span></a>
-<a class="sourceLine" id="cb101-9" data-line-number="9">mdl.fit(X<span class="op">=</span>xTrain, y<span class="op">=</span>yTrain)</a></code></pre></div>
-<pre><code>GridSearchCV(cv=&lt;sklearn.model_selection._split.RepeatedKFold object at 0x1a31327278&gt;,
-             error_score=&#39;raise-deprecating&#39;,
-             estimator=SVC(C=1.0, cache_size=200, class_weight=None, coef0=0.0,
+<div class="sourceCode" id="cb103"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb103-1" data-line-number="1"><span class="im">from</span> sklearn.svm <span class="im">import</span> SVC</a>
+<a class="sourceLine" id="cb103-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb103-3" data-line-number="3">cv <span class="op">=</span> RepeatedKFold(n_splits<span class="op">=</span><span class="dv">5</span>, n_repeats<span class="op">=</span><span class="dv">10</span>, random_state<span class="op">=</span><span class="dv">1040</span>) <span class="co"># Repeat 5-fold cross-validation, ten times</span></a>
+<a class="sourceLine" id="cb103-4" data-line-number="4">paramGrid <span class="op">=</span> [{<span class="st">&#39;kernel&#39;</span>: [<span class="st">&#39;rbf&#39;</span>], <span class="st">&#39;gamma&#39;</span>: [<span class="fl">1e-3</span>, <span class="fl">1e-4</span>], <span class="st">&#39;C&#39;</span>: [<span class="dv">1</span>, <span class="dv">10</span>, <span class="dv">100</span>, <span class="dv">1000</span>]},</a>
+<a class="sourceLine" id="cb103-5" data-line-number="5">             {<span class="st">&#39;kernel&#39;</span>: [<span class="st">&#39;linear&#39;</span>], <span class="st">&#39;C&#39;</span>: [<span class="dv">1</span>, <span class="dv">10</span>, <span class="dv">100</span>, <span class="dv">1000</span>]}] <span class="co"># set hyperprameter search grid</span></a>
+<a class="sourceLine" id="cb103-6" data-line-number="6">mdl <span class="op">=</span> GridSearchCV(estimator<span class="op">=</span>SVC(), param_grid<span class="op">=</span>paramGrid, cv<span class="op">=</span>cv)</a>
+<a class="sourceLine" id="cb103-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb103-8" data-line-number="8"><span class="co"># Fit SVM</span></a>
+<a class="sourceLine" id="cb103-9" data-line-number="9">mdl.fit(X<span class="op">=</span>xTrain, y<span class="op">=</span>yTrain)</a></code></pre></div>
+<pre><code>GridSearchCV(cv=RepeatedKFold(n_repeats=10, n_splits=5, random_state=1040),
+             error_score=nan,
+             estimator=SVC(C=1.0, break_ties=False, cache_size=200,
+                           class_weight=None, coef0=0.0,
                            decision_function_shape=&#39;ovr&#39;, degree=3,
-                           gamma=&#39;auto_deprecated&#39;, kernel=&#39;rbf&#39;, max_iter=-1,
+                           gamma=&#39;scale&#39;, kernel=&#39;rbf&#39;, max_iter=-1,
                            probability=False, random_state=None, shrinking=True,
                            tol=0.001, verbose=False),
-             iid=&#39;warn&#39;, n_jobs=None,
+             iid=&#39;deprecated&#39;, n_jobs=None,
              param_grid=[{&#39;C&#39;: [1, 10, 100, 1000], &#39;gamma&#39;: [0.001, 0.0001],
                           &#39;kernel&#39;: [&#39;rbf&#39;]},
                          {&#39;C&#39;: [1, 10, 100, 1000], &#39;kernel&#39;: [&#39;linear&#39;]}],
              pre_dispatch=&#39;2*n_jobs&#39;, refit=True, return_train_score=False,
              scoring=None, verbose=0)</code></pre>
-<div class="sourceCode" id="cb103"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb103-1" data-line-number="1"><span class="bu">print</span>(mdl.best_estimator_)</a></code></pre></div>
-<pre><code>SVC(C=1000, cache_size=200, class_weight=None, coef0=0.0,
+<div class="sourceCode" id="cb105"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb105-1" data-line-number="1"><span class="bu">print</span>(mdl.best_estimator_)</a></code></pre></div>
+<pre><code>SVC(C=1000, break_ties=False, cache_size=200, class_weight=None, coef0=0.0,
     decision_function_shape=&#39;ovr&#39;, degree=3, gamma=0.001, kernel=&#39;rbf&#39;,
     max_iter=-1, probability=False, random_state=None, shrinking=True,
     tol=0.001, verbose=False)</code></pre>
-<div class="sourceCode" id="cb105"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb105-1" data-line-number="1">yTestPred <span class="op">=</span> mdl.predict(xTest) <span class="co"># evaluate performance on test data</span></a>
-<a class="sourceLine" id="cb105-2" data-line-number="2"><span class="bu">print</span>(confusion_matrix(yTest, yTestPred)) <span class="co"># true/predicted</span></a></code></pre></div>
+<div class="sourceCode" id="cb107"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb107-1" data-line-number="1">yTestPred <span class="op">=</span> mdl.predict(xTest) <span class="co"># evaluate performance on test data</span></a>
+<a class="sourceLine" id="cb107-2" data-line-number="2"><span class="bu">print</span>(confusion_matrix(yTest, yTestPred)) <span class="co"># true/predicted</span></a></code></pre></div>
 <pre><code>[[14  0  0]
  [ 0 13  0]
  [ 0  0 18]]</code></pre>
