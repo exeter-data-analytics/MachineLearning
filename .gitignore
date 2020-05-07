@@ -3,8 +3,8 @@
 .Rhistory
 .Rproj.user
 .Rproj
-
 # ignore compiled files
 _bookdown_files
 _site
 _gh-pages_commit.sh
+.RData
